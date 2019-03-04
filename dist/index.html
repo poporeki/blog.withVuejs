@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/favicon.ico><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css><title>.web</title><style>.app-init-loading-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      font-size: .3rem;
+      color: #fff;
+      background-color: rgb(41, 41, 41);
+      z-index: 9999999;
+    }
+
+    .app-init-loading-wrapper.hide {
+      display: none !important;
+    }
+
+
+    .app-init-loading-wrapper .progress-bar {
+      position: absolute;
+      width: 100%;
+      height: 1%;
+      top: 0;
+      left: 0;
+      background-color: rgb(61, 61, 61);
+    }
+
+    .app-init-loading-wrapper .progress-bar::after {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 20%;
+      background-color: rgb(0, 119, 255);
+      animation: progressInX 3s infinite;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .app-init-loading-wrapper .object {
+      position: absolute;
+      height: 10px;
+      width: 50px;
+      background-color: #fff;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute span {
+      animation-name: aniInTop;
+      animation-duration: 2s;
+      animation-timing-function: ease;
+      animation-iteration-count: infinite;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute span:nth-child(2) {
+      animation-delay: 200ms;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute span:nth-child(3) {
+      animation-delay: 400ms;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute span:nth-child(4) {
+      animation-delay: 600ms;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute span:nth-child(5) {
+      animation-delay: 800ms;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute span:nth-child(6) {
+      animation-delay: 1000ms;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute span:nth-child(7) {
+      animation-delay: 1200ms;
+    }
+
+    .app-init-loading-wrapper .loading-center-absolute span:nth-child(8) {
+      animation-delay: 1400ms;
+    }
+
+    @keyframes aniInTop {
+      0% {
+        opacity: 0;
+        transform: translateY(-50%);
+      }
+
+      45% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      55% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-50%);
+      }
+    }
+
+    @keyframes progressInX {
+      0% {
+        width: 20%;
+        transform: translateX(-100%);
+      }
+
+      100% {
+        width: 60%;
+        transform: translateX(200%);
+      }
+    }</style><script>if (/Android|webOS|iPhone|iPod|iPad|Window Phone|BlackBerry/i.test(navigator.userAgent)) {
+      (function (documents, windows) {
+        var domElement = documents.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+          setRem = function () {
+            var clientWidth = domElement.clientWidth;
+            if (!clientWidth) return;
+            if (clientWidth >= 750) {
+              domElement.style.fontSize = '60px';
+            } else {
+              domElement.style.fontSize = 100 * (clientWidth / 750) + 'px';
+            }
+          };
+
+        if (!documents.addEventListener) return;
+        setRem();
+        windows.addEventListener(resizeEvt, setRem, false);
+        documents.addEventListener('DOMContentLoaded', setRem, false);
+      })(document, window);
+    } else {
+      document.documentElement.style.fontSize = '50px'
+    }</script><link href=/js/about.5ff011b7.js rel=prefetch><link href=/css/app.8baef5fd.css rel=preload as=style><link href=/css/chunk-vendors.aa8e5218.css rel=preload as=style><link href=/js/app.bf69d278.js rel=preload as=script><link href=/js/chunk-vendors.36d7b7af.js rel=preload as=script><link href=/css/chunk-vendors.aa8e5218.css rel=stylesheet><link href=/css/app.8baef5fd.css rel=stylesheet></head><body><div class=app-init-loading-wrapper><div class=progress-bar></div><div class=loading-center-absolute><span>l</span> <span>o</span> <span>a</span> <span>d</span> <span>i</span> <span>n</span> <span>g</span></div></div><div id=app></div><script src=/js/chunk-vendors.36d7b7af.js></script><script src=/js/app.bf69d278.js></script></body></html>
