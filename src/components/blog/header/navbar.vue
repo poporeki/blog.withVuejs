@@ -2,7 +2,7 @@
   <transition enter-active-class="animated flipInX">
     <ul class="navbar" v-if='isShow'>
       <li v-for="(item,idx) in navlist" :key='idx'>
-        <a :href="item.href">{{item.name}}</a>
+        <a :href='"/blog/articlelist?by[type_id]="+item._id'>{{item.type_name}}</a>
       </li>
     </ul>
   </transition>
@@ -13,23 +13,21 @@ export default {
   data() {
     return {
       isShow: false,
-      navlist: [
-        { name: "首页", href: "/blog" },
-        {
-          name: "Web前端",
-          href: "/blog/articlelist?by[type_id]=5b16cd78bbe59122b43bf2c1"
-        },
-        {
-          name: "服务端",
-          href: "/blog/articlelist?by[type_id]=5b198d59be1c73036d50c176"
-        },
-        {
-          name: "数据库",
-          href: "/blog/articlelist?by[type_id]=5b16ce950100982448b19d55"
-        },
-        { name: "个人简历", href: "/iresume" }
-      ]
+      navlist: []
     };
+  },
+  methods:{
+    getNavbar(){
+      let that=this;
+      this.$axios
+      .get('https://www.yansk.cn/api/v1/gethomenavbar')
+      .then(({data})=>{
+        this.navlist=data.data;
+      })
+    }
+  },
+  created(){
+    this.getNavbar();
   },
   mounted() {
     this.isShow = true;
