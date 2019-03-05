@@ -77,13 +77,14 @@ export default {
     },
     getNum() {
       return this.num < 16 ? (this.num += 4) : (this.num = 0);
-    },
+    }/* ,
     bianli(Jone, Jtwo) {
       let target = JSON.parse(Jone);
-      json2.map(value => {
+      let that=this;
+      target.map(value => {
         that.$set(that.json1, that.json1.length, value);
       });
-    }
+    } */
   },
   mounted() {
     this.addNum();

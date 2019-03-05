@@ -21,7 +21,7 @@
   display: flex;
   flex-wrap: wrap;
   min-height: 200px;
-  font-size: 0.28rem;
+  font-size: 0.26rem;
   .tag-lk {
     position: relative;
     display: inline-block;

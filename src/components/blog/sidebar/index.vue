@@ -8,14 +8,8 @@
       <li class="aaa ani1">
         <a href="/blog"><span>首页</span></a>
       </li>
-      <li>
-        <a href="/blog/articlelist?by[type_id]=5b16cd78bbe59122b43bf2c1"><span>Web前端</span></a>
-      </li>
-      <li>
-        <a href="/blog/articlelist?by[type_id]=5b198d59be1c73036d50c176"><span>服务端</span></a>
-      </li>
-      <li>
-        <a href="/blog/articlelist?by[type_id]=5b16ce950100982448b19d55"><span>数据库</span></a>
+      <li v-for="(item,idx) in navlist" :key="idx">
+        <a :href='"/blog/articlelist?by[type_id]="+item._id'><span>{{item.type_name}}</span></a>
       </li>
       <li>
         <a href="/iresume"><span>个人简历</span></a>
@@ -70,7 +64,7 @@ aside.l-aside {
       padding: 0;
       margin: 0;
       margin-top: -55%;
-      font-size: 0.5rem;
+      font-size: 0.25rem;
       text-align: center;
       color: #fff;
       text-shadow: 0 0 10px #fff;
@@ -94,7 +88,7 @@ aside.l-aside {
   .navbar {
     position: relative;
     margin-top: 20vh;
-    max-height: 80vh;
+    max-height: 60vh;
     overflow-y: auto;
     overflow-x: hidden;
     &::-webkit-scrollbar {
@@ -122,6 +116,7 @@ aside.l-aside {
           display: block;
           margin-top: -50%;
           text-align: center;
+          font-size: .25rem;
           transform: translateY(-50%);
         }
         &:after {
@@ -144,3 +139,27 @@ aside.l-aside {
   }
 }
 </style>
+
+<script>
+export default {
+  data() {
+    return {
+      navlist:[]
+    };
+  },
+  methods:{
+    getNavbar(){
+      let that=this;
+      this.$axios
+      .get('https://www.yansk.cn/api/v1/gethomenavbar')
+      .then(({data})=>{
+        that.navlist=data.data;
+      })
+    }
+  },
+  created(){
+    this.getNavbar();
+  }
+};
+</script>
+

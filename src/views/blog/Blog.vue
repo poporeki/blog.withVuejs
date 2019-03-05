@@ -115,7 +115,7 @@ import Header from "../../components/blog/header";
 import Body from "../../components/blog/home";
 import Footer from "../../components/blog/footer";
 import Sidebar from "../../components/blog/sidebar";
-import "../../assets/css/icon/blog.css";
+import "../../assets/iconfont_blog/iconfont.css";
 import "../../assets/css/progressive-image.css";
 export default {
   name: "Blog",

@@ -97,7 +97,7 @@ footer {
           box-sizing: border-box;
           text-align: center;
           text-shadow: 0 0 5px #2c2f34;
-
+          font-size: .26rem;
           &:after {
             content: "";
             position: absolute;

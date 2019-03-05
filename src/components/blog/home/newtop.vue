@@ -32,7 +32,7 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="pic-box"><img :src="filterSrc(arc.content)===''?'/images/exp.png':filterSrc(arc.content)" alt="img"></div>
+              <div class="pic-box" v-if="filterSrc(arc.content)!==''"><img :src="filterSrc(arc.content)===''?'/images/exp.png':filterSrc(arc.content)" alt="img"></div>
               <p> {{arc.source}}</p>
             </div>
           </div>
@@ -217,7 +217,7 @@
         word-break: break-word;
         overflow: hidden;
         margin: 10px 0 0 0;
-        font-size: 0.2rem;
+        font-size: 0.26rem;
         max-height: 100px;
         color: rgb(226, 226, 226);
       }

@@ -9,18 +9,18 @@
         <swiper-slide class="hot-list-item" v-for="item in topData" :key="item.id">
           <a :href="'/blog/article/' + item.artid" class="hot-lk">
             <span class="lt">
-              <img :src="item.previewImage ? item.previewImage : '/images/exp.png'" alt="images">
+              <img :src="item.previewImage ? item.previewImage : '/images/exp.png'" onerror="this.src='/images/exp.png'" alt="images">
             </span>
             <span class="rt p10">
               <div class="art-tit">{{item.title}}</div>
               <div class="art-info">
-                <div class="read"><i class="iconfont bottom icon-read"></i>{{item.read}}</div>
+                <div class="read"><i class="iconfont bottom icon-eye"></i>&nbsp;{{item.read}}</div>
                 <div class="time">{{item.timeCreate}}</div>
               </div>
             </span>
           </a>
         </swiper-slide>
-        <div class="swiper-scrollbar"></div> <!-- 滚动条 -->
+        <div class="swiper-scrollbar" slot="scrollbar"></div> <!-- 滚动条 -->
       </swiper>
     </transition>
 
@@ -146,6 +146,9 @@ export default {
             slidesPerView: 3,
             spaceBetween: 10
           }
+        },
+        scrollbar: {
+          el: '.swiper-scrollbar',
         }
       },
       isShow: false,
@@ -154,14 +157,13 @@ export default {
   },
   methods: {
     getData() {
-      let _this = this;
+      let that = this;
       this.$axios
         .get("https://www.yansk.cn/api/v1/article/gettop")
         .then(({ data }) => {
-          _this.isRequest = false;
-          _this.topData = data.data;
-          _this.isShow = true;
-          console.log(`热点：${data.data}`);
+          that.isRequest = false;
+          that.topData = data.data;
+          that.isShow = true;
         });
     }
   },

@@ -34,6 +34,8 @@
     > .lt-item,
     > .rt-item {
       width: 100%;
+      min-height: 300px;
+      height:100%;
     }
 
     > .rt-item {

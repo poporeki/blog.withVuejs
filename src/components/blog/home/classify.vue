@@ -1,19 +1,17 @@
 <template>
-  <section class="classify">
-    <div class="lt">
-      <h2 class="title">分类</h2>
-    </div>
-    <transition-group tag="div" class="rt" name="classify" enter-active-class="animated fadeInDown">
+<section class="classify">
+    <div class="lt"><h2 class="title">分类</h2></div>
+    <div class="rt">
+      <transition-group tag="div" class="rt" name="classify" enter-active-class="animated fadeInDown">
       <div class="classify-item" v-for="item in typelist" :key="item.typeID">
         <a class="type-lk" :href="'/blog/articlelist?by[type_id]='+item.typeID">
-          <i :class='"iconfont icon-"+item.typeName.toLowerCase() '></i>
-          <i :class='"iconfont bottom icon-"+item.typeName.toLowerCase() '></i>
-          <p>
-            {{item.typeName}}
-          </p>
+          <i :class='"iconfont icon-"+item.typeIconName'></i>
+          <i :class='"iconfont bottom icon-"+item.typeIconName'></i>
+          <p>{{item.typeName}}</p>
         </a>
       </div>
-    </transition-group>
+      </transition-group>
+    </div>
   </section>
 </template>
 <style lang="scss">
@@ -61,7 +59,7 @@ section.classify {
     box-sizing: border-box;
     box-shadow: 2px 2px 10px #000;
     background-color: $color-block-wrap;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition: transform .3s ease, background-color .3s ease;
     overflow: hidden;
 
     &:hover {
@@ -88,13 +86,13 @@ section.classify {
           transform: translateY(0);
         }
 
-        > p {
+        >p {
           background-color: $color-block-hover;
         }
       }
 
       .iconfont {
-        font-size: 1rem;
+        font-size: 50px;
         position: absolute;
         width: 100%;
         height: 100%;
@@ -104,7 +102,7 @@ section.classify {
         color: $color-lk-font;
         box-sizing: border-box;
         text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.384);
-        transition: transform 0.3s ease-in, color 0.3s ease;
+        transition: transform .3s ease-in, color .3s ease;
 
         &.bottom {
           transform: translateY(100%);
@@ -112,20 +110,20 @@ section.classify {
         }
       }
 
-      > p {
+      >p {
         position: absolute;
         width: 100%;
         padding: 10px;
         left: 0;
         margin: 0;
         bottom: 0;
-        font-size: 0.32rem;
+        font-size: .3rem;
         color: $color-lk-bgcolor;
         background-color: $color-black;
         box-sizing: border-box;
         text-align: center;
         letter-spacing: 5px;
-        transition: color 0.5s ease;
+        transition: color .5s ease;
       }
     }
 

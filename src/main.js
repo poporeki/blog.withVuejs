@@ -7,6 +7,7 @@ import progressive from "progressive-image/dist/vue";
 import "../src/assets/scss/font_face.scss";
 import commonFn from './assets/utils.js'
 import Highlight from './assets/highlight';
+import rem from './assets/rem';
 
 Vue.config.productionTip = false;
 

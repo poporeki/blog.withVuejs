@@ -52,7 +52,7 @@
       padding: 2px 5px;
       left: 0;
       top: 0;
-      font-size: 0.12rem;
+      font-size: 0.25rem;
       text-align: center;
     }
   }
