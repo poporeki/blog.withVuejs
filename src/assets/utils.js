@@ -1,4 +1,5 @@
 export default {
+  // 增加className
   addClass(el, name) {
     let className = el.className;
     let arr = className.split(" ");
@@ -8,6 +9,7 @@ export default {
     if (newArr.length !== 0) return;
     el.className += " " + name;
   },
+  //移除claaName
   removeClass(el, name) {
     let className = el.className;
     let arr = className.split(" ");
@@ -17,6 +19,7 @@ export default {
     filter.join(" ");
     el.className = filter.join(" ");
   },
+  // 是否包含该classname
   hasClass(el, name) {
     let className = el.className;
     let arr = className.split(' ');

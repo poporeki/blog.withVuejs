@@ -497,7 +497,6 @@ export default {
             }, 2000);
           }
           if (data.status === true) {
-            console.log(data.data);
             that.$set(that.artComms, that.artComms.length, data.data);
           }
         });
@@ -529,8 +528,6 @@ export default {
             }, 2000);
           }
           if (data.status === true) {
-            console.log(data.data);
-
             that.$set(that.artComms, that.artComms.length, data.data);
             that.init();
           }
@@ -564,8 +561,6 @@ export default {
             }, 2000);
           }
           if (data.status === true) {
-            console.log(data.data);
-
             that.$set(
               that.artComms[commidx].commReps,
               that.artComms[commidx].commReps.length,
@@ -627,8 +622,6 @@ export default {
             );
           });
         });
-
-        console.log(that.replyBoxStatus);
         resolve();
       });
     }

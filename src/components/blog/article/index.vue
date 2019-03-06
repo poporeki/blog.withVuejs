@@ -42,12 +42,10 @@ export default {
   },
   methods: {
     getArticle() {
-      console.log("geetarticle");
       let that = this;
       this.$axios
         .get("https://www.yansk.cn/api/v1/article/get/" + this.arcid)
         .then(({ data }) => {
-          console.log(`:${data.data}`);
           let datas=data.data;
           if (data.status && data.code === 404) {
             that.$router.replace({

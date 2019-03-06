@@ -13,7 +13,7 @@
       </div>
       <div class="gradient"></div>
     </div>
-
+    <!-- <blog-background></blog-background> -->
     <blog-footer></blog-footer>
     <blog-sidebar></blog-sidebar>
   </div>
@@ -115,6 +115,7 @@ import Header from "../../components/blog/header";
 import Body from "../../components/blog/home";
 import Footer from "../../components/blog/footer";
 import Sidebar from "../../components/blog/sidebar";
+import Background from "../../components/blog/background";
 import "../../assets/iconfont_blog/iconfont.css";
 import "../../assets/css/progressive-image.css";
 export default {
@@ -137,7 +138,8 @@ export default {
     "blog-header": Header,
     "blog-body": Body,
     "blog-footer": Footer,
-    "blog-sidebar": Sidebar
+    "blog-sidebar": Sidebar,
+    "blog-background":Background
   },
   mounted() {
     console.log("blog");

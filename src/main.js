@@ -19,19 +19,17 @@ Vue.prototype.$axios = Axios;
 Axios.defaults.withCredentials = true;
 
 router.beforeEach((to, from, next) => {
-  window.scrollTo(0, 0);
+  
   let _store = store;
-  console.log("router before");
   window.document.title = to.meta.title;
   let notshow = to.meta.notshow;
-  console.log(`路由前${notshow}`);
   notshow
     ?
     notshow.loading ?
     (store.state.isLoading = false) :
     (store.state.isLoading = true) :
     "";
-
+  // 用户时效验证
   Axios.post("https://www.yansk.cn/auth").then(({
     data
   }) => {
@@ -46,8 +44,11 @@ router.beforeEach((to, from, next) => {
     _store.state.isLogin = false;
     _store.state.userInfo = {};
   });
+  
 });
-
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0);
+});
 //定义一个请求拦截器
 Axios.interceptors.request.use(function (config) {
   if (config.url === "https://www.yansk.cn/auth") return config;

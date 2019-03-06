@@ -46,6 +46,7 @@
     &:hover {
       .hot-lk {
         background-color: $highlight-color-block-wrap;
+        border: 3px solid rgb(119, 119, 119);
       }
     }
 
@@ -57,10 +58,12 @@
       justify-content: center;
       height: 100%;
       width: 100%;
+      border:0 solid  rgb(119, 119, 119);
       border-radius: 4px;
       background-color: $color-block-wrap;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease,border .3s ease;
       overflow: hidden;
+      box-sizing: border-box;
 
       > span {
         display: block;
@@ -85,7 +88,7 @@
 
       .rt {
         display: flex;
-        width: 70%;
+        flex-grow: 1;
         word-wrap: break-word;
         flex-direction: column;
         justify-content: flex-start;
