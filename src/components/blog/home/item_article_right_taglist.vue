@@ -20,7 +20,7 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  min-height: 200px;
+  min-height: 150px;
   font-size: 0.26rem;
   .tag-lk {
     position: relative;
@@ -118,7 +118,6 @@ export default {
       this.$axios
         .get("https://www.yansk.cn/blog/gettags")
         .then(({ data }) => {
-          console.log("taglist");
           that.isRequest = false;
           if (data.status) {
             that.taglist = data.data;

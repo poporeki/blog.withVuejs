@@ -383,7 +383,6 @@ export default {
   inject: ["reload"],
   methods: {
     tipsUp(event) {
-      console.log("focus");
       let type = event.type;
       let target = event.currentTarget;
       let parent = target.parentElement;
@@ -465,7 +464,6 @@ export default {
   },
   watch: {
     isuError(value) {
-      console.log(value);
       const that = this;
       if (value === true) {
         setTimeout(() => {

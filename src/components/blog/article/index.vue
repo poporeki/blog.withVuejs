@@ -4,7 +4,7 @@
       <section class="article-wrapper" v-if='isShow'>
         <bread-crumb :arcid='articleData.arcInfo.id' :arctitle="articleData.arcInfo.title" :typename="articleData.arcInfo.type.name"></bread-crumb>
 
-        <article-content :art='articleData.arcInfo'></article-content>
+        <article-content :artinfo='articleData'></article-content>
         <div class="line"></div>
         <article-comment :arcId="articleData.arcInfo.id" :toComment='isToComment' :artTotal="articleData.commsTotal" :artComms="articleData.arcComms"></article-comment>
       </section>
@@ -31,7 +31,8 @@ export default {
     return {
       isShow: false,
       isToComment: false,
-      articleData: {}
+      articleData: {},
+      articleInfo:{}
     };
   },
   components: {

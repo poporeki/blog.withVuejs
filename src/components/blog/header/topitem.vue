@@ -118,14 +118,11 @@ export default {
   methods: {
     logout() {
       let _this = this;
-
-      console.log("logout");
       this.$axios
         .post("https://www.yansk.cn/logout")
         .then(({
           data
         }) => {
-          console.log("logout success");
           data.status ? (_this.$store.state.isLogin = false) : "";
         });
     },

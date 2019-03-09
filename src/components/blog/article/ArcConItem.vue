@@ -36,6 +36,10 @@
         {{tag.tag_name}}
       </a>
     </div>
+    <share-item></share-item>
+    <ad-item></ad-item>
+    <pnlink-item  :arcprev="arcPrev" :arcnext="arcNext"></pnlink-item>
+    <likes-item  :arcid="arcid" :userIsLiked='artinfo.userIsLiked' :likesTotal="artinfo.arcInfo.likes"></likes-item>
   </article>
 </template>
 <style lang="scss">
@@ -208,10 +212,24 @@
 </style>
 
 <script>
+import ShareItem from './ArcConItem_share';
+import AdItem from './ArcConItem_ad';
+import PnlinkItem from './ArcConItem_pnLink';
+import LikesItem from './ArcConItem_likes';
 export default {
-  props: ["art"],
-  methods: {},
-  mounted() {}
+  props: ["artinfo"],
+  data(){
+    return{
+      art:this.artinfo.arcInfo,
+      arcid:this.artinfo.arcInfo.id,
+      arcPrev:this.artinfo.arcPrev,
+      arcNext:this.artinfo.arcNext,
+      
+    }
+  },
+  components:{
+    ShareItem,AdItem,PnlinkItem,LikesItem
+  }
 };
 </script>
 

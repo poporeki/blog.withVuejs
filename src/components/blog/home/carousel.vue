@@ -194,7 +194,6 @@ export default {
   },
   methods: {
     getData() {
-      console.log("getCarousel");
       let _this = this;
       this.$axios
         .get("https://www.yansk.cn/api/v1/getCarousel", {

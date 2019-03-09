@@ -630,8 +630,6 @@ export default {
     this.init();
   },
   mounted() {
-    console.log("comment ishow");
-
     /* 是否锚点到评论区 */
     this.toComment === true ? this.goAnchor("comment") : "";
   },

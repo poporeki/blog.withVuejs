@@ -265,7 +265,6 @@ export default {
         .get("https://www.yansk.cn/blog/getartlist")
         .then(({ data }) => {
           that.isRequest = false;
-          console.log(data);
           if (data.data === null || data.data.length === 0) {
             that.isEmptyData = true;
             return;

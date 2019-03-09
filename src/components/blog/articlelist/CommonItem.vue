@@ -186,7 +186,6 @@ export default {
       window.addEventListener("scroll", this.scrolls);
     },
     scrolls() {
-      console.log("commmm");
       if (this.isOver) return;
       let ref = this.$refs;
       let scrollTop = ref.ulArclist.offsetTop;
@@ -234,7 +233,6 @@ export default {
     },
     getArticlelistData() {
       const that = this;
-      console.log("all");
       this.$axios.post(this.requestUrl).then(({ data }) => {
         that.isInit = true;
         if (!data.data) return;

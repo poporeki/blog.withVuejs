@@ -55,11 +55,20 @@
     align-self: center;
   }
 }
+@media(max-width: 768px) {
+  .sec-wrapper {
+    flex-direction: column;
+  }
 
+  .weather {
+    align-self: center;
+    width: 100% !important;
+  }
+}
 .sec-wrapper {
   display: flex;
   justify-content: space-between;
-
+  margin-bottom:20px;
   .weather {
     position: relative;
     width: 300px;
@@ -127,7 +136,6 @@ export default {
   },
   methods: {
     getWeather(geolo) {
-      console.log("aaaa");
       let _this = this;
       this.$axios
         .get("https://www.yansk.cn/api/v1/weather/gettheday", {
@@ -135,7 +143,6 @@ export default {
         })
         .then(({ data }) => {
           let wData = data.lives[0];
-          console.log(wData);
           _this.weatherData.city = wData.city;
           _this.weatherData.updateTime = wData.reporttime;
           _this.weatherData.temp = wData.temperature;
