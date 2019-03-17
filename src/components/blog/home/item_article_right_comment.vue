@@ -7,7 +7,7 @@
           {{item.article[0].title}}
         </h6>
         <div class="arc-comm">
-          <img class="head-pic" :src="'https://www.yansk.cn'+item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png'" alt="头像">
+          <img class="head-pic" :src="'https://www.yansk.cn'+(item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png')" alt="头像">
           {{item.author[0].user_name}} :
           <span>{{item.comment_text}}</span>
         </div>

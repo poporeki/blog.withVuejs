@@ -6,7 +6,7 @@
       <swiper-slide v-for="item in carouData" :key="item.id">
         <a :href="'/blog/article/'+item.id">
             <h3>{{item.title}}</h3>
-            <img :src='item.imgSrc!==""?item.imgSrc:""' onerror="this.src='/images/exp.png'" alt="空白">
+            <img :src='item.imgSrc!==""?item.imgSrc:""' :onerror="errorImg" alt="空白">
           </a>
       </swiper-slide>
       
@@ -137,6 +137,7 @@ export default {
   data() {
     return {
       isRequest: true,
+      errorImg:`this.src="/images/exp.png"`,
       swiperOption: {
         autoplay: 3000,
         speed: 1000,
@@ -196,11 +197,7 @@ export default {
     getData() {
       let that = this;
       this.$axios
-        .get("https://www.yansk.cn/api/v1/getCarousel", {
-          by: {
-            type: 1213123131312312
-          }
-        })
+        .get("https://www.yansk.cn/api/v1/getCarousel")
         .then(({
           data
         }) => {

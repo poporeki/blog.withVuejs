@@ -1,5 +1,5 @@
 <template >
-  <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+  <transition enter-active-class="animated aniFadeIn" leave-active-class="animated bounceOut">
     <div v-if="isLoading" class="loading">
       <div class="inner">
         <div class="k-line2 k-line12-1"></div>
@@ -29,6 +29,17 @@
     top: 50%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
+  }
+}
+.aniFadeIn{
+  animation:fadeIn .3s ;
+}
+@keyframes fadeIn{
+  0%{
+    opacity:0;
+  }
+  100%{
+    opacity:1;
   }
 }
 .k-line2 {

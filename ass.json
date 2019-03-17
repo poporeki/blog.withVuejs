@@ -1,0 +1,235 @@
+{
+    "status": 1,
+    "data": {
+        "arcInfo": {
+            "id": "5bac67604849991e754197f5",
+            "title": "CSS 的空格处理",
+            "type": {
+                "id": "5b16cd78bbe59122b43bf2c1",
+                "name": "前端"
+            },
+            "from": "http://www.ruanyifeng.com/blog/2018/07/white-space.html",
+            "tags": [{
+                "_id": "5b16cf470100982448b19d5a",
+                "tag_name": "CSS"
+            }],
+            "createTime": "6 个月前",
+            "content": "<p><br></p><h2>一、空格规则</h2><p>HTML 代码的空格通常会被浏览器忽略。</p><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018073106.jpg\" alt=\"\" title=\"\"></p><blockquote><pre><code>\n&lt;p&gt;◡◡hello◡◡world◡◡&lt;/p&gt;\n</code></pre></blockquote><p>上面是一行 HTML 代码，文字的前部、内部和后部各有两个空格。为了便于识别，这里使用半圆形符号<code>◡</code>表示空格。</p><p>浏览器的输出结果如下。</p><blockquote><pre><code>\nhello world\n</code></pre></blockquote><p>可以看到，文字的前部和后部的空格都会忽略，内部的连续空格只会算作一个。这就是浏览器处理空格的基本规则。</p><p>如果希望空格原样输出，可以使用<code>&lt;pre&gt;</code>标签。</p><blockquote><pre><code>\n&lt;pre&gt;◡◡hello◡◡world◡◡&lt;/pre&gt;\n</code></pre></blockquote><p>另一种方法是，改用 HTML 实体<code>&amp;nbsp;</code>表示空格。</p><blockquote><pre><code>\n&lt;p&gt;<span title=\"&nbsp;\">&amp;nbsp;</span><span title=\"&nbsp;\">&amp;nbsp;</span>hello<span title=\"&nbsp;\">&amp;nbsp;</span><span title=\"&nbsp;\">&amp;nbsp;</span>world<span title=\"&nbsp;\">&amp;nbsp;</span><span title=\"&nbsp;\">&amp;nbsp;</span>&lt;/p&gt;\n</code></pre></blockquote><h2>二、空格字符</h2><p>HTML 处理空格的规则，适用于多种字符。除了普通的空格键，还包括制表符（<code>\\t</code>）和换行符（<code>\\r</code>和<code>\\n</code>）。</p><p>浏览器会自动把这些符号转成普通的空格键。</p><blockquote><pre><code>\n&lt;p&gt;hello\nworld&lt;/p&gt;\n</code></pre></blockquote><p>上面代码中，文本内部包含了一个换行符，浏览器视同为空格，输出结果如下。</p><blockquote><pre><code>\nhello world\n</code></pre></blockquote><p>所以，文本内部的换行是无效的（除非文本放在<code>&lt;pre&gt;</code>标签内）。</p><blockquote><pre><code>\n&lt;p&gt;hello&lt;br&gt;world&lt;/p&gt;\n</code></pre></blockquote><p>上面代码使用<code>&lt;br&gt;</code>标签显式表示换行。</p><h2>三、CSS 的 white-space 属性</h2><p>HTML 语言的空格处理，基本上就是直接过滤。这样的处理过于粗糙，完全忽视了原始文本内部的空格可能是有意义的。</p><p>CSS 提供了一个<code>white-space</code>属性，可以提供更精确一点的空格处理方式。该属性共有六个值，除了一个通用的<code>inherit</code>（继承父元素），下面依次介绍剩下的五个值。</p><h3>3.1 white-space: normal</h3><p><code>white-space</code>属性的默认值为<code>normal</code>，表示浏览器以正常方式处理空格。</p><blockquote><pre><code>\n&lt;p&gt;◡◡hellohellohello◡hello\nworld\n&lt;/p&gt;\n</code></pre></blockquote><p>上面代码中，文本前部有两个空格，内部有一个长单词和一个换行符。</p><p>然后，容器<code>&lt;p&gt;</code>指定一个比较小的宽度。为了便于识别，背景色设为红色。</p><blockquote><pre><code>\np {\n  width: 100px;\n  background: red;\n}\n</code></pre></blockquote><p>显示效果如下图。</p><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018073101.png\" alt=\"\" title=\"\"></p><p>可以看到，文首的空格被忽略。由于容器太窄，第一个单词溢出容器，然后在后面一个空格处换行。文本内部的换行符自动转成了空格。</p><h3>3.2 white-space: nowrap</h3><p><code>white-space</code>属性为<code>nowrap</code>时，不会因为超出容器宽度而发生换行。</p><blockquote><pre><code>\np {\n  white-space: nowrap;\n}\n</code></pre></blockquote><p>显示效果如下图。</p><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018073102.png\" alt=\"\" title=\"\"></p><p>所有文本显示为一行，不会换行。</p><h3>3.3 white-space: pre</h3><p><code>white-space</code>属性为<code>pre</code>时，就按照<code>&lt;pre&gt;</code>标签的方式处理。</p><blockquote><pre><code>\np {\n  white-space: pre;\n}\n</code></pre></blockquote><p>显示效果如下图。</p><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018073103.png\" alt=\"\" title=\"\"></p><p>上面结果与原始文本完全一致，所有空格和换行符都保留了。</p><h3>3.4 white-space: pre-wrap</h3><p><code>white-space</code>属性为<code>pre-wrap</code>时，基本还是按照<code>&lt;pre&gt;</code>标签的方式处理，唯一区别是超出容器宽度时，会发生换行。</p><blockquote><pre><code>\np {\n  white-space: pre-wrap;\n}\n</code></pre></blockquote><p>显示效果如下图。</p><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018073104.png\" alt=\"\" title=\"\"></p><p>文首的空格、内部的空格和换行符都保留了，超出容器的地方发生了折行。</p><h3>3.5 white-space: pre-line</h3><p><code>white-space</code>属性为<code>pre-line</code>时，意为保留换行符。除了换行符会原样输出，其他都与<code>white-space:normal</code>规则一致。</p><blockquote><pre><code>\np {\n  white-space: pre-line;\n}\n</code></pre></blockquote><p>显示效果如下图。</p><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018073105.png\" alt=\"\" title=\"\"></p><p>除了文本内部的换行符没有转成空格，其他都与<code>normal</code>的处理规则一致。这对于诗歌类型的文本很有用。</p><h2>四、参考链接</h2><ul><li><a href=\"https://medium.com/@patrickbrosset/when-does-white-space-matter-in-html-b90e8a7cdd33\" target=\"_blank\">When does white space matter in HTML?</a>，by Patrick Brosset</li><li><a href=\"https://css-tricks.com/almanac/properties/w/whitespace/\" target=\"_blank\">white-space</a>，by Sara Cope</li></ul><p>（完）</p>",
+            "source": "一、空格规则HTML 代码的空格通常会被浏览器忽略。\n&lt;p&gt;◡◡hello◡◡world◡◡&lt;/p&gt;\n上面是一行 HTML 代码，文字的前部、内部和后部各有两个空格。为了便于识别，这里使用半圆形符号◡表示空格。浏览器的输出结果如下。\nhello world\n可以看到，文字的前",
+            "author": "yansk",
+            "readNum": 1188,
+            "likes": 1
+        },
+        "arcComms": [{
+                "id": "5bebcb7d36973234203b3a41",
+                "user": {
+                    "name": "yansk",
+                    "avatar": "/images/upload/userAvatar/2019/2/5/thumbnail_20190205115950595040101.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "teset",
+                "floor": 29
+            },
+            {
+                "id": "5be05ed8528b8ff8244f52b9",
+                "user": {
+                    "name": "yansk",
+                    "avatar": "/images/upload/userAvatar/2019/2/5/thumbnail_20190205115950595040101.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "1",
+                "floor": 28
+            },
+            {
+                "id": "5bdbee75c21e4014089fc9c5",
+                "user": {
+                    "name": "amca",
+                    "avatar": "/images/upload/userAvatar/2019/2/6/thumbnail_2019020612012412449054.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "test27",
+                "commReps": [{
+                        "user": {
+                            "name": "yansk",
+                            "id": "5b1693af7eba9d47f0afb224",
+                            "avatar": "/images/upload/userAvatar/2019/2/5/thumbnail_20190205115950595040101.jpg"
+                        },
+                        "id": "5bddef86d96ed18dec135fec",
+                        "repContent": "27-1-1",
+                        "likeNum": 0,
+                        "createTime": "4 个月前",
+                        "submitAddress": "地球",
+                        "to": {
+                            "user": {
+                                "id": "5b1693af7eba9d47f0afb224",
+                                "name": "yansk",
+                                "avatar": "/images/my-head.png"
+                            },
+                            "id": "5bddef48d96ed18dec135feb",
+                            "repContent": "27-1",
+                            "likeNum": 0,
+                            "createTime": "4 个月前",
+                            "submitAddress": "地球",
+                            "floor": 1
+                        },
+                        "floor": 2
+                    },
+                    {
+                        "user": {
+                            "name": "yansk",
+                            "id": "5b1693af7eba9d47f0afb224",
+                            "avatar": "/images/upload/userAvatar/2019/2/5/thumbnail_20190205115950595040101.jpg"
+                        },
+                        "id": "5bddef48d96ed18dec135feb",
+                        "repContent": "27-1",
+                        "likeNum": 0,
+                        "createTime": "4 个月前",
+                        "submitAddress": "地球",
+                        "to": "",
+                        "floor": 1
+                    }
+                ],
+                "floor": 27
+            },
+            {
+                "id": "5bdbee72c21e4014089fc9c4",
+                "user": {
+                    "name": "amca",
+                    "avatar": "/images/upload/userAvatar/2019/2/6/thumbnail_2019020612012412449054.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "test26",
+                "floor": 26
+            },
+            {
+                "id": "5bdbee6dc21e4014089fc9c3",
+                "user": {
+                    "name": "amca",
+                    "avatar": "/images/upload/userAvatar/2019/2/6/thumbnail_2019020612012412449054.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "test25",
+                "floor": 25
+            },
+            {
+                "id": "5bdbee69c21e4014089fc9c2",
+                "user": {
+                    "name": "amca",
+                    "avatar": "/images/upload/userAvatar/2019/2/6/thumbnail_2019020612012412449054.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "test24",
+                "floor": 24
+            },
+            {
+                "id": "5bdbee66c21e4014089fc9c1",
+                "user": {
+                    "name": "amca",
+                    "avatar": "/images/upload/userAvatar/2019/2/6/thumbnail_2019020612012412449054.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "test23",
+                "floor": 23
+            },
+            {
+                "id": "5bdbee61c21e4014089fc9c0",
+                "user": {
+                    "name": "amca",
+                    "avatar": "/images/upload/userAvatar/2019/2/6/thumbnail_2019020612012412449054.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "test22",
+                "floor": 22
+            },
+            {
+                "id": "5bdbee5fc21e4014089fc9bf",
+                "user": {
+                    "name": "amca",
+                    "avatar": "/images/upload/userAvatar/2019/2/6/thumbnail_2019020612012412449054.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "test21",
+                "floor": 21
+            },
+            {
+                "id": "5bdbee5cc21e4014089fc9be",
+                "user": {
+                    "name": "amca",
+                    "avatar": "/images/upload/userAvatar/2019/2/6/thumbnail_2019020612012412449054.jpg"
+                },
+                "submitAddress": "地球",
+                "createTime": "4 个月前",
+                "likeNum": 0,
+                "text": "test20",
+                "floor": 20
+            }
+        ],
+        "userIsLiked": false,
+        "commsTotal": 29,
+        "arcPrev": {
+            "like_this": [],
+            "tags_id": [
+                "5b16cf470100982448b19d5a",
+                "5b1ebdb49123a65124e1eeba"
+            ],
+            "_id": "5bac667c4849991e754197f4",
+            "title": "如何更愉快地使用rem —— 别说你懂CSS相对单位",
+            "attribute": {
+                "carousel": true
+            },
+            "from": "http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/",
+            "type_id": "5b16cd78bbe59122b43bf2c1",
+            "is_delete": false,
+            "read": 169,
+            "content": "<p>前段时间试译了Keith J.Grant的CSS好书《CSS in Depth》，其中的第二章<a href=\"https://livebook.manning.com/#!/book/css-in-depth/chapter-2\" target=\"_blank\" rel=\"noopener\">《Working with relative units》</a>，书中对relative units的讲解和举例可以说相当全面，看完之后发现自己并不太懂CSS相对单位，也希望分享给大家，所以有了这个译文系列。（若有勘误或翻译建议，欢迎&nbsp;<a href=\"https://github.com/YuyingWu/blog/tree/dev/source/_posts\" target=\"_blank\" rel=\"noopener\">Github PR</a>&nbsp;^_^）</p><p>《别说你懂CSS相对单位》系列译文：</p><ul><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-relative-units/\">如何更愉快地使用em</a></li><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/\">如何更愉快地使用rem</a>&nbsp;[本文]</li><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-viewport-relative-units/\">视口相关单位的应用</a></li><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-unitless-number/\">无单位数字和行高</a></li><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-css-variables/\">CSS自定义属性</a></li></ul><p>本文对应的章节目录：</p><ul><li>2.2 em和rem<ul><li>2.2.2 对font-size使用rem<ul><li>可用性：对font-size使用相对长度单位</li></ul></li></ul></li><li>2.3 停止使用像素思维去思考<ul><li>2.3.1 设置一个合理的字号默认值</li><li>2.3.2 让这个面板变得“响应式”</li><li>2.3.3 调整单个组件的大小</li></ul></li></ul><hr><h2 id=\"2-2-em和rem\"><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/#2-2-em%E5%92%8Crem\" title=\"2.2 em和rem\"></a>2.2 em和rem</h2><h3 id=\"2-2-2-对font-size使用rem\"><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/#2-2-2-%E5%AF%B9font-size%E4%BD%BF%E7%94%A8rem\" title=\"2.2.2 对font-size使用rem\"></a>2.2.2 对font-size使用rem</h3><p>当浏览器解析HTML文档时，创建了一个用来代表页面元素的集合，叫做DOM（文档对象模型，Document Object Model）。树状结构，每一个节点代表一个元素。<code>&lt;html&gt;</code>就是顶层节点（根节点），在下面的是它的子节点<code>&lt;head&gt;</code>和<code>&lt;body&gt;</code>，再往下就是它们的子节点，还有后代节点，如此类推。</p><p>根节点是文档里所有其他元素的祖先。它有一个特别的伪类（pseudo-class）选择器（:root），在样式表里可以用这个选择器表示。使用带类名的类型选择器html，或者直接用标签选择器，效果是一样的。</p><p>rem是根em（root em）的缩写。rem是和根元素关联的，不依赖当前元素。不管你在文档中的什么地方使用这个单位，1.2rem的计算值是相等的，等于1.2倍的根元素的字号大小。下面的示例代码中，声明了根元素的字号大小，并在嵌套的无序列表中使用rem声明字号大小。</p><p>[ 代码片段 2.10 使用rem声明字号大小 ]</p><figure><table><tbody><tr><td><pre>1<br>2<br>3<br>4<br>5<br>6<br>7<br></pre></td><td><pre>:root {                    1<br>  font-size: 1em;          2<br>}<br><br>ul {<br>  font-size: .8rem;<br>}<br></pre></td></tr></tbody></table></figure><ul><li>1 伪类 :root 等价于 html 选择器</li><li>2 使用浏览器的默认字号大小（16px）</li></ul><p>在这个示例里，根字号大小是浏览器的默认大小16px（根元素的1em等于浏览器的默认字号大小）。无序列表的字号大小为0.8rem，计算结果是12.8px。因为这只跟根元素相关，尽管你在列表里嵌套了列表，嵌套子列表的字号仍然保持不变。</p><blockquote><h4 id=\"可用性：对font-size使用相对长度单位\"><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/#%E5%8F%AF%E7%94%A8%E6%80%A7%EF%BC%9A%E5%AF%B9font-size%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%AF%B9%E9%95%BF%E5%BA%A6%E5%8D%95%E4%BD%8D\" title=\"可用性：对font-size使用相对长度单位\"></a>可用性：对font-size使用相对长度单位</h4><p>一些浏览器会提供给用户2种方式定制文字的大小：缩放和设置一个默认的字号大小。通过按Ctrl+或者Ctrl-，用户可以对页面进行缩放。这在视觉上会把整个页面的文字或图片（其实是所有元素）都放大或缩小了。在一些浏览器，这个改变只针对当前的标签页且是临时的，不会影响到新开的标签页。</p><p>设置默认字号大小，会有点不一样。不仅仅是设置的入口比较难找（一般在浏览器的设置页），而且这个设置是永久的，直到用户把默认值还原。值得注意的是，这个设置对使用px或其他绝对单位定义的字号大小无效。因为默认字号大小对一些用户是必要的，尤其是弱视的群体，你应该用相对单位或百分比来定义字号的大小。</p></blockquote><p>rem简化了很多em带来的复杂度。事实上，rem提供了一个在px和em间的相对单位折中解决方案，而且更易于使用。那么，是不是意味着你应该在对所有元素都使用rem，去掉其他长度单位呢？当然不是。</p><p>在CSS的世界里，这个答案通常是，看情况。rem只是你的工具箱中的其中一个。掌握CSS很重要的一点，就是学会分辨在什么场景下该使用什么工具。我的选择是，对<code>font-size</code>使用rem，对border使用px，对其他的度量方式如<code>padding</code>、<code>margin</code>、<code>border-radius</code>等使用em。然而在必要时，需要声明容器的宽度的话，我更喜欢使用百分比。</p><p>这样，字号大小就变得可预测，而当其他因素影响到元素的字号大小时，你也可以借助em去缩放元素的padding和margin。在border上使用像素是很合适的，尤其当你想要一根漂亮的线的时候。以上就是我对不同属性使用不同单位的理想方案，不过我要再次声明，这些都是工具，在某些特定场景下，利用不同的工具可能取到更好的效果。</p><blockquote><p>提示</p><p>当你不确定的时候，对<code>font-size</code>使用rem，对<code>border</code>使用px，以及对其他大多数属性使用em。</p></blockquote><h2 id=\"2-3-停止使用像素思维去思考\"><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/#2-3-%E5%81%9C%E6%AD%A2%E4%BD%BF%E7%94%A8%E5%83%8F%E7%B4%A0%E6%80%9D%E7%BB%B4%E5%8E%BB%E6%80%9D%E8%80%83\" title=\"2.3 停止使用像素思维去思考\"></a>2.3 停止使用像素思维去思考</h2><p>把页面的根元素字号大小定义为0.625em或者62.5%，在最近几年来，这样的用法很常见，这是一种模式，或者更贴切地说，这是一种反模式。</p><p>[ 代码片段 2.11 反模式：全局地把font-size定义为10px ]</p><figure><table><tbody><tr><td><pre>1<br>2<br>3<br></pre></td><td><pre>html {<br>  font-size: .625em;<br>}<br></pre></td></tr></tbody></table></figure><p>我并不推荐这种用法。这个用法把浏览器默认的字号大小16px缩小到10px。这样做的好处是简化了计算，如果设计师告诉你字号大小应该是14px，那你可以很轻易地计算出1.4rem，毕竟我们还是在使用相对单位。</p><p>一开始，这看起来很方便，但事实上这样的实现方式有两个问题。第一，强制你写了很多重复的样式代码。10px对于大多数文本来说太小了，你需要在整个页面中，来来回回地覆盖它。你会发现，自己把一段段落（<code>&lt;p&gt;</code>）的字号大小声明为1.4rem，然后又把导航（<code>&lt;nav&gt;</code>）的链接字号大小声明为1.4rem，样式代码中还有很多这样的用法。这样引入了更高的错误风险，当你需要修改时发现代码耦合程度比较高，同时也会让样式文件变大。</p><p>第二个问题是，你这么做的时候，其实你还是在用像素的思维在思考。虽然在代码里写的是<code>1.4rem</code>，但是在你的脑子里，其实还是想的是<code>14px</code>。在响应式网页开发中，你应该学会适应那些“模糊”的值。1.2em实际等于多少像素，并不重要，你只需要知道这是比继承的字号大一点点，那就足够了。而且，如果在屏幕上这不是你想要的效果，那就改吧。这是需要时间实验和试错的，但事实上，使用px的时候我们也需要这样做。（在第13章，我们会有更具体的方式来优化这个实现方式。）</p><p>当使用em时，我们很容易陷入纠结，这个值转化成像素值会是多少呢？尤其对于字号大小。你一直在乘和除以em值，这样你很快就会疯掉了。相反，我希望你可以接受一项挑战，尝试培养先开始使用em的习惯。如果你习惯使用像素，那转成em是需要一定时间和练习的，但相信我，这很值得。</p><p>这不是在说你再也不使用像素了。如果你跟一个设计师合作，你可能需要用更精确的像素值去沟通，这没问题的。在项目的开始，你需要声明一个基础的字号大小（通常是对标题或者标注的常用字号）。使用绝对值去描述大小，往往会更加容易。</p><p>转换成rem会有计算环节，那就让计算器去忙吧（通常我会在Mac电脑上按<code>cmd+空格</code>，在Spotlight里计算）。首先在根元素上声明根字号大小，从那开始，使用像素应该是例外的情况，而不是常态。</p><p>在这章内容里，我还是会持续地聊起像素。这会有助于我解释相对单位的工作原理，同时也能帮助你培养计算em值的习惯。在这章之后，我基本会使用相对单位来讨论字号的大小。</p><h3 id=\"2-3-1-设置一个合理的字号默认值\"><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/#2-3-1-%E8%AE%BE%E7%BD%AE%E4%B8%80%E4%B8%AA%E5%90%88%E7%90%86%E7%9A%84%E5%AD%97%E5%8F%B7%E9%BB%98%E8%AE%A4%E5%80%BC\" title=\"2.3.1 设置一个合理的字号默认值\"></a>2.3.1 设置一个合理的字号默认值</h3><p>先假设你想把默认字号设定为14px。把10px设定为基准值，再在页面中去覆盖它的写法，我们不推荐这种写法，相反，你应该在根元素上直接声明一个值。<br>在这个代码片段里，目标字号值是继承的，浏览器的默认值16px，那么14/16 = 0.875。</p><p>把下面的代码添加到一个新的样式表的最上面，我们会在这上面添加其他代码。这里设定根元素（<code>&lt;html&gt;</code>）的默认字号大小。</p><p>[ 代码片段 2.12 设定正确的默认字号大小 ]</p><figure><table><tbody><tr><td><pre>1<br>2<br>3<br></pre></td><td><pre>:root {                    1<br>  font-size: 0.875em;      2<br>}<br></pre></td></tr></tbody></table></figure><ul><li>1 或者使用 HTML 选择器</li><li>2 14/16（期望值px / 继承值px）等于0.875</li></ul><p>现在，你的期望基准字号14px对整个页面的元素有效，你不需要在其他地方重新声明了。你只需要在设计不一样的地方修改成新的字号，譬如标题。</p><p>我们一起来创建图2.7那样的面板吧！你创建的这个面板，基于14px字号，使用相对单位。</p><p>[ 图 2.7 使用相对单位和继承字号的面板 ]</p><p><img src=\"http://sinacloud.net/woodysblog/css-in-depth/02fig07_alt.jpg\" alt=\"&quot;图 2.7&quot;\"></p><p>下面是模板，加到你的页面吧。</p><p>[ 代码片段 2.13 面板的模板 ]</p><figure><table><tbody><tr><td><pre>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br></pre></td><td><pre>&lt;div class=\"panel\"&gt;<br>  &lt;h2&gt;Single-origin&lt;/h2&gt;<br>  &lt;div class=\"panel-body\"&gt;<br>    We have built partnerships with small farms around the world to<br>    hand-select beans at the peak of season. We then carefully roast<br>    in &lt;a href=\"/batch-size\"&gt;small batches&lt;/a&gt; to maximize their<br>    potential.<br>  &lt;/div&gt;<br>&lt;/div&gt;<br></pre></td></tr></tbody></table></figure><p>下一段代码是样式的。你会在<code>padding</code>和<code>border-radius</code>使用<code>em</code>，标题的字号使用<code>rem</code>，以及<code>border</code>使用<code>px</code>。把下面代码添加到你的样式表吧。</p><p>[ 代码片段 2.14 使用相对单位的面板 ]</p><figure><table><tbody><tr><td><pre>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br></pre></td><td><pre>.panel {<br>  padding: 1em;                    1<br>  border-radius: 0.5em;            1<br>  border: 1px solid #999;          2<br>}<br><br>.panel &gt; h2 {<br>  margin-top: 0;                   3<br>  font-size: 0.8rem;               4<br>  font-weight: bold;               4<br>  text-transform: uppercase;       4<br>}<br></pre></td></tr></tbody></table></figure><ul><li>1 对padding和border-radius使用em</li><li>2 用1px定义细边框</li><li>3 把面板上面多余的空间去掉，更多解释看第3章</li><li>4 用rem控制标题的字号大小</li></ul><p>这段代码给面板添加了一个细边框以及定义了标题的样式。我希望标题的字号小一点，但要加粗和全是大写。（你可以根据自己的设计，把字号改大点或者使用不同的排版方式）</p><p>第二个选择器<code>&gt;</code>是一个直接后代组合选择符（direct descendant combinator），它代表的是<code>.panel</code>下的子元素<code>h2</code>。更完整的选择器和组合选择符的索引可以看附录A。</p><p>在代码片段2.13中，为了更清晰看到效果，我给<code>body</code>添加了一个类<code>panel-body</code>，不过你会发现，在你自己的代码里是不需要的。因为这个元素从根元素上继承了字号大小，它已经是你想要看到的那样。</p><h3 id=\"2-3-2-让这个面板变得“响应式”\"><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/#2-3-2-%E8%AE%A9%E8%BF%99%E4%B8%AA%E9%9D%A2%E6%9D%BF%E5%8F%98%E5%BE%97%E2%80%9C%E5%93%8D%E5%BA%94%E5%BC%8F%E2%80%9D\" title=\"2.3.2 让这个面板变得“响应式”\"></a>2.3.2 让这个面板变得“响应式”</h3><p>我们再更深入地看看这个问题。你可以根据屏幕尺寸的变化，添加媒体查询来改变基础字号大小，这可以令面板在不同尺寸的屏幕下，有不同的大小变化。（见图2.8）</p><p>[ 图 2.8 在不同屏幕大小的响应式面板：300px（左上角），800px（右上角），1440px（下面） ]</p><p><img src=\"http://sinacloud.net/woodysblog/css-in-depth/02fig08_alt.jpg\" alt=\"&quot;图 2.8&quot;\"></p><blockquote><p>媒体查询（media query） —— 通过<code>@media</code>规则来声明样式，在不同的屏幕尺寸或者媒体类型（如打印机或显示器）下，触发对应的样式控制。这是响应式设计的关键要素。详情看代码片段2.15的这个例子，我在第8章会更深入的讨论媒体查询这个话题。</p></blockquote><p>为了实现上面说的效果，把你的样式代码改成这样。</p><p>[ 代码片段 2.15 ]</p><figure><table><tbody><tr><td><pre>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br></pre></td><td><pre>:root {                            1<br>  font-size: 0.75em;               1<br>}                                  1<br><br>@media (min-width: 800px) {        2<br>  :root {                          2<br>    font-size: 0.875em;            2<br>  }                                2<br>}                                  2<br><br>@media (min-width: 1200px) {       3<br>  :root {                          3<br>    font-size: 1em;                3<br>  }                                3<br>}<br></pre></td></tr></tbody></table></figure><ul><li>1 针对所有屏幕，但是在更大的屏幕会被覆盖</li><li>2 针对比800px更宽的屏幕，覆盖默认样式代码</li><li>3 针对比1200px更宽的屏幕，覆盖以上两套样式代码</li></ul><p>第一套样式规则，声明了小屏幕中的默认字号大小，这是我们想要在较小的屏幕上看到的字号大小。然后使用媒体查询，把800px和1200px分别作为两个分水岭逐级增加字号的大小，覆盖掉默认的代码。</p><p>针对页面的根元素使用这些字号大小，响应式地重新定义em和rem对应的值，从而达到响应改变整个页面的效果。尽管你没有直接对这个面板做任何的修改，它现在是响应式的。在小屏幕上，譬如一台手机，字号大小会被渲染成更小的（12px）。然后，在更大的屏幕上，宽大于800px和大于1200px的，组件的字号会分别放大到14px和16px。改变你的浏览器窗口，看看组件是怎么变化的吧。</p><p>如果你在整个页面中像这样严格使用相对单位，整个页面会随着视窗大小放大和缩小。这会是你的响应式策略里很重要的一部分。上面的2套媒体查询声明代码，可以帮助你节省在页面的其他部分使用媒体查询的额外代码。不过，如果你在元素中声明的字号大小是以像素为单位的，那就不会产生任何效果了。</p><p>类似地，如果你的老板或者客户觉得现在网站的字号太小或者太大，你随时可以做到通过修改一行代码影响到全局的元素，这项改变会影响到页面上的其他元素，不费吹灰之力。</p><h3 id=\"2-3-3-调整单个组件的大小\"><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/#2-3-3-%E8%B0%83%E6%95%B4%E5%8D%95%E4%B8%AA%E7%BB%84%E4%BB%B6%E7%9A%84%E5%A4%A7%E5%B0%8F\" title=\"2.3.3 调整单个组件的大小\"></a>2.3.3 调整单个组件的大小</h3><p>你也可以通过使用em缩放页面上的一个独立组件。有时，你可能会需要界面上的某些组件可以有个大号的版本。在我们的面板上这么做吧，首先你需要给面板添加一个类名<code>large</code>：<code>&lt;div&gt;</code>。</p><p>在图2.9，我们看到了面板的普通版和大号版的比较。效果类似响应式面板，但是两种尺寸是可以同时在同一个页面中使用的。</p><p>[ 图 2.9 在一个页面上的普通尺寸面板和大号面板 ]</p><p><img src=\"http://sinacloud.net/woodysblog/css-in-depth/02fig09_alt.jpg\" alt=\"&quot;图 2.9&quot;\"></p><p>我们来对面板的字号声明方式做一些小的修改。你还是在使用相对单位，但需要调整它们的基准值。第一点，给每个面板的父元素字号大小的定义<code>font-size: 1rem</code>。这里指的是，不管在什么地方使用这个面板，每个面板的字号大小是一个确定值。</p><p>第二点，使用em重新声明标题的字号大小，而不使用rem，这样标题就可以和刚才声明的父元素字号1rem关联起来。下面是对应的代码，更新下你的样式表代码吧。</p><p>[ 代码片段 2.16 创建一个面板的大号版本 ]</p><figure><table><tbody><tr><td><pre>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br></pre></td><td><pre>.panel {<br>  font-size: 1rem;               1<br>  padding: 1em;<br>  border: 1px solid #999;<br>  border-radius: 0.5em;<br>}<br><br>.panel &gt; h2 {<br>  margin-top: 0;<br>  font-size: 0.8em;              2<br>  font-weight: bold;<br>  text-transform: uppercase;<br>}<br></pre></td></tr></tbody></table></figure><ul><li>1 给组件声明确定的字号大小</li><li>2 其他元素的字号大小用em和父元素字号关联</li></ul><p>这些修改看起来并没有影响面板的样式，但是现在你已经准备好了，做一个大号的面板只需要修改一小行代码。你需要做的，就是把父元素字号大小改写成1rem以外的一个值。因为其他元素的计算方式都依赖父元素的字号大小，只要修改它，整个面板的相关尺寸都会发生改变。添加下一个CSS代码片段到你的样式表，定义一个大号面板吧。</p><p>[ 代码片段 2.17 利用一行代码放大整个面板 ]</p><figure><table><tbody><tr><td><pre>1<br>2<br>3<br></pre></td><td><pre>.panel.large {               1<br>  font-size: 1.2rem;<br>}<br></pre></td></tr></tbody></table></figure><ul><li>1 组合选择器指向同时有panel类和large类的元素</li></ul><p>现在，你可以给普通面板添加<code></code>和给大号面板添加<code></code>。类似地，你也可以定义一个小号版本，只需要把父元素的字号设得比1rem小。如果这个面板是一个更复杂的组件，包含多种字号大小或padding，也只需要一个声明就可以重置大小，只要所有的子元素都是使用em声明的。</p><hr><p>《别说你懂CSS相对单位》系列译文：</p><ul><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-relative-units/\">如何更愉快地使用em</a></li><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-stop-thinking-in-px/\">如何更愉快地使用rem</a>&nbsp;[本文]</li><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-viewport-relative-units/\">视口相关单位的应用</a></li><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-unitless-number/\">无单位数字和行高</a></li><li><a href=\"http://wuyuying.com/blog/archives/css-in-depth-css-variables/\">CSS自定义属性</a></li></ul><p>章节：</p><ul><li>2.1 相对单位值的魔力<ul><li>2.1.1 完美像素设计（pixel-perfect design）的挣扎</li><li>2.1.2 完美像素网页的终结</li><li>像素（pixel）、点（point）和pc（pica）</li></ul></li><li>2.2 em和rem<ul><li>2.2.1 对font-size使用em<ul><li>当我们在一个元素内用em同时声明font-size和其他属性</li><li>字号收缩问题</li></ul></li><li>2.2.2 对font-size使用rem<ul><li>可用性：对font-size使用相对长度单位</li></ul></li></ul></li><li>2.3 停止使用像素思维去思考<ul><li>2.3.1 设置一个合理的字号默认值</li><li>2.3.2 让这个面板变得“响应式”</li><li>2.3.3 调整单个组件的大小</li></ul></li><li>2.4 视口相关单位（viewport-relative units）<ul><li>CSS3</li><li>2.4.1 在font-size上使用vw</li><li>2.4.2 在font-size上使用calc()</li></ul></li><li>2.5 不带单位的数字（unitless number）和行高（line-height）</li><li>2.6 自定义属性（也叫“CSS变量”）<ul><li>2.6.1 动态改变自定义属性的值</li><li>2.6.2 通过JavaScript改变自定义属性的值</li><li>2.6.3 初探自定义属性</li></ul></li><li>总结</li></ul><blockquote><p>原著版权信息：</p><p>作者：Keith J.Grant<br>书籍：CSS in Depth<br>章节：<a href=\"https://livebook.manning.com/#!/book/css-in-depth/chapter-2\" target=\"_blank\" rel=\"noopener\">Working with relative units</a></p></blockquote>",
+            "source": "前段时间试译了Keith J.Grant的CSS好书《CSS in Depth》，其中的第二章《Working with relative units》，书中对relative units的讲解和举例可以说相当全面，看完之后发现自己并不太懂CSS相对单位，也希望分享给大家，所以有了这个译文系列。（若",
+            "support": 12,
+            "author_id": "5b1693af7eba9d47f0afb224",
+            "create_time": "2018-09-18T05:11:24.991Z",
+            "update_time": "2019-03-08T21:20:39.559Z",
+            "__v": 0
+        },
+        "arcNext": {
+            "like_this": [],
+            "tags_id": [
+                "5b169d415ceb7750a8d2d78b",
+                "5b198ee2be1c73036d50c17d",
+                "5b1ebdb49123a65124e1eeba"
+            ],
+            "_id": "5bac68194849991e754197f6",
+            "title": "JSON Web Token 入门教程",
+            "attribute": {
+                "carousel": true
+            },
+            "from": "http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html",
+            "type_id": "5b198d59be1c73036d50c176",
+            "is_delete": false,
+            "read": 68,
+            "content": "<p>JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案，本文介绍它的原理和用法。</p><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018072301.jpg\" alt=\"\" title=\"\"></p><h2>一、跨域认证的问题</h2><p>互联网服务离不开用户认证。一般流程是下面这样。</p><blockquote><p>1、用户向服务器发送用户名和密码。</p><p>2、服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</p><p>3、服务器向用户返回一个 session_id，写入用户的 Cookie。</p><p>4、用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</p><p>5、服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</p></blockquote><p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p><p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p><p>一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</p><p>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</p><h2>二、JWT 的原理</h2><p>JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。</p><blockquote><pre><code>\n{\n  \"姓名\": \"张三\",\n  \"角色\": \"管理员\",\n  \"到期时间\": \"2018年7月1日0点0分\"\n}\n</code></pre></blockquote><p>以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。</p><p>服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。</p><h2>三、JWT 的数据结构</h2><p>实际的 JWT 大概就像下面这样。</p><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018072304.jpg\" alt=\"\" title=\"\"></p><p>它是一个很长的字符串，中间用点（<code>.</code>）分隔成三个部分。注意，JWT 内部是没有换行的，这里只是为了便于展示，将它写成了几行。</p><p>JWT 的三个部分依次如下。</p><blockquote><ul><li>Header（头部）</li><li>Payload（负载）</li><li>Signature（签名）</li></ul></blockquote><p>写成一行，就是下面的样子。</p><blockquote><pre><code>\nHeader.Payload.Signature\n</code></pre></blockquote><p><img src=\"https://www.wangbase.com/blogimg/asset/201807/bg2018072303.jpg\" alt=\"\" title=\"\"></p><p>下面依次介绍这三个部分。</p><h3>3.1 Header</h3><p>Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。</p><blockquote><pre><code>\n{\n  \"alg\": \"HS256\",\n  \"typ\": \"JWT\"\n}\n</code></pre></blockquote><p>上面代码中，<code>alg</code>属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；<code>typ</code>属性表示这个令牌（token）的类型（type），JWT 令牌统一写为<code>JWT</code>。</p><p>最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。</p><h3>3.2 Payload</h3><p>Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。</p><blockquote><ul><li>iss (issuer)：签发人</li><li>exp (expiration time)：过期时间</li><li>sub (subject)：主题</li><li>aud (audience)：受众</li><li>nbf (Not Before)：生效时间</li><li>iat (Issued At)：签发时间</li><li>jti (JWT ID)：编号</li></ul></blockquote><p>除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。</p><blockquote><pre><code>\n{\n  \"sub\": \"1234567890\",\n  \"name\": \"John Doe\",\n  \"admin\": true\n}\n</code></pre></blockquote><p>注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。</p><p>这个 JSON 对象也要使用 Base64URL 算法转成字符串。</p><h3>3.3 Signature</h3><p>Signature 部分是对前两部分的签名，防止数据篡改。</p><p>首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。</p><blockquote><pre><code>\nHMACSHA256(\n  base64UrlEncode(header) + \".\" +\n  base64UrlEncode(payload),\n  secret)\n</code></pre></blockquote><p>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用\"点\"（<code>.</code>）分隔，就可以返回给用户。</p><h3>3.4 Base64URL</h3><p>前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。</p><p>JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符<code>+</code>、<code>/</code>和<code>=</code>，在 URL 里面有特殊含义，所以要被替换掉：<code>=</code>被省略、<code>+</code>替换成<code>-</code>，<code>/</code>替换成<code>_</code>&nbsp;。这就是 Base64URL 算法。</p><h2>四、JWT 的使用方式</h2><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p><p>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息<code>Authorization</code>字段里面。</p><blockquote><pre><code>\nAuthorization: Bearer &lt;token&gt;\n</code></pre></blockquote><p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p><h2>五、JWT 的几个特点</h2><p>（1）JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</p><p>（2）JWT 不加密的情况下，不能将秘密数据写入 JWT。</p><p>（3）JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。</p><p>（4）JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。</p><p>（5）JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</p><p>（6）为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</p><h2>六、参考链接</h2><ul><li><a href=\"https://jwt.io/introduction/\" target=\"_blank\">Introduction to JSON Web Tokens</a>， by Auth0</li><li><a href=\"https://medium.com/@bryanmanuele/sessionless-authentication-withe-jwts-with-node-express-passport-js-69b059e4b22c\" target=\"_blank\">Sessionless Authentication using JWTs (with Node + Express + Passport JS)</a>, by Bryan Manuele</li><li><a href=\"https://github.com/dwyl/learn-json-web-tokens/blob/master/README.md\" target=\"_blank\">Learn how to use JSON Web Tokens</a>, by dwyl</li></ul><p>（完）</p>",
+            "source": "JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案，本文介绍它的原理和用法。一、跨域认证的问题互联网服务离不开用户认证。一般流程是下面这样。1、用户向服务器发送用户名和密码。2、服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。3、服",
+            "support": 12,
+            "author_id": "5b1693af7eba9d47f0afb224",
+            "create_time": "2018-01-27T05:18:17.806Z",
+            "update_time": "2019-03-12T19:00:20.950Z",
+            "__v": 0
+        }
+    }
+}

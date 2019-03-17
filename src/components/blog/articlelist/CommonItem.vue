@@ -30,7 +30,7 @@
 <style lang="scss">
 .loading-ani-articlelist {
   position: relative;
-  padding: 30px;
+  padding: 10px;
 
   &:after,
   &:before {

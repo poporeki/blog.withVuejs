@@ -1,7 +1,7 @@
 <template>
 
   <section class="comment-block" id="comment">
-    <h3>发表评论</h3>
+    <h3 @click="jisuan">发表评论</h3>
     <div class="add-comm clearfix">
       <textarea @keyup="typing($event)" v-model="context_comm" name="comm_textarea" class="comm-textarea" id="comm_textarea"></textarea>
       <a href="javascript:void(0);" class="comm-submit-btn" @click='submitComment' data-attr="">
@@ -16,8 +16,8 @@
       <!-- 评论列表 -->
       <ul class="list">
 
-        <li v-if="artComms.length===0">目前并没有评论哦</li>
-        <li class="comment-item" v-for=" (comm,commIdx) in artComms" :key='comm.id' :data-commid='comm.id'>
+        <li v-if="commList.length===0">目前并没有评论哦</li>
+        <li class="comment-item" v-for=" (comm,commIdx) in commList" :key='comm.id' :data-commid='comm.id'>
           <div>
             <div class="head-pic">
               <a href="javascript:void(0);"> <img :src='"https://www.yansk.cn/"+comm.user.avatar' alt="avatar"> </a>
@@ -35,7 +35,7 @@
               <div class="tools">
                 <a href="javascript:void(0);" class="comm-reply-btn" @click="fadeToggle($event,commIdx)">回复</a>
                 <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp">
-                  <div class="reply-block" v-show='replyBoxStatus[commIdx].status'>
+                  <div class="reply-block" v-show='comm.status'>
                     <div class="add-comm clearfix">
                       <textarea name="comm_textarea" @keyup="typing" v-model="replyContent" class="comm-textarea" id="comm_textarea" cols="30" rows="10"></textarea>
                       <a href="javascript:void(0);" class="comm-submit-btn" @click="submitComment($event,'toComment',comm.id,commIdx)">提交
@@ -44,7 +44,7 @@
                         </transition>
                       </a>
                     </div>
-                    <div class="close-btn" @click="replyBoxStatus[commIdx].status=false"></div>
+                    <div class="close-btn" @click="comm.status=false"></div>
                   </div>
                 </transition>
               </div>
@@ -58,7 +58,7 @@
 
             <li class="comment-item" v-for="(reply,repIdx) in comm.commReps" :key="reply.id">
               <div>
-                <span>'#'{{reply.floor}} </span>
+                <span># {{reply.floor}} </span>
                 <div class="head-pic">
                   <a href="javascript:void(0);">
                     <img :src='"https://www.yansk.cn"+reply.user.avatar' alt="avatar">
@@ -73,13 +73,13 @@
                     </div>
                   </div>
                   <p v-if="reply.to==''">{{reply.repContent}}</p>
-                  <p v-if="reply.to!=''||typeof reply!==undefined">
-                    回复 #{{reply.to.floor}} {{reply.to.author_id.username}}:{{reply.repContent}}
+                  <p v-if="typeof reply!=='undefined'&&reply.to!==''&&reply.to!==null">
+                    回复 #{{reply.to.floor}} {{reply.to.user.name}}:{{reply.repContent}}
                   </p>
                   <div class="tools">
                     <a href="javascript:void(0);" @click="fadeToggle($event,commIdx,repIdx)" class="comm-reply-btn">回复</a>
                     <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp">
-                      <div class="reply-block" v-show='replyBoxStatus[commIdx].reply[repIdx].status'>
+                      <div class="reply-block" v-show='reply.status'>
                         <div class="add-comm clearfix">
                           <textarea name="comm_textarea" @keyup="typing" v-model="replyContent" class="comm-textarea" id="comm_textarea" cols="30" rows="10"></textarea>
                           <a href="javascript:void(0);" @click="submitComment($event,'toReply',comm.id,commIdx,reply.id)" class="comm-submit-btn reply-child" :data-repid='reply.id'>提交
@@ -88,7 +88,7 @@
                             </transition>
                           </a>
                         </div>
-                        <div class="close-btn" @click="replyBoxStatus[commIdx].reply[repIdx].status=false"></div>
+                        <div class="close-btn" @click="reply.status=false"></div>
                       </div>
                     </transition>
 
@@ -104,9 +104,16 @@
           </ul>
 
         </li>
-
-        <li class="comment-more" v-if="artTotal>artComms.length">
-          <a href="javascript:void(0);" class="more-comms-lk">查看更多评论</a>
+        
+        <li class="comment-more" v-if="(artTotal>artComms.length)&&(!(isEnd||isRequestError))">
+          <a href="javascript:void(0);" class="more-comms-lk" @click="getMoreComment()">查看更多评论</a>
+        </li>
+        <li v-if="isEnd" style="text-align:center;">--THE END--</li>
+        <transition enter-active-class="animated fadeInDown" leave-active-class="animated flipOutX">
+        <li v-if="isRequestError" @click="this.getMoreComment">拉取数据失败，点击重试</li>
+        </transition>
+        <li v-if="!isRequestError&&isRequest">
+          <div class="loading-ani-articlelist"></div>
         </li>
       </ul>
     </div>
@@ -433,7 +440,11 @@ export default {
       commConErrorMsg: "",
       replyContent: "",
       context_reply: "",
-      replyBoxStatus: []
+      isEnd:false,
+      isRequest: false,
+      isRequestError: false,
+      replyBoxStatus: [],
+      commList:[]
     };
   },
   props: ["arcId", "artTotal", "artComms", "toComment"],
@@ -501,6 +512,10 @@ export default {
           }
         });
     },
+    /**
+     * 提交评论
+     * 
+     */
     submitToComment(commid, idx) {
       let that = this;
       let url = "https://www.yansk.cn/api/v1/article/comment/submitReply";
@@ -533,6 +548,9 @@ export default {
           }
         });
     },
+    /**
+     * 提交评论回复
+     */
     submitToReply(commid, replyid, commidx) {
       let that = this;
       let url = "https://www.yansk.cn/api/v1/article/comment/submitReply";
@@ -574,7 +592,7 @@ export default {
       let params = arguments;
       let that = this;
       let target = event.currentTarget;
-      let replyBoxStatus = this.replyBoxStatus;
+      let replyBoxStatus = this.commList;
       this.replyContent = "";
       replyBoxStatus.map(comm => {
         comm.status = false;
@@ -598,17 +616,19 @@ export default {
       }
       replyBoxStatus[commIdx].status = !replyBoxStatus[commIdx].status;
     },
-    init() {
+    init(that,commlist) {
       return new Promise(resolve => {
-        let that = this;
-        let comms = this.artComms;
+        let comms = commlist;
+        let length=that.replyBoxStatus.length===0?0:that.replyBoxstatus.length-1;
         if(typeof comms=='undefined') return resolve();
+        debugger
         comms.map((comm, index) => {
-          that.$set(that.replyBoxStatus, index, { status: false, reply: [] });
+          that.$set(that.replyBoxStatus, length+index, { status: false, reply: [] });
           let replyArr = comm.commReps;
           if (
             replyArr === undefined ||
-            typeof replyArr === undefined ||
+            replyArr===null||
+            typeof replyArr === 'undefined' ||
             replyArr.length === 0
           ) {
             return;
@@ -624,10 +644,65 @@ export default {
         });
         resolve();
       });
+    },
+    inits(that,commlist) {
+      return new Promise(resolve => {
+        let comms = commlist;
+        let length=that.commList.length===0?0:that.commList.length-1;
+        if(typeof comms=='undefined') return resolve();
+        comms.map((comm, idx) => {
+
+          that.$set(commlist[idx], 'status', false);
+
+          let replyArr = comm.commReps;
+          if (
+            replyArr === undefined ||
+            replyArr===null||
+            typeof replyArr === 'undefined' ||
+            replyArr.length === 0
+          ) {
+            that.commList.push(comm);
+            return;
+          }
+          replyArr.map((reply, repidx) => {
+            that.$set(commlist[idx].commReps[repidx], 'status', false);
+          });
+          that.commList.push(comm);
+          console.log(`评论列表：：${JSON.stringify(that.commList)}`)
+        });
+        resolve();
+      });
+    },
+    jisuan(){
+      console.log(this.artTotal>this.artComms.length)&&(this.isEnd!==true||this.isRequestError!==true)
+      console.log(`${this.artTotal>this.artComms.length}`);
+      console.log(`${this.isEnd!==true}`);
+      console.log(`${this.isRequestError!==true}`);
+   },
+    getMoreComment(){
+      let that=this;
+      this.isRequest = true;
+      this.isRequestError = false;
+      that.$axios.get('http://localhost:3000/api/v1/article/comment/getComments',{
+        params: {
+          isGlobalLoading:false,
+        skip:that.commList.length||0,
+        arcid:that.arcId
+      }}).then(({data})=>{
+        console.log(JSON.stringify(data));
+        that.isRequest = false;
+        if(data.status!==1){
+          that.isEnd=true;
+        }
+        that.inits(that,data.data)
+      }).catch(()=>{
+        that.isRequestError = true;
+      })
     }
   },
   created() {
-    this.init();
+    this.inits(this,this.artComms);
+    console.log(JSON.stringify(this.artComms));
   },
   mounted() {
     /* 是否锚点到评论区 */
