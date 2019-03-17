@@ -2,14 +2,22 @@
   <div class="blog-page" @scroll="imgload">
     <blog-header></blog-header>
     <div class="body" ref="page">
-      <transition enter-active-class="animated  lightSpeedIn" leave-active-class="animated bounceOutDown">
-        <router-view />
+      <transition
+        enter-active-class="animated  lightSpeedIn"
+        leave-active-class="animated bounceOutDown"
+      >
+        <router-view/>
       </transition>
     </div>
-    <img src="" alt="">
+    <img src alt>
     <div class="bg-block">
-      <div class="progressive parallax-window " ref='bg'>
-        <img class="preview" v-progressive="bg.lowRes" :data-srcset="bg.original" :src="bg.original" />
+      <div class="progressive parallax-window" ref="bg">
+        <img
+          class="preview"
+          v-progressive="bg.lowRes"
+          :data-srcset="bg.original"
+          :src="bg.original"
+        >
       </div>
       <div class="gradient"></div>
     </div>
@@ -116,6 +124,7 @@ import Body from "../../components/blog/home";
 import Footer from "../../components/blog/footer";
 import Sidebar from "../../components/blog/sidebar";
 import Background from "../../components/blog/background";
+import UpdateLog from "../../components/blog/updatelog";
 import "../../assets/iconfont_blog/iconfont.css";
 import "../../assets/css/progressive-image.css";
 export default {
@@ -139,10 +148,10 @@ export default {
     "blog-body": Body,
     "blog-footer": Footer,
     "blog-sidebar": Sidebar,
-    "blog-background":Background
+    "blog-background": Background,
+    "blog-updatelog": UpdateLog
   },
   mounted() {
-    console.log("blog");
     const _this = this;
     let img = new Image();
     if (!this.bg) return;

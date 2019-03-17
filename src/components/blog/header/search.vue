@@ -309,11 +309,12 @@ export default {
       const that = this;
       this.isRequest = true;
       this.$axios
-        .post("https://www.yansk.cn/blog/search/like", {
+        .post("https://www.yansk.cn/api/v1/article/search/like", {
           wd: this.keywords /* 键入文本 */ ,
           isGlobalLoading: false /* axios拦截>全局Loading关闭 */
         })
         .then(({
+          
           data
         }) => {
           let ds = data.data;

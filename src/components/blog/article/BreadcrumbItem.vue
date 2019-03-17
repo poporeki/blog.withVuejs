@@ -2,14 +2,12 @@
   <div class="bread">
     <ol class="breadcrumb">
       <li>
-        <router-link to='/'>Home</router-link>
+        <router-link to="/">Home</router-link>
       </li>
       <li>
-        <router-link to="'/blog/articlelist?by[type_id]='+arcid">{{typename}}</router-link>
+        <router-link :to="'/blog/articlelist?by[type_id]='+arctype.id">{{arctype.name}}</router-link>
       </li>
-      <li style="color:#aaa">
-        {{arctitle}}
-      </li>
+      <li style="color:#aaa">{{arctitle}}</li>
     </ol>
   </div>
 </template>
@@ -66,7 +64,7 @@ export default {
     return {};
   },
 
-  props: ["typename", "arctitle", "arcid"]
+  props: ["arctype", "arctitle", "arcid"]
 };
 </script>
 

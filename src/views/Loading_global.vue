@@ -1,5 +1,5 @@
 <template >
-  <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutLeft">
+  <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
     <div v-if="isLoading" class="loading">
       <div class="inner">
         <div class="k-line2 k-line12-1"></div>

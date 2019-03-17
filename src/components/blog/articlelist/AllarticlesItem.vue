@@ -5,7 +5,7 @@
         <small>文章列表</small>
       </h2>
     </div>
-    <common-item :requestUrl='requestUrl'></common-item>
+    <common-item :requestUrl="requestUrl"></common-item>
   </div>
 </template>
 <style lang="scss">
@@ -25,7 +25,7 @@ export default {
       dataComplete: false,
       artclist: {},
       requestUrl: false,
-      originalRequestUrl: "https://www.yansk.cn/blog/articlelist"
+      originalRequestUrl: "https://www.yansk.cn/api/v1/articlelist/getlist"
     };
   },
   methods: {},

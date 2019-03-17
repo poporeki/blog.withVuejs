@@ -1,12 +1,21 @@
 <template>
   <div>
     <transition enter-active-class="animated fadeInUp">
-      <section class="article-wrapper" v-if='isShow'>
-        <bread-crumb :arcid='articleData.arcInfo.id' :arctitle="articleData.arcInfo.title" :typename="articleData.arcInfo.type.name"></bread-crumb>
+      <section class="article-wrapper" v-if="isShow">
+        <bread-crumb
+          :arcid="articleData.arcInfo.id"
+          :arctitle="articleData.arcInfo.title"
+          :arctype="articleData.arcInfo.type"
+        ></bread-crumb>
 
-        <article-content :artinfo='articleData'></article-content>
+        <article-content :artinfo="articleData"></article-content>
         <div class="line"></div>
-        <article-comment :arcId="articleData.arcInfo.id" :toComment='isToComment' :artTotal="articleData.commsTotal" :artComms="articleData.arcComms"></article-comment>
+        <article-comment
+          :arcId="articleData.arcInfo.id"
+          :toComment="isToComment"
+          :artTotal="articleData.commsTotal"
+          :artComms="articleData.arcComms"
+        ></article-comment>
       </section>
     </transition>
   </div>
@@ -32,7 +41,7 @@ export default {
       isShow: false,
       isToComment: false,
       articleData: {},
-      articleInfo:{}
+      articleInfo: {}
     };
   },
   components: {
@@ -47,7 +56,7 @@ export default {
       this.$axios
         .get("https://www.yansk.cn/api/v1/article/get/" + this.arcid)
         .then(({ data }) => {
-          let datas=data.data;
+          let datas = data.data;
           if (data.status && data.code === 404) {
             that.$router.replace({
               path: "/404"

@@ -9,19 +9,19 @@
         <div class="lt">
           <div class="top">
             <div class="title">
-              <h4>{{arc.title}} </h4>
+              <h4>{{arc.title}}</h4>
             </div>
-            <div class="time"> {{arc.create_time}}</div>
+            <div class="time">{{arc.create_time}}</div>
           </div>
           <div class="thumbnail">{{arc.source}}</div>
         </div>
       </a>
     </li>
-    <li v-if='isOver' style="text-align:center;">--THE END--</li>
+    <li v-if="isOver" style="text-align:center;">--THE END--</li>
     <transition enter-active-class="animated fadeInDown" leave-active-class="animated flipOutX">
-      <li v-if='isResuestError' @click="this.getNewData">拉取数据失败，点击重试</li>
+      <li v-if="isResuestError" @click="this.getNewData">拉取数据失败，点击重试</li>
     </transition>
-    <li v-if='!isResuestError&&this.isRequest'>
+    <li v-if="!isResuestError&&this.isRequest">
       <div class="loading-ani-articlelist"></div>
     </li>
   </ul>
@@ -176,23 +176,24 @@ export default {
       isOver: false,
       isScroll: false,
       isRequest: false,
+      typename: "",
       arcList: [],
       menus: this.$route.params.path
     };
   },
   props: ["requestUrl"],
   methods: {
-    isS() {
+    listenerScroll() {
       window.addEventListener("scroll", this.scrolls);
     },
     scrolls() {
       if (this.isOver) return;
       let ref = this.$refs;
-      let scrollTop = ref.ulArclist.offsetTop;
+      let listScrollTop = ref.ulArclist.offsetTop;
       let scrollHeight = ref.ulArclist.clientHeight;
       let offsetHeight = document.documentElement.scrollTop;
       let sTop = document.documentElement.offsetHeight;
-      let RemainingHeight = scrollHeight + scrollTop;
+      let RemainingHeight = scrollHeight + listScrollTop;
       if (
         RemainingHeight - (offsetHeight + sTop) < 100 &&
         this.isScroll === false
@@ -207,37 +208,40 @@ export default {
       this.isResuestError = false;
       this.isRequest = true;
       this.$axios
-        .post(this.requestUrl, {
-          page: this.page,
-          limit: this.limit,
-          isGlobalLoading: false
+        .get(this.requestUrl, {
+          params: { page: this.page, limit: this.limit, isGlobalLoading: false }
         })
         .then(({ data }) => {
           that.isRequest = false;
-          if (data.status === 0) {
+          let datas = data.data;
+          if (data.status === 0||data.status===false) {
             that.isOver = true;
             return;
           }
           that.isScroll = false;
-          let d = data.data;
-          if (!d) return;
-          d.map(value => {
+          let list = datas.arclist;
+          if (!list) return;
+          list.map(value => {
             that.$set(that.arcList, that.arcList.length, value);
           });
           that.page++;
         })
-        .catch(() => {
+        .catch(err => {
           that.isResuestError = true;
           that.isScroll = false;
         });
     },
     getArticlelistData() {
       const that = this;
-      this.$axios.post(this.requestUrl).then(({ data }) => {
+      this.$axios.get(this.requestUrl).then(({ data }) => {
+        let datas = data.data;
+        if (data.status !== 1 || !datas) return;
+
         that.isInit = true;
-        if (!data.data) return;
-        that.arcList = data.data;
-        this.isS();
+        that.typename = datas.typename;
+        that.arcList = datas.arclist;
+        that.listenerScroll();
+        that.page++;
       });
     }
   },

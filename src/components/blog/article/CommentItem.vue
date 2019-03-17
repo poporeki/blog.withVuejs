@@ -449,7 +449,7 @@ export default {
     },
     /* 输入状态 */
     typing(ev) {
-      console.log("as:" + ev);
+      console.log("typing:" + ev);
       let target = ev.currentTarget;
       let nextSibling = target.nextSibling;
       if (target.value === "")

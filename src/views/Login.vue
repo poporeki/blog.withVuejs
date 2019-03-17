@@ -428,7 +428,6 @@ export default {
           isGlobalLoading: false
         })
         .then(({ data }) => {
-          console.log(11);
           _this.logining = false;
           let status = data.status;
           let msg = data.msg;

@@ -5,11 +5,6 @@
     <div class="object"></div>
     <div class="object"></div>
     <div class="object"></div>
-    <div class="object"></div>
-    <div class="object"></div>
-    <div class="object"></div>
-    <div class="object"></div>
-    <div class="object"></div>
   </div>
 </template>
 <style lang="scss">
@@ -20,18 +15,20 @@
   height: 5%;
   min-height: 10px;
   max-height: 200px;
-  width: 20%;
+  width:10%;
   min-width: 30px;
   transform: translate(-50%, -50%);
 }
 .object {
-  width: 1.9%;
+  width: 5%;
   height: 100%;
-  margin-right: 0.1%;
+  margin-right: 5%;
+  box-sizing: border-box;
   background-color: #fff;
   -webkit-animation: animate 1s infinite;
   animation: animate 1s infinite;
   float: left;
+
 }
 
 .object:last-child {
@@ -77,17 +74,17 @@
 
 @-webkit-keyframes animate {
   50% {
-    -ms-transform: translateX(-25px) scaleY(2);
-    -webkit-transform: translateX(-25px) scaleY(2);
-    transform: translateX(-25px) scaleY(2);
+    -ms-transform: scaleY(2);
+    -webkit-transform: scaleY(2);
+    transform: scaleY(2);
   }
 }
 
 @keyframes animate {
   50% {
-    -ms-transform: translateX(-25px) scaleY(2);
-    -webkit-transform: translateX(-25px) scaleY(2);
-    transform: translateX(-25px) scaleY(2);
+    -ms-transform: scaleY(2);
+    -webkit-transform: scaleY(2);
+    transform: scaleY(2);
   }
 }
 </style>

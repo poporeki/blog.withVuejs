@@ -19,7 +19,7 @@ Vue.prototype.$axios = Axios;
 Axios.defaults.withCredentials = true;
 
 router.beforeEach((to, from, next) => {
-  
+
   let _store = store;
   window.document.title = to.meta.title;
   let notshow = to.meta.notshow;
@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
     _store.state.isLogin = false;
     _store.state.userInfo = {};
   });
-  
+
 });
 router.afterEach((to, from, next) => {
   window.scrollTo(0, 0);
@@ -53,8 +53,8 @@ router.afterEach((to, from, next) => {
 Axios.interceptors.request.use(function (config) {
   if (config.url === "https://www.yansk.cn/auth") return config;
   store.dispatch("showloader");
-  if (config.data && config.data.isGlobalLoading === false) {
-    true;
+  if ((config.data && config.data.isGlobalLoading === false) || (config.params && config.params.isGlobalLoading === false)) {
+    store.state.isLoading = false;
   } else {
     let notshow = vm.$route.meta.notshow;
     if (notshow) {
@@ -70,7 +70,6 @@ Axios.interceptors.request.use(function (config) {
 });
 //定义一个响应拦截器
 Axios.interceptors.response.use(function (config) {
-  console.log("response");
   store.dispatch("hideloader");
   store.state.isLoading = false;
   let data = config.data;
@@ -81,7 +80,7 @@ Axios.interceptors.response.use(function (config) {
         redirect: router.currentRoute.fullPath
       }
     }); */
-    router.push("/login")    
+    router.push("/login")
   }
 
   return config;

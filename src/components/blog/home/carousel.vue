@@ -194,7 +194,7 @@ export default {
   },
   methods: {
     getData() {
-      let _this = this;
+      let that = this;
       this.$axios
         .get("https://www.yansk.cn/api/v1/getCarousel", {
           by: {
@@ -204,10 +204,9 @@ export default {
         .then(({
           data
         }) => {
-          _this.isRequest = false;
-          _this.carouData = data.data;
-          console.log(data);
-          _this.isShow = true;
+          that.isRequest = false;
+          that.carouData = data.data;
+          that.isShow = true;
         });
     }
   },

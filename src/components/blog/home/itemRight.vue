@@ -2,6 +2,7 @@
   <div class="right-item">
     <item-tags></item-tags>
     <item-commtop></item-commtop>
+    <item-log></item-log>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -14,12 +15,13 @@
 <script>
 import itemTags from "./item_article_right_taglist";
 import itemCommtop from "./item_article_right_comment";
+import itemLog from "./item_article_right_update_log";
 export default {
   components: {
     itemTags,
-    itemCommtop
+    itemCommtop,
+    itemLog
   }
 };
 </script>
-
 

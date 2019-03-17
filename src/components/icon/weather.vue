@@ -458,7 +458,6 @@ export default {
   watch: {
     /* 监听天气 */
     temp(value) {
-      console.log(value);
       let a = this.check(value);
       this[a] = true;
     }
