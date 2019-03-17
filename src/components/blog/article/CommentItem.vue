@@ -649,7 +649,6 @@ export default {
     inits(that,commlist) {
       return new Promise(resolve => {
         let comms = commlist;
-        let length=that.commList.length===0?0:that.commList.length-1;
         if(typeof comms=='undefined') return resolve();
         comms.map((comm, idx) => {
 
@@ -669,7 +668,6 @@ export default {
             that.$set(commlist[idx].commReps[repidx], 'status', false);
           });
           that.commList.push(comm);
-          console.log(`评论列表：：${JSON.stringify(that.commList)}`)
         });
         resolve();
       });
@@ -690,7 +688,6 @@ export default {
         skip:that.commList.length||0,
         arcid:that.arcId
       }}).then(({data})=>{
-        console.log(JSON.stringify(data));
         that.isRequest = false;
         if(data.status!==1){
           that.isEnd=true;
@@ -703,7 +700,6 @@ export default {
   },
   created() {
     this.inits(this,this.artComms);
-    console.log(JSON.stringify(this.artComms));
   },
   mounted() {
     /* 是否锚点到评论区 */
