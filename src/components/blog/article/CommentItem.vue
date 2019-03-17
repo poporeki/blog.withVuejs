@@ -588,6 +588,7 @@ export default {
           }
         });
     },
+    /* 回复框切换 */
     fadeToggle(event, commIdx, replyIdx) {
       let params = arguments;
       let that = this;
@@ -683,7 +684,7 @@ export default {
       let that=this;
       this.isRequest = true;
       this.isRequestError = false;
-      that.$axios.get('http://localhost:3000/api/v1/article/comment/getComments',{
+      that.$axios.get('https://www.yansk.cn/api/v1/article/comment/getComments',{
         params: {
           isGlobalLoading:false,
         skip:that.commList.length||0,
