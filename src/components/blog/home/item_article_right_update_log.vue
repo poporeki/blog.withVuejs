@@ -21,7 +21,33 @@
     </ul>
   </div>
 </template>
-
+<style lang="scss">
+.update-log-box{
+    .title{
+      a{
+        color: rgb(207, 207, 207);
+        &:hover{
+          color: #fff;
+        }
+      }
+    }
+    .log-list{
+      border-left: 1px solid rgb(78, 78, 78);
+      padding-left: 25px;
+      font-size:.25rem;
+      .log-list-item{
+        margin-bottom: 15px;
+        .u-cnt{
+          color: rgb(167, 167, 167);
+          font-size: .9em;
+        }
+      }
+      .log-end{
+        text-align: right;
+      }
+    }
+  }
+</style>
 <script>
 export default {
   data() {
