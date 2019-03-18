@@ -6,7 +6,7 @@ import Blog from '../../views/blog/Blog.vue'
 const defaults = {
   path: '',
   meta: {
-    title: "YANSK'S BLOG",
+    title: "博客首页",
     notshow: {
       loading: true
     }

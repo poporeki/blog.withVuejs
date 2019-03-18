@@ -21,7 +21,7 @@ Axios.defaults.withCredentials = true;
 router.beforeEach((to, from, next) => {
 
   let _store = store;
-  window.document.title = to.meta.title;
+  window.document.title = (to.meta.title || '') + "-" + window.document.title;
   let notshow = to.meta.notshow;
   notshow
     ?

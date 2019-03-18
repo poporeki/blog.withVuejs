@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '../views/Login.vue'
 import BLOG from './blog/index.js'
 import Blank from '../views/blog/Blank.vue'
+import NotFound from '../router/404.js'
 import aaaa from '../views/a'
 Vue.use(Router)
 
@@ -25,7 +26,6 @@ export default new Router({
   routes: [{
       path: '/',
       meta: {
-        title: "YANSK'S BLOG",
         notshow: {
           loading: true
         }
@@ -57,6 +57,7 @@ export default new Router({
         title: '登陆'
       },
       component: Login
-    }
+    },
+    NotFound
   ]
 })

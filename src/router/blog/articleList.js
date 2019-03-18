@@ -5,6 +5,10 @@ export default {
   component: Aritclelist,
   children: [{
     path: '',
-    component: Allarticles
+    component: Allarticles,
+    meta: {
+      title: '文章列表'
+    }
   }]
+
 }
