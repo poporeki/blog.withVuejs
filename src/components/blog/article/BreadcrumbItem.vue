@@ -36,8 +36,7 @@
         transition: transform 0.3s ease, background-color 0.3s ease;
 
         &:hover {
-          transform: rotate(-5deg);
-          background-color: #000000;
+          transform: rotate(6deg);
         }
 
         &:active {

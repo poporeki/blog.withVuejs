@@ -104,7 +104,7 @@ ul.article-list {
     transform-origin: bottom center;
     animation: flipXIn 1s forwards;
     perspective: 1200px;
-
+    font-size: 0.28rem;
     &:last-child {
       margin-bottom: 0;
     }
@@ -112,7 +112,7 @@ ul.article-list {
     &:hover,
     &:active {
       > a {
-        transform: translateX(5px);
+        transform: translateX(6px);
       }
     }
 
@@ -153,6 +153,8 @@ ul.article-list {
       .thumbnail {
         color: rgb(189, 189, 189);
         padding-top: 10px;
+        word-break: break-all;
+        font-size: 0.8em;
       }
     }
 
@@ -214,7 +216,7 @@ export default {
         .then(({ data }) => {
           that.isRequest = false;
           let datas = data.data;
-          if (data.status === 0||data.status===false) {
+          if (data.status === 0 || data.status === false) {
             that.isOver = true;
             return;
           }
@@ -235,10 +237,15 @@ export default {
       const that = this;
       this.$axios.get(this.requestUrl).then(({ data }) => {
         let datas = data.data;
+        let searchedName = data.data.searchedName;
+        console.log('QQQ:'+searchedName)
+        if (searchedName !== "") {
+          that.$emit("update:title", searchedName);
+        }
+
         if (data.status !== 1 || !datas) return;
 
         that.isInit = true;
-        that.typename = datas.typename;
         that.arcList = datas.arclist;
         that.listenerScroll();
         that.page++;

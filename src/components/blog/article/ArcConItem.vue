@@ -65,27 +65,32 @@
     .type-lk {
       display: inline-block;
       color: #fff;
-      background-color: #000000;
-      border-radius: 50%;
-      padding: 0 5px;
+      background-color: #e16d20;
+      border-radius: 10%;
+      padding: 0 10px;
       text-align: center;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease,background-color .3s ease;
 
       &:hover {
-        transform: rotate(-5deg);
         background-color: #222222;
       }
     }
   }
 }
 .article-box {
+  
   p.end {
-    font-size: 0.5rem;
+    font-size: 0.3rem;
   }
 }
 .article-body {
   font-size: 0.28rem;
   color: rgba(236, 236, 236, 1);
+  ol{
+    &>li{
+      list-style: decimal;
+    }
+  }
   a {
     color: #70917e;
     word-wrap: break-word;
@@ -103,8 +108,7 @@
 
     > code {
       margin: 0 3px;
-      padding: 1px 3px;
-      font-weight: bold;
+      padding: 1px 5px;
       background-color: #2f533f;
     }
     code {

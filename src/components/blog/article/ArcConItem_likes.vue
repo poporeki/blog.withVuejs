@@ -27,8 +27,8 @@
       max-width: 100px;
       border-radius: 50%;
       background-color: #4cc37e;
-      box-shadow: 0 0 20px #38915a;
-      transition: transform .3s ease, background-color .3s ease, box-shadow 1s ease;
+      box-shadow: 0 0 1px #000;
+      transition: transform .3s ease, background-color .3s ease, box-shadow .5s ease;
       font-family: 'Architects Daughter',
         cursive;
 
@@ -42,7 +42,8 @@
 
       &:hover {
         background-color: #59e995;
-        box-shadow: 0 0 40px #000;
+        box-shadow: 0 0 20px #38915a;
+        
       }
     }
 
