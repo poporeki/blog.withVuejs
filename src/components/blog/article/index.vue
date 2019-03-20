@@ -54,10 +54,9 @@
 			getArticle() {
 				let that = this;
 				this.$axios
-					.get("https://www.yansk.cn/api/v1/article/get/" + this.arcid)
+					.get("http://localhost:3000/api/v1/article/get/" + this.arcid)
 					.then(({ data }) => {
 						let datas = data.data;
-						debugger;
 						if (data.status===undefined||data.code === 404||data.status===0||data.status===false) {
 							that.$router.replace({
 								path: "/404"

@@ -138,7 +138,7 @@ export default {
     getWeather(geolo) {
       let _this = this;
       this.$axios
-        .get("https://www.yansk.cn/api/v1/weather/gettheday", {
+        .get("http://localhost:3000/api/v1/weather/gettheday", {
           geolocation: geolo
         })
         .then(({ data }) => {

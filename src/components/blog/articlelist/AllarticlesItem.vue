@@ -32,7 +32,7 @@ export default {
       title: "",
       artclist: {},
       requestUrl: false,
-      originalRequestUrl: "https://www.yansk.cn/api/v1/articlelist/getlist"
+      originalRequestUrl: "http://localhost:3000/api/v1/articlelist/getlist"
     };
   },
   methods: {},

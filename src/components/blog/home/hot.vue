@@ -169,7 +169,7 @@
 			getData() {
 				let that = this;
 				this.$axios
-					.get("https://www.yansk.cn/api/v1/article/gettop")
+					.get("http://localhost:3000/api/v1/article/gettop")
 					.then(({ data }) => {
 						that.isRequest = false;
 						that.topData = data.data;

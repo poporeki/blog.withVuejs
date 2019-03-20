@@ -25,7 +25,7 @@ export default {
       dataComplete: false,
       artclist: {},
       requestUrl: false,
-      originalRequestUrl: "https://www.yansk.cn/blog/articlelist"
+      originalRequestUrl: "http://localhost:3000/blog/articlelist"
     };
   },
   methods: {},

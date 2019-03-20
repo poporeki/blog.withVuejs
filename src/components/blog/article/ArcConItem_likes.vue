@@ -85,7 +85,7 @@ export default {
       let that=this;
 
       that.$axios
-        .post("https://www.yansk.cn/api/v1/article/like",{
+        .post("http://localhost:3000/api/v1/article/like",{
         arcid: that.arcid,
         isGlobalLoading: false,
       })

@@ -197,7 +197,7 @@ export default {
     getData() {
       let that = this;
       this.$axios
-        .get("https://www.yansk.cn/api/v1/getCarousel")
+        .get("http://localhost:3000/api/v1/getCarousel")
         .then(({
           data
         }) => {

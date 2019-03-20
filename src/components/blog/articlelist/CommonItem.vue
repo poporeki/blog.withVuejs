@@ -237,7 +237,6 @@ export default {
       const that = this;
       this.$axios.get(this.requestUrl).then(({ data }) => {
         let datas = data.data;
-        debugger
         if (data.status===undefined||data.code === 404||data.status===0||data.status===false) {
 							that.$router.replace({
 								path: "/404"

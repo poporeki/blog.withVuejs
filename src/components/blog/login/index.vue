@@ -439,7 +439,7 @@ export default {
       this.isRequest = true;
       const that = this;
       this.$axios
-        .post("https://www.yansk.cn/login", {
+        .post("http://localhost:3000/login", {
           uname: this.username,
           upwd: this.password,
           isGlobalLoading: false

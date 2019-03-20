@@ -20,14 +20,14 @@
         <li class="comment-item" v-for=" (comm,commIdx) in commList" :key='comm.id' :data-commid='comm.id'>
           <div>
             <div class="head-pic">
-              <a href="javascript:void(0);"> <img :src='"https://www.yansk.cn/"+comm.user.avatar' alt="avatar"> </a>
+              <a href="javascript:void(0);"> <img :src='"http://localhost:3000/"+comm.user.avatar' alt="avatar"> </a>
             </div>
             <div class="content">
               <div class="info">
                 <div class="lt">
                   <div class="username">{{comm.user.name}}</div>
-                  <div class="address">{{comm.submitAddress}}</div>
-                  <div class="p-date"> {{comm.createTime}}</div>
+                  <div class="address">{{comm.submit_address}}</div>
+                  <div class="p-date"> {{comm.create_time}}</div>
                 </div>
                 <div class="floor-blk"> {{comm.floor+'楼'}}</div>
               </div>
@@ -61,20 +61,20 @@
                 <span># {{reply.floor}} </span>
                 <div class="head-pic">
                   <a href="javascript:void(0);">
-                    <img :src='"https://www.yansk.cn"+reply.user.avatar' alt="avatar">
+                    <img :src='"http://localhost:3000"+reply.user.avatar' alt="avatar">
                   </a>
                 </div>
                 <div class="content">
                   <div class="info">
                     <div class="lt">
                       <div class="username">{{reply.user.name}}</div>
-                      <div class="address">{{reply.submitAddress}}</div>
-                      <div class="p-date">{{reply.createTime}}</div>
+                      <div class="address">{{reply.submit_address}}</div>
+                      <div class="p-date">{{reply.create_time}}</div>
                     </div>
                   </div>
-                  <p v-if="reply.to==''">{{reply.repContent}}</p>
+                  <p v-if="reply.to==''">{{reply.arc_content}}</p>
                   <p v-if="typeof reply!=='undefined'&&reply.to!==''&&reply.to!==null">
-                    回复 #{{reply.to.floor}} {{reply.to.user.name}}:{{reply.repContent}}
+                    回复 #{{reply.to.floor}} {{reply.to.user.name}}:{{reply.arc_content}}
                   </p>
                   <div class="tools">
                     <a href="javascript:void(0);" @click="fadeToggle($event,commIdx,repIdx)" class="comm-reply-btn">回复</a>
@@ -82,7 +82,7 @@
                       <div class="reply-block" v-show='reply.status'>
                         <div class="add-comm clearfix">
                           <textarea name="comm_textarea" @keyup="typing" v-model="replyContent" class="comm-textarea" id="comm_textarea" cols="30" rows="10"></textarea>
-                          <a href="javascript:void(0);" @click="submitComment($event,'toReply',comm.id,commIdx,reply.id)" class="comm-submit-btn reply-child" :data-repid='reply.id'>提交
+                          <a href="javascript:void(0);" @click="submitComment($event,'toReply',comm.id,commIdx,reply.id,repIdx)" class="comm-submit-btn reply-child" :data-repid='reply.id'>提交
                             <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp">
                               <span class="s-c-empty" v-if="isCommConError">{{commConErrorMsg}}</span>
                             </transition>
@@ -471,45 +471,48 @@ export default {
       }
     },
     /* 提交评论 */
-    submitComment(event, type, commid, commidx, replyid) {
+    submitComment(event, type, commid, commidx, replyid,replyidx) {
       if (!this.isLogin) {
         return this.$router.push({
           path: "/login"
         });
       }
       if (type === "toComment") {
-        this.submitToComment(commid);
+        this.submitToComment(commid,commidx);
         return;
       } else if (type === "toReply") {
-        this.submitToReply(commid, replyid, commidx);
+        this.submitToReply(commid, replyid, commidx,replyidx);
         return;
       }
       const that = this;
       this.$axios
-        .post("https://www.yansk.cn/api/v1/article/comment/postComment", {
+        .post("http://localhost:3000/api/v1/article/comment/submitComment", {
           isGlobalLoading: false,
           comm_content: this.context_comm,
           arc_id: this.arcId
         })
-        .then(({ data }) => {
-          if (data.status === -1) {
-            that.isCommConError = true;
-            that.commConErrorMsg = data.msg;
-            setTimeout(() => {
-              that.isCommConError = false;
-              that.commConErrorMsg = "";
-            }, 2000);
-          } else if (data.status === false) {
-            that.isCommConError = true;
-            that.commConErrorMsg = data.msg;
-            setTimeout(() => {
-              that.isCommConError = false;
-              that.commConErrorMsg = "";
-            }, 2000);
-          }
+        .then(({data})=>{
           if (data.status === true) {
-            that.$set(that.artComms, that.artComms.length, data.data);
+            that.context_comm='';
+            that.pushCommentData(that,data.data)
+          }else if (data.status === -1) {
+            that.isCommConError = true;
+            that.commConErrorMsg = data.msg;
+            setTimeout(() => {
+              that.isCommConError = false;
+              that.commConErrorMsg = "";
+            }, 2000);
+          } else{
+            that.isCommConError = true;
+            that.commConErrorMsg = data.msg;
+            setTimeout(() => {
+              that.isCommConError = false;
+              that.commConErrorMsg = "";
+            }, 2000);
           }
+          
+        }).catch(err=>{
+          console.log(`提交错误：${err}`);
         });
     },
     /**
@@ -518,7 +521,8 @@ export default {
      */
     submitToComment(commid, idx) {
       let that = this;
-      let url = "https://www.yansk.cn/api/v1/article/comment/submitReply";
+      let url = "http://localhost:3000/api/v1/article/comment/submitReply";
+      debugger
       this.$axios
         .post(url, {
           isGlobalLoading: false,
@@ -527,33 +531,27 @@ export default {
           commid: commid
         })
         .then(({ data }) => {
-          if (data.status === -1) {
-            that.isCommConError = true;
-            that.commConErrorMsg = data.msg;
-            setTimeout(() => {
-              that.isCommConError = false;
-              that.commConErrorMsg = "";
-            }, 2000);
-          } else if (data.status === false) {
-            that.isCommConError = true;
-            that.commConErrorMsg = data.msg;
-            setTimeout(() => {
-              that.isCommConError = false;
-              that.commConErrorMsg = "";
-            }, 2000);
-          }
           if (data.status === true) {
-            that.$set(that.artComms, that.artComms.length, data.data);
-            that.init();
+            that.replyContent='';
+            that.commList[idx].status=false;
+            that.pushCommentData(that,data.data)
+          }else {
+            that.isCommConError = true;
+            that.commConErrorMsg = data.msg;
+            setTimeout(() => {
+              that.isCommConError = false;
+              that.commConErrorMsg = "";
+            }, 2000);
           }
+          
         });
     },
     /**
      * 提交评论回复
      */
-    submitToReply(commid, replyid, commidx) {
+    submitToReply(commid, replyid, commidx,replyidx) {
       let that = this;
-      let url = "https://www.yansk.cn/api/v1/article/comment/submitReply";
+      let url = "http://localhost:3000/api/v1/article/comment/submitReply";
       this.$axios
         .post(url, {
           isGlobalLoading: false,
@@ -563,29 +561,20 @@ export default {
           reply_id: replyid
         })
         .then(({ data }) => {
-          if (data.status === -1) {
-            that.isCommConError = true;
-            that.commConErrorMsg = data.msg;
-            setTimeout(() => {
-              that.isCommConError = false;
-              that.commConErrorMsg = "";
-            }, 2000);
-          } else if (data.status === false) {
-            that.isCommConError = true;
-            that.commConErrorMsg = data.msg;
-            setTimeout(() => {
-              that.isCommConError = false;
-              that.commConErrorMsg = "";
-            }, 2000);
-          }
+          debugger
           if (data.status === true) {
-            that.$set(
-              that.artComms[commidx].commReps,
-              that.artComms[commidx].commReps.length,
-              data.data
-            );
-            that.init();
-          }
+            that.replyContent='';
+            that.commList[commidx].commReps[replyidx].status=false;
+            that.pushCommentData(that,data.data,commidx)
+          }else{
+            that.isCommConError = true;
+            that.commConErrorMsg = data.msg;
+            setTimeout(() => {
+              that.isCommConError = false;
+              that.commConErrorMsg = "";
+            }, 2000);
+          } 
+          
         });
     },
     /* 回复框切换 */
@@ -597,7 +586,7 @@ export default {
       this.replyContent = "";
       replyBoxStatus.map(comm => {
         comm.status = false;
-        let replyArr = comm.reply;
+        let replyArr = comm.commReps;
         if (
           replyArr === undefined ||
           typeof replyArr === undefined ||
@@ -610,9 +599,8 @@ export default {
         });
       });
       if (arguments.length === 3) {
-        replyBoxStatus[commIdx].reply[replyIdx].status = !replyBoxStatus[
-          commIdx
-        ].reply[replyIdx].status;
+        replyBoxStatus[commIdx].commReps[replyIdx].status = 
+        !replyBoxStatus[commIdx].commReps[replyIdx].status;
         return;
       }
       replyBoxStatus[commIdx].status = !replyBoxStatus[commIdx].status;
@@ -646,10 +634,20 @@ export default {
         resolve();
       });
     },
-    inits(that,commlist) {
+    pushCommentData(that,commlist,commidx) {
       return new Promise(resolve => {
         let comms = commlist;
         if(typeof comms=='undefined') return resolve();
+        if(arguments.length===3){
+          that.$set(comms,'status',false);
+          that.commList[commidx].commReps.unshift(comms);
+          return resolve();
+        }
+        if(!(comms instanceof Array)) {
+          that.$set(comms,'status',false);
+          that.commList.unshift(comms);
+          return resolve();
+        }
         comms.map((comm, idx) => {
 
           that.$set(commlist[idx], 'status', false);
@@ -682,7 +680,7 @@ export default {
       let that=this;
       this.isRequest = true;
       this.isRequestError = false;
-      that.$axios.get('https://www.yansk.cn/api/v1/article/comment/getComments',{
+      that.$axios.get('http://localhost:3000/api/v1/article/comment/getComments',{
         params: {
           isGlobalLoading:false,
         skip:that.commList.length||0,
@@ -692,14 +690,14 @@ export default {
         if(data.status!==1){
           that.isEnd=true;
         }
-        that.inits(that,data.data)
+        that.pushCommentData(that,data.data)
       }).catch(()=>{
         that.isRequestError = true;
       })
     }
   },
   created() {
-    this.inits(this,this.artComms);
+    this.pushCommentData(this,this.artComms);
   },
   mounted() {
     /* 是否锚点到评论区 */

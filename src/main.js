@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
     (store.state.isLoading = true) :
     "";
   // 用户时效验证
-  Axios.post("https://www.yansk.cn/auth").then(({
+  Axios.post("http://localhost:3000/auth").then(({
     data
   }) => {
     next();
@@ -51,7 +51,7 @@ router.afterEach((to, from, next) => {
 });
 //定义一个请求拦截器
 Axios.interceptors.request.use(function (config) {
-  if (config.url === "https://www.yansk.cn/auth") return config;
+  if (config.url === "http://localhost:3000/auth") return config;
   store.dispatch("showloader");
   if ((config.data && config.data.isGlobalLoading === false) || (config.params && config.params.isGlobalLoading === false)) {
     store.state.isLoading = false;

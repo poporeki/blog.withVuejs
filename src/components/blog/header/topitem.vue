@@ -17,6 +17,9 @@
     </transition>
     <transition enter-active-class="animated fadeInRight">
       <div class="box-inner" v-if="this.$store.state.isLogin">
+        <div class="link-box" v-if="1">
+          <a href="javascript:void(0);" @click="logout">控制台</a>
+        </div>
         <div class="link-box">
           <a href="javascript:void(0);" @click="logout">退出登录</a>
         </div>
@@ -119,7 +122,7 @@ export default {
     logout() {
       let _this = this;
       this.$axios
-        .post("https://www.yansk.cn/logout")
+        .post("http://localhost:3000/logout")
         .then(({
           data
         }) => {

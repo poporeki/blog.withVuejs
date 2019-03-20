@@ -262,7 +262,7 @@ export default {
     getNewArticleTopData() {
       const that = this;
       this.$axios
-        .get("https://www.yansk.cn/blog/getartlist")
+        .get("http://localhost:3000/blog/getartlist")
         .then(({ data }) => {
           that.isRequest = false;
           if (data.data === null || data.data.length === 0) {

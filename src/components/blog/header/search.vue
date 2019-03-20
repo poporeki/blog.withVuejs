@@ -309,7 +309,7 @@ export default {
       const that = this;
       this.isRequest = true;
       this.$axios
-        .post("https://www.yansk.cn/api/v1/article/search/like", {
+        .post("http://localhost:3000/api/v1/article/search/like", {
           wd: this.keywords /* 键入文本 */ ,
           isGlobalLoading: false /* axios拦截>全局Loading关闭 */
         })
