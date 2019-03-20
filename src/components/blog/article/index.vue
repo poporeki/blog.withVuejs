@@ -54,7 +54,7 @@
 			getArticle() {
 				let that = this;
 				this.$axios
-					.get("http://localhost:3000/api/v1/article/get/" + this.arcid)
+					.get("https://www.yansk.cn/api/v1/article/get/" + this.arcid)
 					.then(({ data }) => {
 						let datas = data.data;
 						if (data.status===undefined||data.code === 404||data.status===0||data.status===false) {

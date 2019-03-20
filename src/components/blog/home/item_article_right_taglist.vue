@@ -116,7 +116,7 @@ export default {
       this.isRequest = true;
       this.isRequestError = false;
       this.$axios
-        .get("http://localhost:3000/blog/gettags")
+        .get("https://www.yansk.cn/blog/gettags")
         .then(({ data }) => {
           that.isRequest = false;
           if (data.status) {

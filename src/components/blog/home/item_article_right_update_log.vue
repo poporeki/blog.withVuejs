@@ -59,7 +59,7 @@ export default {
     getUpdateLogList() {
       let that = this;
       that.$axios
-        .get("http://localhost:3000/blog/log/getlist?limit=3")
+        .get("https://www.yansk.cn/blog/log/getlist?limit=3")
         .then(({ data }) => {
           if (data.status !== 1 || data.data.logList.length === 0) return;
           let list = data.data.logList;

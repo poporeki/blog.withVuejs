@@ -20,7 +20,7 @@
         <li class="comment-item" v-for=" (comm,commIdx) in commList" :key='comm.id' :data-commid='comm.id'>
           <div>
             <div class="head-pic">
-              <a href="javascript:void(0);"> <img :src='"http://localhost:3000/"+comm.user.avatar' alt="avatar"> </a>
+              <a href="javascript:void(0);"> <img :src='"https://www.yansk.cn/"+comm.user.avatar' alt="avatar"> </a>
             </div>
             <div class="content">
               <div class="info">
@@ -61,7 +61,7 @@
                 <span># {{reply.floor}} </span>
                 <div class="head-pic">
                   <a href="javascript:void(0);">
-                    <img :src='"http://localhost:3000"+reply.user.avatar' alt="avatar">
+                    <img :src='"https://www.yansk.cn"+reply.user.avatar' alt="avatar">
                   </a>
                 </div>
                 <div class="content">
@@ -486,7 +486,7 @@ export default {
       }
       const that = this;
       this.$axios
-        .post("http://localhost:3000/api/v1/article/comment/submitComment", {
+        .post("https://www.yansk.cn/api/v1/article/comment/submitComment", {
           isGlobalLoading: false,
           comm_content: this.context_comm,
           arc_id: this.arcId
@@ -521,7 +521,7 @@ export default {
      */
     submitToComment(commid, idx) {
       let that = this;
-      let url = "http://localhost:3000/api/v1/article/comment/submitReply";
+      let url = "https://www.yansk.cn/api/v1/article/comment/submitReply";
       debugger
       this.$axios
         .post(url, {
@@ -551,7 +551,7 @@ export default {
      */
     submitToReply(commid, replyid, commidx,replyidx) {
       let that = this;
-      let url = "http://localhost:3000/api/v1/article/comment/submitReply";
+      let url = "https://www.yansk.cn/api/v1/article/comment/submitReply";
       this.$axios
         .post(url, {
           isGlobalLoading: false,
@@ -680,7 +680,7 @@ export default {
       let that=this;
       this.isRequest = true;
       this.isRequestError = false;
-      that.$axios.get('http://localhost:3000/api/v1/article/comment/getComments',{
+      that.$axios.get('https://www.yansk.cn/api/v1/article/comment/getComments',{
         params: {
           isGlobalLoading:false,
         skip:that.commList.length||0,

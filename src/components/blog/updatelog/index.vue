@@ -39,7 +39,7 @@ export default {
     getLoglist() {
       let that = this;
       that.$axios
-        .get("http://localhost:3000/blog/log/getlist")
+        .get("https://www.yansk.cn/blog/log/getlist")
         .then(({ data }) => {
           let datas = data.data;
           if (

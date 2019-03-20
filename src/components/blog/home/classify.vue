@@ -145,7 +145,7 @@ export default {
     getTypeList() {
       let _this = this;
       this.$axios
-        .get("http://localhost:3000/api/v1/getarctypes")
+        .get("https://www.yansk.cn/api/v1/getarctypes")
         .then(({ data }) => {
           _this.typelist = data;
         });

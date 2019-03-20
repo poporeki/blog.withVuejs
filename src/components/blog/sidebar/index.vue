@@ -168,7 +168,7 @@
 			getNavbar() {
 				let that = this;
 				this.$axios
-					.get("http://localhost:3000/api/v1/gethomenavbar")
+					.get("https://www.yansk.cn/api/v1/gethomenavbar")
 					.then(({ data }) => {
 						that.navlist = data.data;
 					});

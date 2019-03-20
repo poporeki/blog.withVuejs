@@ -122,7 +122,7 @@ export default {
     logout() {
       let _this = this;
       this.$axios
-        .post("http://localhost:3000/logout")
+        .post("https://www.yansk.cn/logout")
         .then(({
           data
         }) => {

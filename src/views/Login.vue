@@ -476,7 +476,7 @@ export default {
       this.show = true;
       this.logining = true;
       this.$axios
-        .post("http://localhost:3000/login", {
+        .post("https://www.yansk.cn/login", {
           uname: this.username,
           upwd: this.password,
           isGlobalLoading: false
