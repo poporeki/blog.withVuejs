@@ -1,9 +1,11 @@
-import BlogHome from '../../components/blog/home'
-import Article from './article.js';
+import Article from './article';
 import ArticleList from './articleList';
 import UpdateLog from './updatelog';
-import Blog from '../../views/blog/Blog.vue'
-const defaults = {
+import BlogLayout from '@/views/blog/LayoutIndexView.vue'
+import BlogHome from '@/views/blog/HomeView.vue'
+import Tools from '@/router/tools'
+
+const Defaults = {
   path: '',
   meta: {
     title: "博客首页",
@@ -16,6 +18,6 @@ const defaults = {
 export default {
   path: '/blog',
   name: 'blog',
-  children: [defaults, Article, ArticleList, UpdateLog],
-  component: Blog
+  component: BlogLayout,
+  children: [Defaults, Article, ArticleList, UpdateLog, Tools]
 }

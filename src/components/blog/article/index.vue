@@ -31,7 +31,6 @@
 </style>
 
 <script>
-	import Loading from "../../../views/Loading";
 	import BreadCrumb from "./BreadcrumbItem";
 	import ArticleContent from "./ArcConItem";
 	import ArticleComment from "./CommentItem";
@@ -45,7 +44,6 @@
 			};
 		},
 		components: {
-			Loading,
 			BreadCrumb,
 			ArticleContent,
 			ArticleComment
@@ -57,7 +55,12 @@
 					.get("https://www.yansk.cn/api/v1/article/get/" + this.arcid)
 					.then(({ data }) => {
 						let datas = data.data;
-						if (data.status===undefined||data.code === 404||data.status===0||data.status===false) {
+						if (
+							data.status === undefined ||
+							data.code === 404 ||
+							data.status === 0 ||
+							data.status === false
+						) {
 							that.$router.replace({
 								path: "/404"
 							});

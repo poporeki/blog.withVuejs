@@ -1,11 +1,11 @@
-import Aritclelist from '../../components/blog/articlelist'
-import Allarticles from '../../components/blog/articlelist/AllarticlesItem.vue'
+import AritcleListView from '@/views/blog/artlist/ArticleListView'
+import CommonView from '@/views/blog/artlist/CommonView'
 export default {
   path: 'articlelist',
-  component: Aritclelist,
+  component: AritcleListView,
   children: [{
     path: '',
-    component: Allarticles,
+    component: CommonView,
     meta: {
       title: '文章列表'
     }

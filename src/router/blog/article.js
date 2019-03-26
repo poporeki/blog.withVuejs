@@ -1,4 +1,4 @@
-import BlogArticle from '../../components/blog/article';
+import BlogArticle from '@/views/blog/ArticleView';
 export default {
   path: 'article/:arcid',
   component: BlogArticle,

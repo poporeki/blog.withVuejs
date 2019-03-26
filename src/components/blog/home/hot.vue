@@ -133,7 +133,7 @@
 </style>
 
 <script>
-	import Loading from "../../loadingAnimate_cro";
+	import Loading from "@/components/loading/Loading_02";
 	import "swiper/dist/css/swiper.css";
 	import { swiper, swiperSlide } from "vue-awesome-swiper";
 	export default {

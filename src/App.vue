@@ -19,7 +19,7 @@
 	}
 </style>
 <script>
-	import Loading from "./views/Loading_global";
+	import Loading from "@/components/loading/Loading_global";
 	export default {
 		components: {
 			Loading
