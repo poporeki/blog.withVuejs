@@ -305,13 +305,13 @@
 						text: "",
 						tips: ""
 					} /* ,
-																															phoneNumber: {
-																																isChecked: false,
-																																text: "",
-																																rule: /^1[3-9]\d{9}$/,
-																																errorStatus: false,
-																																tips: ""
-																															} */,
+																																														phoneNumber: {
+																																															isChecked: false,
+																																															text: "",
+																																															rule: /^1[3-9]\d{9}$/,
+																																															errorStatus: false,
+																																															tips: ""
+																																														} */,
 					captcha: {
 						captchaData: "",
 						isChecked: false,
@@ -328,7 +328,7 @@
 			getCaptcha() {
 				let that = this;
 				that.$axios
-					.post("https://www.yansk.cn/verify/refreshCaptcha", {
+					.post("/verify/refreshCaptcha", {
 						isGlobalLoading: false
 					})
 					.then(({ data }) => {
@@ -349,8 +349,8 @@
 				switch (text) {
 					case "password": {
 						let uPwd = that.valid.password;
-						var reg = uPwd.rule;
-						var isTrue = reg.test(uPwd.text);
+						let reg = uPwd.rule;
+						let isTrue = reg.test(uPwd.text);
 						if (!isTrue) {
 							uPwd.errorStatus = true;
 							uPwd.tips = "密码格式不正确，请输入正确的格式";
@@ -359,7 +359,7 @@
 						uPwd.errorStatus = false;
 						break;
 					}
-					case "confirmPassword":
+					case "confirmPassword": {
 						let cfPwd = that.valid.confirmPassword;
 						if (that.valid.password.text !== cfPwd.text) {
 							cfPwd.errorStatus = true;
@@ -368,18 +368,19 @@
 						}
 						cfPwd.errorStatus = false;
 						break;
-					case "userName":
+					}
+					case "userName": {
 						let uName = that.valid.userName;
-						var reg = uName.rule;
+						let reg = uName.rule;
 						let nameContent = uName.text;
-						var isTrue = reg.test(uName.text);
+						let isTrue = reg.test(uName.text);
 						if (!isTrue) {
 							uName.errorStatus = true;
 							uName.tips = "用户名格式不正确,请重新输入";
 							return;
 						}
 						that.$axios
-							.post("https://www.yansk.cn/verify/checkUserName", {
+							.post("/verify/checkUserName", {
 								username: nameContent,
 								isGlobalLoading: false
 							})
@@ -392,23 +393,26 @@
 								uName.errorStatus = false;
 							});
 						break;
-					case "captcha":
-						let captcha = that.valid.captcha;
-						let content = captcha.text;
+					}
+
+					case "captcha": {
+						let capt = that.valid.captcha;
+						let content = capt.text;
 						that.$axios
-							.post("https://www.yansk.cn/verify/checkCaptcha", {
+							.post("/verify/checkCaptcha", {
 								str: content,
 								isGlobalLoading: false
 							})
 							.then(({ data }) => {
 								if (!data) {
-									captcha.errorStatus = true;
-									captcha.tips = "验证码输入错误";
+									capt.errorStatus = true;
+									capt.tips = "验证码输入错误";
 									return;
 								}
-								captcha.errorStatus = false;
+								capt.errorStatus = false;
 							});
-						if (content) break;
+						break;
+					}
 				}
 			},
 			tipsStyle(target) {
@@ -434,7 +438,7 @@
 				that.isRequest = true;
 				debugger;
 				that.$axios
-					.post("https://www.yansk.cn/reg", {
+					.post("/reg", {
 						isGlobalLoading: false,
 						uname: that.valid.userName.text,
 						upwd: that.valid.password.text
@@ -451,13 +455,13 @@
 							});
 						}, 3000);
 					})
-					.catch(err => {
+					.catch(() => {
 						that.isRequest = false;
 					});
 			}
 		},
 		watch: {
-			submitForm_tips(val) {
+			submitForm_tips() {
 				setTimeout(() => {
 					this.submitForm_tips = "";
 				}, 3000);

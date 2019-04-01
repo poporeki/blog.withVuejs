@@ -17,6 +17,7 @@
 				</div>
 			</a>
 		</li>
+
 		<li v-if="isOver" style="text-align:center;">--THE END--</li>
 		<transition enter-active-class="animated fadeInDown" leave-active-class="animated flipOutX">
 			<li v-if="isResuestError" @click="this.getNewData">拉取数据失败，点击重试</li>
@@ -170,7 +171,8 @@
 						let list = datas.arclist;
 						if (!list) return;
 						list.map(value => {
-							that.$set(that.arcList, that.arcList.length, value);
+							that.arcList.push(value);
+							// that.$set(that.arcList, that.arcList.length, value);
 						});
 						that.page++;
 					})
@@ -212,6 +214,7 @@
 
 		created() {
 			this.getNewData();
+			this.listenerScroll();
 		}
 	};
 </script>

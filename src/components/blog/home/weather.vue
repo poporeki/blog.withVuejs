@@ -138,7 +138,7 @@
 			getWeather(geolo) {
 				let _this = this;
 				this.$axios
-					.get("https://www.yansk.cn/api/v1/weather/gettheday", {
+					.get("/api/v1/weather/gettheday", {
 						geolocation: geolo
 					})
 					.then(({ data }) => {

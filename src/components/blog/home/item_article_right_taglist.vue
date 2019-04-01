@@ -90,13 +90,6 @@
 				.lk-inner {
 					transform: rotateX(180deg);
 				}
-
-				/* .front {
-	          z-index: 0;
-	        }
-	        .back {
-	          z-index: 1;
-	        } */
 			}
 
 			&:active {
@@ -125,7 +118,7 @@
 				this.isRequest = true;
 				this.isRequestError = false;
 				this.$axios
-					.get("https://www.yansk.cn/blog/gettags")
+					.get("/blog/gettags")
 					.then(({ data }) => {
 						that.isRequest = false;
 						if (data.status) {

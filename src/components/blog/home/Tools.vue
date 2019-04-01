@@ -37,12 +37,18 @@
 
 <style lang="scss">
 	@import "~@/assets/iconfont/tools/iconfont.css";
+	section.tools {
+		display: flex;
+		flex-basis: 100%;
+		flex-direction: column;
+	}
 	.tool-list {
 		display: flex;
 		flex-direction: row;
 		margin: 20px 0;
+		flex-wrap: wrap;
 		.tool-list-item {
-			flex-basis: 20%;
+			flex-basis: 25%;
 			padding: 20px;
 			box-sizing: border-box;
 			transition: box-shadow 0.3s ease;

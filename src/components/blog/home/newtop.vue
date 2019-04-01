@@ -34,7 +34,10 @@
 						</div>
 						<div class="card-body">
 							<div class="pic-box" v-if="filterSrc(arc.content)!==''">
-								<img :src="filterSrc(arc.content)===''?'/images/exp.png':filterSrc(arc.content)" alt="img">
+								<img
+									v-lazy="filterSrc(arc.content)===''?'/images/exp.png':filterSrc(arc.content)"
+									alt="img"
+								>
 							</div>
 							<p>{{arc.source}}</p>
 						</div>
@@ -49,10 +52,19 @@
 </template>
 <style lang="scss" scoped>
 	@import "../../../assets/scss/mixins/_set-color.scss";
-
+	@keyframes flipXIn {
+		0% {
+			opacity: 0;
+			transform: scale(1) rotateX(-70deg);
+		}
+		100% {
+			opacity: 1;
+			transform: scale(1) rotateX(0);
+		}
+	}
 	.article-list {
 		position: relative;
-		width: 80%;
+		flex-basis: 80%;
 		min-height: 200px;
 		animation: translate_LeftToRight 1s forwards;
 		font-size: 0.28rem;
@@ -71,6 +83,11 @@
 			column-rule: 1px solid rgb(53, 53, 53);
 			width: 100%;
 			box-sizing: border-box;
+			@media (max-width: 768px) {
+				& {
+					column-count: 1;
+				}
+			}
 		}
 		.filpXIns {
 			animation: flipXIn 0.3s forwards;
@@ -264,17 +281,15 @@
 		methods: {
 			getNewArticleTopData() {
 				const that = this;
-				this.$axios
-					.get("https://www.yansk.cn/blog/getartlist")
-					.then(({ data }) => {
-						that.isRequest = false;
-						if (data.data === null || data.data.length === 0) {
-							that.isEmptyData = true;
-							return;
-						}
-						let arclist = data.data.arcList;
-						that.arclist = arclist;
-					});
+				this.$axios.get("/blog/getartlist").then(({ data }) => {
+					that.isRequest = false;
+					if (data.data === null || data.data.length === 0) {
+						that.isEmptyData = true;
+						return;
+					}
+					let arclist = data.data.arcList;
+					that.arclist = arclist;
+				});
 			},
 			filterSrc(str) {
 				var imgReg = /<img.*?(?:>|\/>)/gi;

@@ -3,6 +3,7 @@ import ArticleList from './articleList';
 import UpdateLog from './updatelog';
 import BlogLayout from '@/views/blog/LayoutIndexView.vue'
 import BlogHome from '@/views/blog/HomeView.vue'
+import User from './user'
 import Tools from '@/router/tools'
 
 const Defaults = {
@@ -19,5 +20,5 @@ export default {
   path: '/blog',
   name: 'blog',
   component: BlogLayout,
-  children: [Defaults, Article, ArticleList, UpdateLog, Tools]
+  children: [Defaults, Article, ArticleList, UpdateLog, Tools, User]
 }

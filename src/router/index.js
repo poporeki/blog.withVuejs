@@ -6,6 +6,7 @@ import About from '@/router/about'
 import Login from '@/router/login'
 import SignUp from '@/router/signup'
 import NotFound from './404.js'
+import Ganhuo from '@/router/ganhuo'
 
 Vue.use(Router)
 
@@ -40,6 +41,7 @@ export default new Router({
     Login,
     SignUp,
     NotFound,
+    Ganhuo,
     About
   ]
 })

@@ -4,60 +4,66 @@
 			<div class="dog">
 				<img src="/images/login_pic.png" alt>
 			</div>
-			<div class="inner">
-				<form action="/login" method="post" class="login-form">
-					<h2>登录</h2>
-					<div class="control">
-						<input
-							type="text"
-							v-model="username"
-							@focus="tipsUp"
-							class="form-control"
-							@blur="tipsUp"
-							autocomplete="off"
-							maxlength="14"
-							name="uname"
-							id="username"
-							@keyup.enter="login"
-						>
-						<div class="input-tips">
-							<i class="iconfont icon-head"></i>
-							<span>输入用户名</span>
+			<transition @after-leave="afterLeave" leave-active-class="logBoxOut">
+				<div class="inner" v-show="!success">
+					<form action="/login" method="post" class="login-form">
+						<h2>登录</h2>
+						<div :class="{control:true,active:nameInputFocus}">
+							<input
+								type="text"
+								v-model="username"
+								class="form-control"
+								autocomplete="off"
+								maxlength="14"
+								name="uname"
+								id="username"
+								@keyup.enter="login"
+								@focus="nameInputFocus=true"
+								@blur="username===''?nameInputFocus=false:''"
+							>
+							<div class="input-tips">
+								<i class="iconfont icon-head"></i>
+								<span>输入用户名</span>
+							</div>
 						</div>
-					</div>
-					<div class="control">
-						<input
-							type="password"
-							v-model="password"
-							@blur="tipsUp"
-							@focus="tipsUp"
-							class="form-control"
-							maxlength="16"
-							name="upwd"
-							id="upassword"
-							@keyup.enter="login"
-						>
-						<div class="input-tips">
-							<i class="iconfont icon-password"></i>
-							<span>输入密码</span>
+						<div :class="{control:true,active:pwdInputFocus}">
+							<input
+								type="password"
+								v-model="password"
+								class="form-control"
+								maxlength="16"
+								name="upwd"
+								id="upassword"
+								@keyup.enter="login"
+								@focus="pwdInputFocus=true"
+								@blur="password===''?pwdInputFocus=false:''"
+							>
+							<div class="input-tips">
+								<i class="iconfont icon-password"></i>
+								<span>输入密码</span>
+							</div>
 						</div>
-					</div>
-					<div class="login-btn-box">
-						<input @click="login" type="button" id="login_btn" class="login-btn" value="登录">
-						<span
-							:class="{'status-block':true,show:show,logining:logining,success:success,error:err,hide:hide}"
-						>
-							{{msg}}
+						<div class="login-btn-box">
+							<input @click="login" type="button" id="login_btn" class="login-btn" value="登录">
+							<transition
+								enter-active-class="animated  fadeInDown"
+								leave-active-class="animated  fadeOutDown"
+							>
+								<span
+									v-show="logining||success||err"
+									:class="{'status-block':true,logining:logining,success:success,error:err}"
+								>{{msg}}</span>
+							</transition>
 							<div v-if="logining" v-show="logining" class="loading-ani"></div>
-						</span>
+						</div>
+					</form>
+					<!-- <div class="copyright">By Yansk</div> -->
+					<div class="link-box">
+						<a href="/" class="btn back-btn">RETURN</a>
+						<a href="/reg" class="btn reg-btn">注册</a>
 					</div>
-				</form>
-				<!-- <div class="copyright">By Yansk</div> -->
-				<div class="link-box">
-					<a href="/" class="btn back-btn">RETURN</a>
-					<a href="/reg" class="btn reg-btn">注册</a>
 				</div>
-			</div>
+			</transition>
 		</div>
 	</div>
 </template>
@@ -240,18 +246,23 @@
 		}
 
 		&.success {
-			.inner {
-				animation-fill-mode: forwards;
-				animation-delay: 0.5s;
-				animation-duration: 1s;
-				animation-name: loginBox_out;
-			}
+			// .inner {
+			// 	animation-fill-mode: forwards;
+			// 	animation-delay: 0.5s;
+			// 	animation-duration: 1s;
+			// 	animation-name: loginBox_out;
+			// }
 
 			.dog {
 				animation: dog_out 0.5s forwards;
 			}
 		}
-
+		.logBoxOut {
+			animation-fill-mode: forwards;
+			animation-delay: 0.5s;
+			animation-duration: 1s;
+			animation-name: loginBox_out;
+		}
 		@keyframes dog_out {
 			0% {
 				opacity: 1;
@@ -434,7 +445,7 @@
 				text-align: center;
 				line-height: 30px;
 				transition: background-color 0.5s ease;
-				transform: translateY(-100%);
+				transform: translateY(0);
 
 				&.logining {
 					background-color: orange;
@@ -488,7 +499,9 @@
 				err: false,
 				logining: false,
 				hide: false,
-				show: false
+				show: false,
+				nameInputFocus: false,
+				pwdInputFocus: false
 			};
 		},
 		methods: {
@@ -498,7 +511,7 @@
 				this.show = true;
 				this.logining = true;
 				this.$axios
-					.post("https://www.yansk.cn/login", {
+					.post("/login", {
 						uname: this.username,
 						upwd: this.password,
 						isGlobalLoading: false
@@ -506,33 +519,41 @@
 					.then(({ data }) => {
 						that.logining = false;
 						let status = data.status;
-						let msg = data.msg;
+						let msg = data.msg[0].msg || data.msg;
 						if (status) {
 							that.success = true;
-							this.goBack();
+							that.msg = msg;
 						} else {
 							that.err = true;
 						}
 						that.msg = msg;
-						setTimeout(() => {
-							that.msg = "";
-
-							that.success = false;
-							that.err = false;
-							that.hide = true;
-							setTimeout(() => {
-								that.hide = false;
-								that.show = false;
-							}, 1500);
-						}, 2000);
+						that.animateReset(that);
 					});
 			},
-			goBack() {
-				// if (window.history.length > 1 || this.$route.matched) {
-				// 	this.$router.go(-1);
-				// }
-				this.$router.push("/");
+			/* 登陆成功后动画结束钩子 */
+			afterLeave(val) {
+				// 跳转之前页面
+				this.goBack();
 			},
+			animateReset(that) {
+				setTimeout(() => {
+					that.msg = "";
+					that.success = false;
+					that.err = false;
+					that.hide = true;
+					setTimeout(() => {
+						that.hide = false;
+						that.show = false;
+					}, 1500);
+				}, 2000);
+			},
+			goBack() {
+				if (window.history.length > 1 || this.$route.matched) {
+					this.$router.go(-1);
+				}
+				// this.$router.push("/");
+			},
+			/* input效果 */
 			tipsUp(event) {
 				console.log("focus");
 				let type = event.type;

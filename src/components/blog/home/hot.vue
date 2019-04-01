@@ -10,7 +10,7 @@
 					<a :href="'/blog/article/' + item.artid" class="hot-lk">
 						<span class="lt">
 							<img
-								:src="item.previewImage ? item.previewImage : '/images/exp.png'"
+								v-lazy="item.previewImage ? item.previewImage : '/images/exp.png'"
 								onerror="this.src='/images/exp.png'"
 								alt="images"
 							>
@@ -156,9 +156,6 @@
 							slidesPerView: 3,
 							spaceBetween: 10
 						}
-					},
-					scrollbar: {
-						el: ".swiper-scrollbar"
 					}
 				},
 				isShow: false,
@@ -168,13 +165,11 @@
 		methods: {
 			getData() {
 				let that = this;
-				this.$axios
-					.get("https://www.yansk.cn/api/v1/article/gettop")
-					.then(({ data }) => {
-						that.isRequest = false;
-						that.topData = data.data;
-						that.isShow = true;
-					});
+				this.$axios.get("/api/v1/article/gettop").then(({ data }) => {
+					that.isRequest = false;
+					that.topData = data.data;
+					that.isShow = true;
+				});
 			}
 		},
 		components: {

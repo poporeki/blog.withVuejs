@@ -14,7 +14,7 @@
 				<div class="arc-comm">
 					<img
 						class="head-pic"
-						:src="'https://www.yansk.cn'+(item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png')"
+						v-lazy="'https://www.yansk.cn'+(item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png')"
 						alt="头像"
 					>
 					{{item.author[0].user_name}} :
@@ -86,12 +86,12 @@
 				that.isRequest = true;
 				that.isRequestError = false;
 				this.$axios
-					.get("https://www.yansk.cn/api/v1/article/comment/gettop")
+					.get("/api/v1/article/comment/gettop")
 					.then(({ data }) => {
 						that.isRequest = false;
 						that.commlist = data;
 					})
-					.catch(err => {
+					.catch(() => {
 						that.isRequest = false;
 						that.isRequestError = true;
 					});

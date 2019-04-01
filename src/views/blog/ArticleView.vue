@@ -51,25 +51,23 @@
 		methods: {
 			getArticle() {
 				let that = this;
-				this.$axios
-					.get("https://www.yansk.cn/api/v1/article/get/" + this.arcid)
-					.then(({ data }) => {
-						let datas = data.data;
-						if (
-							data.status === undefined ||
-							data.code === 404 ||
-							data.status === 0 ||
-							data.status === false
-						) {
-							that.$router.replace({
-								path: "/404"
-							});
-							return;
-						}
-						that.isShow = true;
-						that.isComment();
-						that.articleData = datas;
-					});
+				this.$axios.get("/api/v1/article/get/" + this.arcid).then(({ data }) => {
+					let datas = data.data;
+					if (
+						data.status === undefined ||
+						data.code === 404 ||
+						data.status === 0 ||
+						data.status === false
+					) {
+						that.$router.replace({
+							path: "/404"
+						});
+						return;
+					}
+					that.isShow = true;
+					that.isComment();
+					that.articleData = datas;
+				});
 			},
 			isComment() {
 				this.$route.hash === "#comment" ? (this.isToComment = true) : "";

@@ -1,7 +1,14 @@
 <template>
-	<aside class="l-aside">
-		<a href="javascript:void(0);" class="sidebar-btn">
-			<p>YANSK</p>
+	<aside :class="{'l-aside':true,unfold:!isFold}">
+		<a
+			href="javascript:void(0);"
+			:class="{'sidebar-btn':true,go:isClicked}"
+			@mousemove="isFold=false"
+			@mouseleave="isFold=true"
+			@click="$route.path!=='/blog/user'?isClicked=true:''"
+			@touchstart="isFold=false"
+		>
+			<p>{{($store.state.userInfo.username).toUpperCase()||'YANSK'}}</p>
 		</a>
 		<img src="/images/logo.png" class="img-logo" alt="logo">
 		<ul class="navbar">
@@ -35,34 +42,57 @@
 		transition: transform 0.5s ease;
 		transform: translateX(-100%);
 		z-index: 1000;
+		&.unfold {
+			transform: translateX(0);
+		}
+		&:after {
+			content: "";
+			width: 100vw;
+			height: 100vh;
+			background-color: #000;
+			z-index: -1;
+		}
 		.sidebar-btn {
 			position: absolute;
 			top: 10%;
 			right: -50%;
 			width: 100%;
 			height: 0px;
+			max-width: 100px;
 			padding-top: 100%; //padding-bottom都可以
 			border-radius: 50%;
-			background-color: rgba(0, 0, 0, 0.932);
+
 			box-shadow: 0 0 20px #000;
 			z-index: 11;
 			transform: rotate(90deg);
 			transition: background-color 0.3s ease, transform 1s ease 0.5s;
-			overflow: hidden;
-			&.go {
-				p {
-					display: none;
-				}
+			&::after {
+				content: "";
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				left: 0;
+				top: 0;
+				border-radius: 50%;
+				background-color: rgba(0, 0, 0, 0.932);
+				z-index: 1;
+			}
+			&.go::after {
 				background-color: rgba(0, 0, 0, 1);
-				animation: goUser 0.5s forwards;
+				animation: goUser 2s forwards;
 			}
 			@keyframes goUser {
 				0% {
 					transform: rotate(0) scale(1);
+					z-index: 1000;
 				}
-				100% {
+				50% {
 					background-color: rgba(0, 0, 0, 1);
 					transform: rotate(0) scale(50);
+				}
+				100% {
+					transform: rotate(0) scale(1);
+					z-index: 1;
 				}
 			}
 			p {
@@ -77,6 +107,7 @@
 				letter-spacing: 5px;
 				transform: translateY(-100%);
 				transition: transform 0.5s ease;
+				z-index: 2;
 			}
 		}
 		&:hover {
@@ -90,6 +121,7 @@
 		}
 		.img-logo {
 			width: 100%;
+			max-width: 100px;
 		}
 		.navbar {
 			position: relative;
@@ -161,17 +193,28 @@
 	export default {
 		data() {
 			return {
-				navlist: []
+				navlist: [],
+				isFold: true,
+				isClicked: false
 			};
 		},
 		methods: {
 			getNavbar() {
 				let that = this;
-				this.$axios
-					.get("https://www.yansk.cn/api/v1/gethomenavbar")
-					.then(({ data }) => {
-						that.navlist = data.data;
+				this.$axios.get("/api/v1/gethomenavbar").then(({ data }) => {
+					that.navlist = data.data;
+				});
+			}
+		},
+		watch: {
+			isClicked(val) {
+				if (!val) return;
+				let that = this;
+				setTimeout(() => {
+					that.$router.push({
+						path: "/blog/user"
 					});
+				}, 500);
 			}
 		},
 		created() {

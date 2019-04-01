@@ -38,19 +38,17 @@
 			//获取日志列表
 			getLoglist() {
 				let that = this;
-				that.$axios
-					.get("https://www.yansk.cn/blog/log/getlist")
-					.then(({ data }) => {
-						let datas = data.data;
-						if (
-							datas === null ||
-							datas.logList === undefined ||
-							datas.logList.length === 0
-						) {
-							return;
-						}
-						that.logList = datas.logList;
-					});
+				that.$axios.get("/blog/log/getlist").then(({ data }) => {
+					let datas = data.data;
+					if (
+						datas === null ||
+						datas.logList === undefined ||
+						datas.logList.length === 0
+					) {
+						return;
+					}
+					that.logList = datas.logList;
+				});
 			}
 		},
 		created() {

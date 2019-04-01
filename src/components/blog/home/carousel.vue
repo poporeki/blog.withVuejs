@@ -12,7 +12,7 @@
 				<swiper-slide v-for="item in carouData" :key="item.id">
 					<a :href="'/blog/article/'+item.id">
 						<h3>{{item.title}}</h3>
-						<img :src="item.imgSrc!==''?item.imgSrc:''" :onerror="errorImg" alt="image">
+						<img v-lazy="item.imgSrc!==''?item.imgSrc:''" :onerror="errorImg" alt="image">
 					</a>
 				</swiper-slide>
 
@@ -204,13 +204,11 @@
 		methods: {
 			getData() {
 				let that = this;
-				this.$axios
-					.get("https://www.yansk.cn/api/v1/getCarousel")
-					.then(({ data }) => {
-						that.isRequest = false;
-						that.carouData = data.data;
-						that.isShow = true;
-					});
+				this.$axios.get("/api/v1/getCarousel").then(({ data }) => {
+					that.isRequest = false;
+					that.carouData = data.data;
+					that.isShow = true;
+				});
 			}
 		},
 		computed: {

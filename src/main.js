@@ -8,16 +8,24 @@ import progressive from "progressive-image/dist/vue";
 import "@/assets/scss/font_face.scss";
 import commonFn from '@/util/utils.js'
 import Highlight from '@/util/highlight';
-import rem from '@/util/rem';
+import VueLazyload from 'vue-lazyload'
+import {
+  BASE_URL
+} from '@/config/baseURL';
+import '@/util/rem';
 
-Vue.config.productionTip = false;
+Vue.use(VueLazyload);
+Vue.config.productionTip = true;
 Vue.component(VueQrcode.name, VueQrcode);
 Vue.use(Highlight);
 
+
+Axios.defaults.baseURL = BASE_URL;
+Axios.defaults.withCredentials = true;
+Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 Vue.prototype.commonFn = commonFn;
 Vue.prototype.$axios = Axios;
-
-Axios.defaults.withCredentials = true;
 
 router.beforeEach((to, from, next) => {
 
@@ -31,7 +39,7 @@ router.beforeEach((to, from, next) => {
     (store.state.isLoading = true) :
     "";
   // 用户时效验证
-  Axios.post("https://www.yansk.cn/auth").then(({
+  Axios.post(BASE_URL + "/auth").then(({
     data
   }) => {
     next();
@@ -49,7 +57,7 @@ router.beforeEach((to, from, next) => {
 });
 //定义一个请求拦截器
 Axios.interceptors.request.use(function (config) {
-  if (config.url === "https://www.yansk.cn/auth") return config;
+  if (config.url === BASE_URL + "/auth") return config;
   store.dispatch("showloader");
   if ((config.data && config.data.isGlobalLoading === false) || (config.params && config.params.isGlobalLoading === false)) {
     store.state.loading.isLoading = false;

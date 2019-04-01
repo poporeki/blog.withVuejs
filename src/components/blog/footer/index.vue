@@ -76,11 +76,11 @@
 				flex-direction: row;
 				padding: 20px;
 				box-sizing: border-box;
-				@media (max-width: 360px) {
-					& {
-						flex-direction: column;
-					}
-				}
+				// @media (max-width: 360px) {
+				// 	& {
+				// 		flex-direction: column;
+				// 	}
+				// }
 				.lk-item {
 					display: flex;
 					flex-grow: 1;

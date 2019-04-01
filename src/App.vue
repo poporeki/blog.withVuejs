@@ -17,6 +17,19 @@
 		width: 100%;
 		height: 100%;
 	}
+	img[lazy="loaded"] {
+		animation: fadeIn 0.5s;
+	}
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+			transform: translateY(-10%);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 </style>
 <script>
 	import Loading from "@/components/loading/Loading_global";

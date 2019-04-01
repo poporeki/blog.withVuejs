@@ -134,6 +134,14 @@
 			imgload() {
 				let bodyHeight = this.$refs.bg.clientHeight;
 				this.$refs.page.style.minHeight = bodyHeight + "px";
+			},
+			getWallpaper() {
+				let that = this;
+				this.$axios.get("/api/v1/bing").then(({ data }) => {
+					if (data.status !== true || data.data.url === "") return;
+					that.bg.original = data.data.url;
+					that.bg.lowRes = data.data.url;
+				});
 			}
 		},
 		components: {
@@ -143,7 +151,7 @@
 			"blog-background": Background
 		},
 		mounted() {
-			const _this = this;
+			const that = this;
 			let img = new Image();
 			if (!this.bg) return;
 			img.src = this.bg.original;
@@ -152,9 +160,10 @@
 			};
 
 			window.onresize = function temp() {
-				_this.imgload();
+				that.imgload();
 			};
-		}
+		},
+		created() {}
 	};
 </script>
 
