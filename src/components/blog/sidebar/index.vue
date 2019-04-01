@@ -8,7 +8,7 @@
 			@click="$route.path!=='/blog/user'?isClicked=true:''"
 			@touchstart="isFold=false"
 		>
-			<p>{{($store.state.userInfo.username).toUpperCase()||'YANSK'}}</p>
+			<p>{{JSON.stringify(user)!=='{}'?(user.username).toUpperCase():'YANSK'}}</p>
 		</a>
 		<img src="/images/logo.png" class="img-logo" alt="logo">
 		<ul class="navbar">
@@ -195,7 +195,8 @@
 			return {
 				navlist: [],
 				isFold: true,
-				isClicked: false
+				isClicked: false,
+				userName: ""
 			};
 		},
 		methods: {
@@ -215,6 +216,11 @@
 						path: "/blog/user"
 					});
 				}, 500);
+			}
+		},
+		computed: {
+			user() {
+				return this.$store.getters.user;
 			}
 		},
 		created() {
