@@ -5,10 +5,9 @@ import store from "./store";
 import Axios from "axios";
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import progressive from "progressive-image/dist/vue";
-import "@/assets/scss/font_face.scss";
 import commonFn from '@/util/utils.js'
 import Highlight from '@/util/highlight';
-import VueLazyload from 'vue-lazyload'
+import VueLazyload from 'vue-lazyload';
 import {
   BASE_URL
 } from '@/config/baseURL';

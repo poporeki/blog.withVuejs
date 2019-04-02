@@ -27,7 +27,6 @@
 </template>
 
 <style lang="scss">
-	@import "../../../assets/scss/mixins/_set-color.scss";
 	.swiper-button-next,
 	.swiper-button-prev {
 		background-image: none;

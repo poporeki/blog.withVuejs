@@ -13,14 +13,22 @@
 		<img src="/images/logo.png" class="img-logo" alt="logo">
 		<ul class="navbar">
 			<li class="aaa ani1">
-				<a href="/blog">
+				<router-link to="/blog">
 					<span>首页</span>
-				</a>
+				</router-link>
 			</li>
 			<li v-for="(item,idx) in navlist" :key="idx">
-				<a :href="'/blog/articlelist?by[type_id]='+item._id">
+				<router-link :to="'/blog/articlelist?by[type_id]='+item._id">
 					<span>{{item.type_name}}</span>
-				</a>
+				</router-link>
+			</li>
+			<li>
+				<router-link to="/blog/tools">
+					<span>工具集</span>
+				</router-link>
+			</li>
+			<li>
+				<a href="https://tu.yansk.cn">图库</a>
 			</li>
 			<li>
 				<a href="/iresume">

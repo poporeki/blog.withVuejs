@@ -1,14 +1,20 @@
 <template>
 	<transition enter-active-class="animated flipInX">
 		<ul class="navbar" v-if="isShow">
-			<li>
-				<a href="/blog">首页</a>
+			<li class="aaa ani1">
+				<router-link to="/blog">
+					<span>首页</span>
+				</router-link>
 			</li>
 			<li v-for="(item,idx) in navlist" :key="idx">
-				<a :href="'/blog/articlelist?by[type_id]='+item._id">{{item.type_name}}</a>
+				<router-link :to="'/blog/articlelist?by[type_id]='+item._id">
+					<span>{{item.type_name}}</span>
+				</router-link>
 			</li>
 			<li>
-				<a href="https://tu.yansk.cn">图库</a>
+				<router-link to="/blog/tools">
+					<span>工具集</span>
+				</router-link>
 			</li>
 			<li>
 				<a href="/iresume">个人简历</a>
@@ -18,8 +24,6 @@
 </template>
 
 <style lang="scss" scoped>
-	@import "../../../assets/scss/mixins/_set-color.scss";
-
 	ul.navbar {
 		display: flex;
 		flex-direction: row;

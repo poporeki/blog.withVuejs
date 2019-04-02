@@ -9,7 +9,7 @@
 			</h2>
 			<h2 class="list-tit" v-if="title===''||title===undefined">所有文章</h2>
 		</div>
-		<common-item :requestUrl="requestUrl" :title.sync="title"></common-item>
+		<common-item :requestUrl="originalRequestUrl" :title.sync="title"></common-item>
 	</div>
 </template>
 <style lang="scss">

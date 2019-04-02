@@ -1,6 +1,6 @@
 <template>
 	<section class="comment-block" id="comment">
-		<h3 @click="jisuan">发表评论</h3>
+		<h3>发表评论</h3>
 		<div class="add-comm clearfix">
 			<textarea
 				@keyup="typing($event)"
@@ -169,7 +169,6 @@
 	</section>
 </template>
 <style lang="scss">
-	@import "../../../assets/scss/mixins/_set-color.scss";
 	.comment-block {
 		font-size: 0.28rem;
 		h3 {
@@ -354,7 +353,6 @@
 		position: relative;
 		background-color: #000;
 		padding: 10px;
-
 		ul.list {
 			> li {
 				position: relative;
@@ -363,11 +361,9 @@
 				border-left: 5px solid #085e2c;
 				transition: border-color 0.4s ease, height 0.3s ease;
 				animation: fadeIn 0.5s;
-
 				&:hover {
 					border-color: #60bb46;
 				}
-
 				.head-pic {
 					position: relative;
 					width: 10vw;
@@ -376,7 +372,6 @@
 					max-height: 80px;
 					margin-top: 5px;
 					box-sizing: border-box;
-
 					a {
 						display: block;
 						height: 100%;
@@ -384,7 +379,6 @@
 						border-top-left-radius: 50%;
 						overflow: hidden;
 						transition: all 0.3s ease;
-
 						> img {
 							height: 100%;
 						}
@@ -575,7 +569,6 @@
 			submitToComment(commid, idx) {
 				let that = this;
 				let url = "/api/v1/article/comment/submitReply";
-				debugger;
 				this.$axios
 					.post(url, {
 						isGlobalLoading: false,
@@ -613,7 +606,6 @@
 						reply_id: replyid
 					})
 					.then(({ data }) => {
-						debugger;
 						if (data.status === true) {
 							that.replyContent = "";
 							that.commList[commidx].commReps[replyidx].status = false;
@@ -654,39 +646,6 @@
 				}
 				replyBoxStatus[commIdx].status = !replyBoxStatus[commIdx].status;
 			},
-			init(that, commlist) {
-				return new Promise(resolve => {
-					let comms = commlist;
-					let length =
-						that.replyBoxStatus.length === 0 ? 0 : that.replyBoxstatus.length - 1;
-					if (typeof comms == "undefined") return resolve();
-					debugger;
-					comms.map((comm, index) => {
-						that.$set(that.replyBoxStatus, length + index, {
-							status: false,
-							reply: []
-						});
-						let replyArr = comm.commReps;
-						if (
-							replyArr === undefined ||
-							replyArr === null ||
-							typeof replyArr === "undefined" ||
-							replyArr.length === 0
-						) {
-							return;
-						}
-						replyArr.map((reply, repidx) => {
-							that.$set(
-								that.replyBoxStatus[index].reply,
-
-								repidx,
-								{ status: false }
-							);
-						});
-					});
-					resolve();
-				});
-			},
 			pushCommentData(that, commlist, commidx) {
 				return new Promise(resolve => {
 					let comms = commlist;
@@ -721,13 +680,6 @@
 					});
 					resolve();
 				});
-			},
-			jisuan() {
-				console.log(this.artTotal > this.artComms.length) &&
-					(this.isEnd !== true || this.isRequestError !== true);
-				console.log(`${this.artTotal > this.artComms.length}`);
-				console.log(`${this.isEnd !== true}`);
-				console.log(`${this.isRequestError !== true}`);
 			},
 			/* 获取更多评论 */
 			getMoreComment() {

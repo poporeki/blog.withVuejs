@@ -1,120 +1,127 @@
 <template>
-	<div class="su-wrapper">
-		<div class="su-title">
-			<h1>注册账号</h1>
-		</div>
-		<form class="su-box">
-			<ul class="form-list">
-				<li class="form-item u-name">
-					<div class="tit-box">
-						用户名
-						<small>(仅允许中文、英文、数字、'_',长度4-12位)</small>
+	<transition enter-active-class="scaleIn_2X">
+		<div class="page-wrapper">
+			<div class="su-wrapper">
+				<div class="su-title">
+					<h1>注册账号</h1>
+				</div>
+				<form class="su-box">
+					<ul class="form-list">
+						<li class="form-item u-name">
+							<div class="tit-box">
+								用户名
+								<small>(仅允许中文、英文、数字、'_',长度4-12位)</small>
+							</div>
+							<div class="body-box">
+								<input
+									type="text"
+									data-status="0"
+									maxlength="12"
+									autocomplete="off"
+									:class="{username:true,true:valid.userName.isChecked&&!valid.userName.errorStatus,error:valid.userName.isChecked&&valid.userName.errorStatus}"
+									name="uname"
+									val="账号"
+									v-model="valid.userName.text"
+									@keyup.enter="submitForm"
+									@keyup.prevent="checkInput('userName')"
+								>
+								<transition
+									enter-active-class="animated fadeInDown"
+									leave-active-class="animated fadeOutUp"
+									v-if="valid.userName.isChecked&&valid.userName.errorStatus===true"
+								>
+									<div :class="{'tips-box':true,error:true}">{{valid.userName.tips}}</div>
+								</transition>
+							</div>
+						</li>
+						<li class="form-item u-password">
+							<div class="tit-box">密码</div>
+							<div class="body-box">
+								<input
+									type="password"
+									id="password"
+									:class="{password:true,true:valid.password.isChecked&&!valid.password.errorStatus,error:valid.password.isChecked&&valid.password.errorStatus}"
+									name="upwd"
+									val="账号"
+									v-model="valid.password.text"
+									@keyup.enter="submitForm"
+									@keyup.prevent="checkInput('password')"
+								>
+								<transition
+									enter-active-class="animated fadeInDown"
+									leave-active-class="animated fadeOutUp"
+									v-if="valid.password.isChecked&&valid.password.errorStatus"
+								>
+									<div :class="{'tips-box':true,error:true}">{{valid.password.tips}}</div>
+								</transition>
+							</div>
+						</li>
+						<li class="form-item check-password">
+							<div class="tit-box">确认密码</div>
+							<div class="body-box">
+								<input
+									type="password"
+									:class="{'check-password':true,true:valid.confirmPassword.isChecked&&!valid.confirmPassword.errorStatus,error:valid.confirmPassword.isChecked&&valid.confirmPassword.errorStatus}"
+									name="a-password"
+									val="账号"
+									v-model="valid.confirmPassword.text"
+									@keyup.enter="submitForm"
+									@keyup.prevent="checkInput('confirmPassword')"
+								>
+								<transition
+									enter-active-class="animated fadeInDown"
+									leave-active-class="animated fadeOutUp"
+									v-if="valid.confirmPassword.isChecked&&valid.confirmPassword.errorStatus"
+								>
+									<div :class="{'tips-box':true,error:true}">{{valid.confirmPassword.tips}}</div>
+								</transition>
+							</div>
+						</li>
+						<li class="form-item captcha">
+							<div class="tit-box">验证码</div>
+							<div class="body-box">
+								<input
+									type="text"
+									:class="{captcha:true,true:valid.captcha.isChecked&&!valid.captcha.errorStatus,error:valid.captcha.isChecked&&valid.captcha.errorStatus}"
+									autocomplete="off"
+									name="su_captcha"
+									val="账号"
+									maxlength="5"
+									v-model="valid.captcha.text"
+									@keyup.enter="submitForm"
+									@keyup.prevent="checkInput('captcha')"
+								>
+								<img :src="valid.captcha.captchaData" alt="captcha" class="captcha-img" @click="getCaptcha">
+								<transition
+									enter-active-class="animated fadeInDown"
+									leave-active-class="animated fadeOutUp"
+									v-if="valid.captcha.isChecked&&valid.captcha.errorStatus"
+								>
+									<div :class="{'tips-box':true,error:true}">{{valid.captcha.tips}}</div>
+								</transition>
+							</div>
+						</li>
+					</ul>
+					<a href="javascript:void(0);" class="su-submit-btn" @click.prevent="submitForm">注册</a>
+					<div class="loading-ani" v-if="isRequest"></div>
+					<div :class="{'su-tips':true,show:this.submitForm_tips!==''}">
+						<span>
+							{{submitForm_tips}}
+							<small></small>
+						</span>
 					</div>
-					<div class="body-box">
-						<input
-							type="text"
-							data-status="0"
-							maxlength="12"
-							autocomplete="off"
-							:class="{username:true,true:valid.userName.isChecked&&!valid.userName.errorStatus,error:valid.userName.isChecked&&valid.userName.errorStatus}"
-							name="uname"
-							val="账号"
-							v-model="valid.userName.text"
-							@keyup.enter="submitForm"
-							@keyup.prevent="checkInput('userName')"
-						>
-						<transition
-							enter-active-class="animated fadeInDown"
-							leave-active-class="animated fadeOutUp"
-							v-if="valid.userName.isChecked&&valid.userName.errorStatus===true"
-						>
-							<div :class="{'tips-box':true,error:true}">{{valid.userName.tips}}</div>
-						</transition>
-					</div>
-				</li>
-				<li class="form-item u-password">
-					<div class="tit-box">密码</div>
-					<div class="body-box">
-						<input
-							type="password"
-							id="password"
-							:class="{password:true,true:valid.password.isChecked&&!valid.password.errorStatus,error:valid.password.isChecked&&valid.password.errorStatus}"
-							name="upwd"
-							val="账号"
-							v-model="valid.password.text"
-							@keyup.enter="submitForm"
-							@keyup.prevent="checkInput('password')"
-						>
-						<transition
-							enter-active-class="animated fadeInDown"
-							leave-active-class="animated fadeOutUp"
-							v-if="valid.password.isChecked&&valid.password.errorStatus"
-						>
-							<div :class="{'tips-box':true,error:true}">{{valid.password.tips}}</div>
-						</transition>
-					</div>
-				</li>
-				<li class="form-item check-password">
-					<div class="tit-box">确认密码</div>
-					<div class="body-box">
-						<input
-							type="password"
-							:class="{'check-password':true,true:valid.confirmPassword.isChecked&&!valid.confirmPassword.errorStatus,error:valid.confirmPassword.isChecked&&valid.confirmPassword.errorStatus}"
-							name="a-password"
-							val="账号"
-							v-model="valid.confirmPassword.text"
-							@keyup.enter="submitForm"
-							@keyup.prevent="checkInput('confirmPassword')"
-						>
-						<transition
-							enter-active-class="animated fadeInDown"
-							leave-active-class="animated fadeOutUp"
-							v-if="valid.confirmPassword.isChecked&&valid.confirmPassword.errorStatus"
-						>
-							<div :class="{'tips-box':true,error:true}">{{valid.confirmPassword.tips}}</div>
-						</transition>
-					</div>
-				</li>
-				<li class="form-item captcha">
-					<div class="tit-box">验证码</div>
-					<div class="body-box">
-						<input
-							type="text"
-							:class="{captcha:true,true:valid.captcha.isChecked&&!valid.captcha.errorStatus,error:valid.captcha.isChecked&&valid.captcha.errorStatus}"
-							autocomplete="off"
-							name="su_captcha"
-							val="账号"
-							maxlength="5"
-							v-model="valid.captcha.text"
-							@keyup.enter="submitForm"
-							@keyup.prevent="checkInput('captcha')"
-						>
-						<img :src="valid.captcha.captchaData" alt="captcha" class="captcha-img" @click="getCaptcha">
-						<transition
-							enter-active-class="animated fadeInDown"
-							leave-active-class="animated fadeOutUp"
-							v-if="valid.captcha.isChecked&&valid.captcha.errorStatus"
-						>
-							<div :class="{'tips-box':true,error:true}">{{valid.captcha.tips}}</div>
-						</transition>
-					</div>
-				</li>
-			</ul>
-			<a href="javascript:void(0);" class="su-submit-btn" @click.prevent="submitForm">注册</a>
-			<div class="loading-ani" v-if="isRequest"></div>
-			<div :class="{'su-tips':true,show:this.submitForm_tips!==''}">
-				<span>
-					{{submitForm_tips}}
-					<small></small>
-				</span>
+				</form>
 			</div>
-		</form>
-	</div>
+		</div>
+	</transition>
 </template>
 
-<style lang="scss">
-	@import "../assets/scss/mixins/_set-color.scss";
-	@import "../assets/scss/mixins/_animation.scss";
+<style lang="scss" scoped>
+	.page-wrapper {
+		position: relative;
+		width: 100vw;
+		height: 100vh;
+	}
 	.loading-ani {
 		position: absolute;
 		width: 100%;
@@ -305,13 +312,13 @@
 						text: "",
 						tips: ""
 					} /* ,
-																																														phoneNumber: {
-																																															isChecked: false,
-																																															text: "",
-																																															rule: /^1[3-9]\d{9}$/,
-																																															errorStatus: false,
-																																															tips: ""
-																																														} */,
+																																																																																		phoneNumber: {
+																																																																																			isChecked: false,
+																																																																																			text: "",
+																																																																																			rule: /^1[3-9]\d{9}$/,
+																																																																																			errorStatus: false,
+																																																																																			tips: ""
+																																																																																		} */,
 					captcha: {
 						captchaData: "",
 						isChecked: false,
@@ -346,74 +353,28 @@
 					that.valid[text].errorStatus = true;
 					return;
 				}
-				switch (text) {
-					case "password": {
-						let uPwd = that.valid.password;
-						let reg = uPwd.rule;
-						let isTrue = reg.test(uPwd.text);
-						if (!isTrue) {
-							uPwd.errorStatus = true;
-							uPwd.tips = "密码格式不正确，请输入正确的格式";
-							return;
-						}
-						uPwd.errorStatus = false;
-						break;
-					}
-					case "confirmPassword": {
-						let cfPwd = that.valid.confirmPassword;
-						if (that.valid.password.text !== cfPwd.text) {
-							cfPwd.errorStatus = true;
-							cfPwd.tips = "密码不一致，请输入正确密码";
-							return;
-						}
-						cfPwd.errorStatus = false;
-						break;
-					}
-					case "userName": {
-						let uName = that.valid.userName;
-						let reg = uName.rule;
-						let nameContent = uName.text;
-						let isTrue = reg.test(uName.text);
-						if (!isTrue) {
-							uName.errorStatus = true;
-							uName.tips = "用户名格式不正确,请重新输入";
-							return;
-						}
-						that.$axios
-							.post("/verify/checkUserName", {
-								username: nameContent,
-								isGlobalLoading: false
-							})
-							.then(({ data }) => {
-								if (!data) {
-									uName.errorStatus = true;
-									uName.tips = "此名字已被注册";
-									return;
-								}
-								uName.errorStatus = false;
-							});
-						break;
-					}
+				let upText = text.substring(0, 1).toUpperCase() + text.substring(1);
+				if (typeof that["check" + upText] === "undefined") return;
+				that["check" + upText](that.valid[text]);
+				/* switch (text) {
+											case "password": {
+												that.checkPassword(that.valid[text]);
+												break;
+											}
+											case "confirmPassword": {
+												that.checkConfirmPassword(that.valid[text]);
+												break;
+											}
+											case "userName": {
+												that.checkUserName(that.valid[text]);
+												break;
+											}
 
-					case "captcha": {
-						let capt = that.valid.captcha;
-						let content = capt.text;
-						that.$axios
-							.post("/verify/checkCaptcha", {
-								str: content,
-								isGlobalLoading: false
-							})
-							.then(({ data }) => {
-								if (!data) {
-									capt.errorStatus = true;
-									capt.tips = "验证码输入错误";
-									return;
-								}
-								capt.errorStatus = false;
-							});
-						break;
-					}
-				}
+											case "captcha": {
+												that.checkCaptcha(that.valid[text]);
+												break;
+											}
+										} */
 			},
 			tipsStyle(target) {
 				return {
@@ -424,7 +385,67 @@
 						this.valid[target].errorStatus === false
 				};
 			},
-			checkForm() {},
+			checkPassword(valid) {
+				let uPwd = valid;
+				let reg = uPwd.rule;
+				let isTrue = reg.test(uPwd.text);
+				if (!isTrue) {
+					uPwd.errorStatus = true;
+					uPwd.tips = "密码格式不正确，请输入正确的格式";
+					return;
+				}
+				uPwd.errorStatus = false;
+			},
+			checkConfirmPassword(valid) {
+				let cfPwd = valid;
+				if (this.valid.password.text !== cfPwd.text) {
+					cfPwd.errorStatus = true;
+					cfPwd.tips = "密码不一致，请输入正确密码";
+					return;
+				}
+				cfPwd.errorStatus = false;
+			},
+			checkUserName(valid) {
+				let uName = valid;
+				let reg = uName.rule;
+				let nameContent = uName.text;
+				let isTrue = reg.test(uName.text);
+				if (!isTrue) {
+					uName.errorStatus = true;
+					uName.tips = "用户名格式不正确,请重新输入";
+					return;
+				}
+				this.$axios
+					.post("/verify/checkUserName", {
+						username: nameContent,
+						isGlobalLoading: false
+					})
+					.then(({ data }) => {
+						if (!data) {
+							uName.errorStatus = true;
+							uName.tips = "此名字已被注册";
+							return;
+						}
+						uName.errorStatus = false;
+					});
+			},
+			checkCaptcha(vaild) {
+				let capt = vaild;
+				let content = capt.text;
+				this.$axios
+					.post("/verify/checkCaptcha", {
+						str: content,
+						isGlobalLoading: false
+					})
+					.then(({ data }) => {
+						if (!data) {
+							capt.errorStatus = true;
+							capt.tips = "验证码输入错误";
+							return;
+						}
+						capt.errorStatus = false;
+					});
+			},
 			/* 提交表单 */
 			submitForm() {
 				let that = this;
@@ -436,7 +457,6 @@
 					}
 				}
 				that.isRequest = true;
-				debugger;
 				that.$axios
 					.post("/reg", {
 						isGlobalLoading: false,

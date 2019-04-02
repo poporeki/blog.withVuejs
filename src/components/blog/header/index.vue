@@ -11,8 +11,6 @@
 </template>
 
 <style lang="scss">
-	@import "../../../assets/scss/mixins/_set-color.scss";
-
 	@font-face {
 		font-family: "Loto";
 		src: url("https://fonts.googleapis.com/css?family=Lato:300");

@@ -1,4 +1,4 @@
-import Updatelog from '../../components/blog/updatelog';
+import Updatelog from '@/views/blog/UpdateLogView';
 export default {
     path: 'log',
     component: Updatelog,

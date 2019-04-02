@@ -34,8 +34,6 @@
 	</div>
 </template>
 <style lang="scss" scoped>
-	@import "../../../assets/scss/mixins/_set-color.scss";
-
 	.hot-list {
 		position: relative;
 		display: flex;

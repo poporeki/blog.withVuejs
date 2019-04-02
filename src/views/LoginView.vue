@@ -59,8 +59,8 @@
 					</form>
 					<!-- <div class="copyright">By Yansk</div> -->
 					<div class="link-box">
-						<a href="/" class="btn back-btn">RETURN</a>
-						<a href="/reg" class="btn reg-btn">注册</a>
+						<router-link to="/" class="btn back-btn">HOME</router-link>
+						<router-link to="signup" class="btn reg-btn">注册</router-link>
 					</div>
 				</div>
 			</transition>
@@ -102,8 +102,8 @@
 
 	.wrapper {
 		position: relative;
-		width: 100%;
-		height: 100%;
+		width: 100vw;
+		height: 100vh;
 		perspective: 1500px;
 		-webkit-perspective: 1500px;
 		transform-style: preserve-3d;

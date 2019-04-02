@@ -1,7 +1,24 @@
+.fadeIn {
+  animation: fadeIn .5s forwards;
+}
+
+.fadeOut {
+  animation: fadeOut .5s forwards;
+}
+
+.scaleIn {
+  animation: scaleIn .5s forwards;
+}
+
+.scaleIn_2X {
+  animation: scaleIn_2x .5s forwards;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -11,8 +28,21 @@
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes fadeInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -21,6 +51,7 @@
     opacity: 0;
     transform: scale(0);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -32,17 +63,19 @@
     opacity: 0;
     transform: scale(2);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
   }
 }
 
-@keyframes translate_LeftToRight {
+@keyframes translateXToRight {
   0% {
     opacity: 0;
     transform: translateX(-20%);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -54,6 +87,7 @@
     opacity: 0;
     transform: scale(1) rotateX(-70deg);
   }
+
   100% {
     opacity: 1;
     transform: scale(1) rotateX(0);

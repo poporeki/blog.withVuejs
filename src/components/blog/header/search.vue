@@ -45,8 +45,6 @@
 </template>
 
 <style lang="scss" scoped>
-	@import "../../../assets/scss/mixins/_set-color.scss";
-
 	.highlight {
 		color: rgb(255, 166, 0);
 

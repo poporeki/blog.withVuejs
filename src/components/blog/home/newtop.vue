@@ -1,11 +1,13 @@
 <template>
-	<div class="article-list">
+	<div class="section-list">
 		<h2 class="title">
 			最新文章
 			<a href="blog/articlelist">MORE</a>
 		</h2>
-		<Loading :isLoading="isRequest"></Loading>
-		<transition-group tag="ul" enter-active-class="filpXIns">
+		<div style="min-height:400px;position:relative;" v-if="isRequest">
+			<Loading :isLoading="isRequest"></Loading>
+		</div>
+		<transition-group tag="ul" enter-active-class="filpXIns" class="article-list" v-show="!isRequest">
 			<li v-if="isEmptyData" :key="0">没有数据</li>
 			<li v-for="arc in arclist" :key="arc.id">
 				<router-link :to="'blog/article/'+arc.id">
@@ -48,25 +50,15 @@
 				<a href="javascript:void(0);" @click="getNewArticleTopData">请求数据失败，请重试</a>
 			</li>
 		</transition-group>
+		<slot></slot>
 	</div>
 </template>
 <style lang="scss" scoped>
-	@import "../../../assets/scss/mixins/_set-color.scss";
-	@keyframes flipXIn {
-		0% {
-			opacity: 0;
-			transform: scale(1) rotateX(-70deg);
-		}
-		100% {
-			opacity: 1;
-			transform: scale(1) rotateX(0);
-		}
-	}
-	.article-list {
+	.section-list {
 		position: relative;
 		flex-basis: 80%;
 		min-height: 200px;
-		animation: translate_LeftToRight 1s forwards;
+		animation: translateXToRight 1s forwards;
 		font-size: 0.28rem;
 		> .title {
 			> a {

@@ -114,12 +114,14 @@
 
 <script>
 	import LoadingItem from "@/components/loading/Loading_01";
+	import qs from "qs";
 	export default {
 		components: { LoadingItem },
 		data() {
 			return {
 				page: 1,
 				isInit: false,
+				querystring: "",
 				isResuestError: false,
 				limit: 10,
 				isOver: false,
@@ -151,15 +153,18 @@
 					this.getNewData();
 				}
 			},
+			// 获取相关文章列表
 			getNewData() {
 				const that = this;
 				if (!this.requestUrl) return;
 				this.isResuestError = false;
 				this.isRequest = true;
+				let params = {};
+				that.querystring !== "" ? (params = that.querystring) : "";
+				params["page"] = this.page;
+				params["limit"] = this.limit;
 				this.$axios
-					.get(this.requestUrl, {
-						params: { page: this.page, limit: this.limit, isGlobalLoading: false }
-					})
+					.get(this.requestUrl, { params })
 					.then(({ data }) => {
 						that.isRequest = false;
 						let datas = data.data;
@@ -169,7 +174,12 @@
 						}
 						that.isScroll = false;
 						let list = datas.arclist;
+						let searchedName = data.data.searchedName || "";
+						if (searchedName !== "") {
+							that.$emit("update:title", searchedName);
+						}
 						if (!list) return;
+
 						list.map(value => {
 							that.arcList.push(value);
 							// that.$set(that.arcList, that.arcList.length, value);
@@ -211,8 +221,21 @@
 				});
 			}
 		},
-
+		watch: {
+			// 监听路由query信息
+			$route(val, oldVal) {
+				if (val.query === oldVal.query) return;
+				//重置内容
+				let query = val.query;
+				this.arcList = [];
+				this.page = 1;
+				this.querystring = query ? qs.parse(query) : "";
+				this.getNewData();
+			}
+		},
 		created() {
+			let query = this.$route.query;
+			this.querystring = query ? qs.parse(query) : "";
 			this.getNewData();
 			this.listenerScroll();
 		}

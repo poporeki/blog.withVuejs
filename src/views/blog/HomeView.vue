@@ -4,9 +4,10 @@
 		<item-classify></item-classify>
 		<item-weather></item-weather>
 		<div class="sections-wrapper">
-			<item-newarts></item-newarts>
+			<item-left>
+				<item-tools></item-tools>
+			</item-left>
 			<item-right></item-right>
-			<item-tools></item-tools>
 		</div>
 	</div>
 </template>
@@ -38,7 +39,7 @@
 			"item-hottop": TopItem,
 			"item-classify": Classify,
 			"item-weather": Weather,
-			"item-newarts": secArticle,
+			"item-left": secArticle,
 			"item-tools": Tools,
 			"item-right": secRight
 		}

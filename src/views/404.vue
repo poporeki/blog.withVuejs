@@ -7,16 +7,19 @@
 			</div>
 			<div class="con-box">
 				<h1 class="title">WTF!!! -Page Not Found</h1>
-				<a class="back-btn" href="/">回去首页</a>
+				<router-link to="/" class="back-btn">回去首页</router-link>
 			</div>
 		</div>
 	</div>
 </template>
 <style lang="scss" scoped>
+	$bgColor: #446072;
+	$boxColor: #566f7f;
+	$fontColor: #fff;
 	.wrap {
-		width: 100%;
-		height: 100%;
-		background-color: #446072;
+		width: 100vw;
+		height: 100vh;
+		background-color: $bgColor;
 	}
 	.con-box {
 		position: relative;
@@ -26,7 +29,7 @@
 		align-items: center;
 		width: 100%;
 		height: 100%;
-		color: #fff;
+		color: $fontColor;
 		overflow: hidden;
 		.title,
 		.back-btn {
@@ -61,7 +64,7 @@
 		top: 50%;
 		left: 50%;
 		border: 5px solid #374d5b;
-		background-color: #566f7f;
+		background-color: $boxColor;
 		box-shadow: 0 0 20px rgba(0, 0, 0, 0.747) inset;
 		border-radius: 10px;
 		transform: translate(-50%, -50%);

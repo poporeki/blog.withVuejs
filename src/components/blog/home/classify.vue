@@ -17,7 +17,6 @@
 	</section>
 </template>
 <style lang="scss">
-	@import "../../../assets/scss/mixins/_set-color.scss";
 	section.classify {
 		position: relative;
 		width: 100%;

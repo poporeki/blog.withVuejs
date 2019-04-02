@@ -5,19 +5,19 @@
 				<Login v-if="isShowLogin" v-on:isClose="isLoginClose"></Login>
 			</transition>
 			<transition enter-active-class="animated fadeInRight">
-				<div class="box-inner" v-if="!this.$store.state.isLogin">
+				<div class="box-inner" v-if="!isLogin">
 					<div class="link-box">
 						<a href="javascript:void(0);" @click="isShowLogin=true;">登陆</a>
 					</div>
 					<div class="link-box">
-						<router-link to="/reg">注册</router-link>
+						<router-link to="/signup">注册</router-link>
 					</div>
 				</div>
 			</transition>
 			<transition enter-active-class="animated fadeInRight">
-				<div class="box-inner" v-if="this.$store.state.isLogin">
+				<div class="box-inner" v-if="isLogin">
 					<div class="link-box" v-if="1">
-						<a href="javascript:void(0);" @click="logout">控制台</a>
+						<a href="https://www.yansk.cn/backend" target="_blank">控制台</a>
 					</div>
 					<div class="link-box">
 						<a href="javascript:void(0);" @click="logout">退出登录</a>
@@ -107,6 +107,7 @@
 
 <script>
 	import Login from "../login";
+	import { mapState } from "vuex";
 	export default {
 		data() {
 			return {
@@ -130,9 +131,7 @@
 			}
 		},
 		computed: {
-			isLoading() {
-				return this.$store.state.isLoading;
-			}
+			...mapState(["isLogin", "isLoading"])
 		},
 		components: {
 			Login

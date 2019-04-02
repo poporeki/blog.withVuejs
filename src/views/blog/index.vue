@@ -2,12 +2,7 @@
 	<div class="blog-page" @scroll="imgload">
 		<blog-header></blog-header>
 		<div class="body" ref="page">
-			<transition
-				enter-active-class="animated  lightSpeedIn"
-				leave-active-class="animated bounceOutDown"
-			>
-				<router-view/>
-			</transition>
+			<router-view/>
 		</div>
 		<img src alt>
 		<div class="bg-block">
@@ -23,11 +18,10 @@
 </template>
 
 <style lang="scss">
-	@import "../../assets/scss/mixins/_set-color.scss";
-	html {
-		height: 100%;
-		width: 100%;
-	}
+	// html {
+	// 	height: 100%;
+	// 	width: 100%;
+	// }
 
 	html,
 	body {

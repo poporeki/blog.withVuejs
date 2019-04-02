@@ -5,30 +5,20 @@
 	</div>
 </template>
 <style lang="scss">
-	html {
-		width: 100%;
-		height: 100%;
-	}
+	// html {
+	// 	width: 100%;
+	// 	height: 100%;
+	// }
 	body {
 		position: relative;
 	}
 	#app {
 		position: relative;
-		width: 100%;
-		height: 100%;
+		// width: 100%;
+		// height: 100%;
 	}
 	img[lazy="loaded"] {
-		animation: fadeIn 0.5s;
-	}
-	@keyframes fadeIn {
-		0% {
-			opacity: 0;
-			transform: translateY(-10%);
-		}
-		100% {
-			opacity: 1;
-			transform: translateY(0);
-		}
+		animation: fadeInTop 0.5s;
 	}
 </style>
 <script>

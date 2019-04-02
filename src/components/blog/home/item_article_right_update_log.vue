@@ -3,7 +3,7 @@
 		<h2 class="title">
 			更新日志
 			<small>
-				<a href="/blog/log">More</a>
+				<router-link to="/blog/log">More</router-link>
 			</small>
 		</h2>
 		<ul class="log-list">

@@ -1,6 +1,10 @@
 <template>
 	<section class="tools">
-		<h2 class="tit">工具</h2>
+		<rule-line></rule-line>
+		<h2 class="tit">
+			工具
+			<small style="cursor:pointer;" @click="$router.push({path:'/blog/tools'})">More</small>
+		</h2>
 		<ul class="tool-list">
 			<li class="tool-list-item">
 				<router-link to="/blog/tools/qrcode">
@@ -16,7 +20,7 @@
 				</router-link>
 			</li>
 			<li class="tool-list-item">
-				<router-link to="/blog/tools/qrcode">
+				<router-link to="/blog/tools/postcode">
 					<div class="tool-box">
 						<div class="tool-icon">
 							<i class="iconfont icon-free-postage"></i>
@@ -28,7 +32,19 @@
 					</div>
 				</router-link>
 			</li>
-			<li class="tool-list-item">1</li>
+			<li class="tool-list-item">
+				<router-link to="/blog/tools/postcode">
+					<div class="tool-box">
+						<div class="tool-icon">
+							<i class="iconfont icon-format-color-fill"></i>
+						</div>
+						<div class="tool-content">
+							<div class="tit">拾色器</div>
+							<div class="info">颜色拾取</div>
+						</div>
+					</div>
+				</router-link>
+			</li>
 			<li class="tool-list-item">1</li>
 			<li class="tool-list-item">1</li>
 		</ul>
@@ -41,6 +57,7 @@
 		display: flex;
 		flex-basis: 100%;
 		flex-direction: column;
+		font-size: 0.26rem;
 	}
 	.tool-list {
 		display: flex;
@@ -72,7 +89,7 @@
 	.tool-content {
 		padding-left: 10px;
 		.tit {
-			font-size: 1.5em;
+			font-size: 1.1em;
 			font-weight: bold;
 		}
 		.info {
@@ -85,6 +102,9 @@
 </style>
 
 <script>
-	export default {};
+	import RuleLine from "@/components/ruleLine.vue";
+	export default {
+		components: { RuleLine }
+	};
 </script>
 
