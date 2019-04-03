@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<loading-item :isLoading="isRequest"></loading-item>
 		<transition enter-active-class="animated fadeInUp">
 			<section class="article-wrapper" v-if="isShow">
 				<bread-crumb
@@ -34,11 +35,14 @@
 	import BreadCrumb from "@/components/blog/article/BreadcrumbItem";
 	import ArticleContent from "@/components/blog/article/ArcConItem";
 	import ArticleComment from "@/components/blog/article/CommentItem";
+
+	import LoadingItem from "@/components/loading/Loading_global";
 	export default {
 		data() {
 			return {
 				isShow: false,
 				isToComment: false,
+				isRequest: false,
 				articleData: {},
 				articleInfo: {}
 			};
@@ -46,28 +50,36 @@
 		components: {
 			BreadCrumb,
 			ArticleContent,
-			ArticleComment
+			ArticleComment,
+			LoadingItem
 		},
 		methods: {
 			getArticle() {
 				let that = this;
-				this.$axios.get("/api/v1/article/get/" + this.arcid).then(({ data }) => {
-					let datas = data.data;
-					if (
-						data.status === undefined ||
-						data.code === 404 ||
-						data.status === 0 ||
-						data.status === false
-					) {
-						that.$router.replace({
-							path: "/404"
-						});
-						return;
-					}
-					that.isShow = true;
-					that.isComment();
-					that.articleData = datas;
-				});
+				that.isRequest = true;
+				this.$axios
+					.get("/api/v1/article/get/" + this.arcid)
+					.then(({ data }) => {
+						that.isRequest = false;
+						let datas = data.data;
+						if (
+							data.status === undefined ||
+							data.code === 404 ||
+							data.status === 0 ||
+							data.status === false
+						) {
+							that.$router.replace({
+								path: "/404"
+							});
+							return;
+						}
+						that.isShow = true;
+						that.isComment();
+						that.articleData = datas;
+					})
+					.catch(() => {
+						this.isRequest = false;
+					});
 			},
 			isComment() {
 				this.$route.hash === "#comment" ? (this.isToComment = true) : "";

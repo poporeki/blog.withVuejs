@@ -58,7 +58,7 @@
 		align-items: center;
 		height: 100%;
 		width: 80%;
-		min-width: 400px;
+		min-width: 300px;
 		min-height: 400px;
 		max-width: 600px;
 		max-height: 600px;

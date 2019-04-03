@@ -58,6 +58,16 @@
 		flex-basis: 100%;
 		flex-direction: column;
 		font-size: 0.26rem;
+		@media (max-width: 768px) {
+			.tool-list-item {
+				flex-basis: 50%;
+			}
+		}
+		@media (max-width: 360px) {
+			.tool-list-item {
+				flex-basis: 100%;
+			}
+		}
 	}
 	.tool-list {
 		display: flex;

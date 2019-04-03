@@ -1,12 +1,14 @@
 <template>
-	<aside :class="{'l-aside':true,unfold:!isFold}">
+	<aside :class="{'l-aside':true,unfold:!isFold}" ref="aside">
 		<a
 			href="javascript:void(0);"
 			:class="{'sidebar-btn':true,go:isClicked}"
 			@mousemove="isFold=false"
 			@mouseleave="isFold=true"
 			@click="$route.path!=='/blog/user'?isClicked=true:''"
-			@touchstart="isFold=false"
+			@touchstart="touchStart"
+			@touchmove="touchMove"
+			@touchend="touchEnd"
 		>
 			<p>{{JSON.stringify(user)!=='{}'?(user.username).toUpperCase():'YANSK'}}</p>
 		</a>
@@ -204,7 +206,18 @@
 				navlist: [],
 				isFold: true,
 				isClicked: false,
-				userName: ""
+				userName: "",
+				touch: {
+					startX: 0,
+
+					nowX: 0,
+					endX: 0,
+					moveX: 0,
+					lastX: 0,
+					lastY: 0,
+
+					translateX: "translateX(-100%)"
+				}
 			};
 		},
 		methods: {
@@ -213,6 +226,44 @@
 				this.$axios.get("/api/v1/gethomenavbar").then(({ data }) => {
 					that.navlist = data.data;
 				});
+			},
+			touchStart(ev) {
+				console.log(ev);
+				if (ev.touches.length !== 1) return;
+				let touches = ev.touches[0];
+				let x = touches.clientX;
+				let y = touches.clientY;
+				this.touch.startX = x;
+			},
+			touchMove(ev) {
+				console.log(ev);
+				if (ev.touches.length !== 1) return;
+				let touches = ev.touches[0];
+				let x = touches.clientX;
+				let y = touches.clientY;
+				let aside = this.$refs.aside;
+				console.log(aside.clientWidth);
+				this.touch.moveX = x;
+				let rs = x - this.touch.startX;
+
+				rs > 0 ? (rs = 0) : "";
+				rs < -aside.clientWidth ? (rs = -aside.clientWidth) : "";
+				console.log(
+					`开始时间：${this.touch.startX}\n 移动距离：${x}\n transX${rs}`
+				);
+				// this.touch.translateX = `translateX(${rs}px)`;
+				aside.style.transform = `translateX(${rs}px)`;
+			},
+			touchEnd(ev) {
+				if (ev.changedTouches.length !== 1) return;
+				let touches = ev.changedTouches[0];
+				let x = touches.clientX;
+				let aside = this.$refs.aside;
+				let rs = x - this.touch.startX;
+
+				rs > 0 || rs >= -aside.clientWidth / 2 ? (rs = 0) : "";
+				rs < -80 || rs < -aside.clientWidth / 2 ? (rs = -80) : "";
+				aside.style.transform = `translateX(${rs}px)`;
 			}
 		},
 		watch: {
