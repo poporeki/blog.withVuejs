@@ -27,50 +27,40 @@ Vue.prototype.commonFn = commonFn;
 Vue.prototype.$axios = Axios;
 
 router.beforeEach((to, from, next) => {
-
-  let _store = store;
-  window.document.title = (to.meta.title || '') + "-" + window.document.title;
-  let notshow = to.meta.notshow;
-  notshow
-    ?
-    notshow.loading ?
-    (store.state.isLoading = false) :
-    (store.state.isLoading = true) :
-    "";
+  let meta = to.meta;
+  window.document.title = (meta.title || '') + "-" + window.document.title;
   // 用户时效验证
-  Axios.post(BASE_URL + "/auth").then(({
-    data
-  }) => {
-    next();
-    console.log("auth");
-    if (data.auth.status) {
-      _store.state.isLogin = true;
-      _store.state.userInfo = data.auth.info.user;
-      return;
-    }
+  Axios.post(BASE_URL + "/auth")
+    .then(({
+      data
+    }) => {
+      if (data.auth.status) {
+        store.state.isLogin = true;
+        store.state.userInfo = data.auth.info.user;
+      } else {
+        store.state.isLogin = false;
+        store.state.userInfo = {};
+      }
 
-    _store.state.isLogin = false;
-    _store.state.userInfo = {};
-  });
+      if (meta.checkAuth) {
+        setTimeout(() => {
+          store.commit('changeWaitAniStatus', false)
+        }, 1000)
+        if (!store.state.isLogin) {
+
+          router.push("/login");
+
+        }
+
+      }
+      next();
+    });
 
 });
 //定义一个请求拦截器
 Axios.interceptors.request.use(function (config) {
   if (config.url === BASE_URL + "/auth") return config;
   store.dispatch("showloader");
-  if ((config.data && config.data.isGlobalLoading === false) || (config.params && config.params.isGlobalLoading === false)) {
-    store.state.loading.isLoading = false;
-  } else {
-    let notshow = vm.$route.meta.notshow;
-    if (notshow) {
-      notshow.loading ?
-        (store.state.loading.isLoading = false) :
-        (store.state.loading.isLoading = true);
-    } else {
-      store.state.loading.isLoading = true;
-    }
-  }
-
   return config;
 });
 //定义一个响应拦截器

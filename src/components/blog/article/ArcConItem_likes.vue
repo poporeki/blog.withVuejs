@@ -74,12 +74,16 @@
 <script>
 	export default {
 		props: ["arcid", "likesTotal", "userIsLiked"],
-		data() {
-			return {
-				likesCount: this.likesTotal,
-				isLiked: this.userIsLiked ? true : false,
-				class: this.userIsLiked ? "btn-article-like liked" : "btn-article-like"
-			};
+		computed: {
+			likesCount() {
+				return this.likesTotal;
+			},
+			isLiked() {
+				return this.userIsLiked ? true : false;
+			},
+			class() {
+				return this.userIsLiked ? "btn-article-like liked" : "btn-article-like";
+			}
 		},
 		methods: {
 			requestLike() {

@@ -107,6 +107,7 @@
 		perspective: 1500px;
 		-webkit-perspective: 1500px;
 		transform-style: preserve-3d;
+		font-size: 0.26rem;
 	}
 
 	.loading-ani {
@@ -315,11 +316,11 @@
 
 				.input-tips {
 					transform: translateY(-20px);
-					font-size: 12px;
+					font-size: 0.22rem;
 
 					.iconfont {
 						transform: rotate(-45deg);
-						font-size: 12px;
+						font-size: 0.22rem;
 					}
 				}
 			}
@@ -489,6 +490,7 @@
 </style>
 
 <script>
+	import { mapMutations } from "vuex";
 	export default {
 		data() {
 			return {
@@ -505,6 +507,7 @@
 			};
 		},
 		methods: {
+			...mapMutations(["IS_LOGIN"]),
 			login() {
 				let that = this;
 				if (this.show || this.hide) return;
@@ -526,6 +529,7 @@
 						} else {
 							that.err = true;
 						}
+						that.IS_LOGIN(status);
 						that.msg = msg;
 						that.animateReset(that);
 					});

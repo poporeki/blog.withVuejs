@@ -495,6 +495,12 @@
 			};
 		},
 		props: ["arcId", "artTotal", "artComms", "toComment"],
+		watch: {
+			artComms() {
+				this.commList = [];
+				this.pushCommentData(this, this.artComms);
+			}
+		},
 		methods: {
 			/* 跳转到锚点 */
 			goAnchor(el) {

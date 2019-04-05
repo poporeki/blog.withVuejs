@@ -85,6 +85,12 @@
 				this.$route.hash === "#comment" ? (this.isToComment = true) : "";
 			}
 		},
+		watch: {
+			arcid(val, oldVal) {
+				if (val === oldVal) return;
+				this.getArticle();
+			}
+		},
 		computed: {
 			arcid() {
 				return this.$route.params.arcid;

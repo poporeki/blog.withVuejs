@@ -427,6 +427,7 @@
 		box-shadow: 0 0 5px rgb(155, 155, 155);
 		color: #000;
 		box-sizing: border-box;
+		font-size: 0.26rem;
 		z-index: 100000;
 		overflow: hidden;
 		&.show {
@@ -565,6 +566,8 @@
 				background-color: #f0af23;
 				box-shadow: 0 0 5px #dbdbdb;
 				text-align: center;
+				font-size: 1.1em;
+				line-height: 1.1em;
 			}
 		}
 	}

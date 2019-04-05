@@ -17,7 +17,12 @@
 				</router-link>
 			</li>
 			<li>
-				<a href="/iresume">个人简历</a>
+				<a href="https://tu.yansk.cn">
+					<span>图库</span>
+				</a>
+			</li>
+			<li>
+				<a href="/iresume">关于我</a>
 			</li>
 		</ul>
 	</transition>

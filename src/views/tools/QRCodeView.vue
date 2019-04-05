@@ -51,7 +51,7 @@
 	export default {
 		data() {
 			return {
-				inputValue: 1,
+				inputValue: "https://www.yansk.cn",
 				QRSource: "",
 				isCreated: false
 			};
@@ -65,7 +65,9 @@
 				this.isCreated = true;
 			}
 		},
-		created() {}
+		created() {
+			this.createQRCode();
+		}
 	};
 </script>
 

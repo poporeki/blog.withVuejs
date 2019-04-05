@@ -2,7 +2,7 @@
 	<div class="section-list">
 		<h2 class="title">
 			最新文章
-			<a href="blog/articlelist">MORE</a>
+			<router-link to="/blog/articlelist">MORE</router-link>
 		</h2>
 		<div style="min-height:400px;position:relative;" v-if="isRequest">
 			<Loading :isLoading="isRequest"></Loading>

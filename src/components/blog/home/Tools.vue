@@ -1,9 +1,9 @@
 <template>
 	<section class="tools">
 		<rule-line></rule-line>
-		<h2 class="tit">
+		<h2 class="title">
 			工具
-			<small style="cursor:pointer;" @click="$router.push({path:'/blog/tools'})">More</small>
+			<router-link to="/blog/tools">MORE</router-link>
 		</h2>
 		<ul class="tool-list">
 			<li class="tool-list-item">
@@ -66,6 +66,15 @@
 		@media (max-width: 360px) {
 			.tool-list-item {
 				flex-basis: 100%;
+			}
+		}
+	}
+	.tools {
+		.title {
+			a {
+				color: #000;
+				background-color: #fff;
+				font-size: 0.6em;
 			}
 		}
 	}

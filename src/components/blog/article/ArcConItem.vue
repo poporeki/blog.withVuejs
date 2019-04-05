@@ -28,9 +28,11 @@
 			<br>原帖地址：
 			<a :href="art.from">{{art.from}}</a>
 		</div>
+		<br>
 		<p class="end" v-if="art!==null">--THE END--</p>
+		<br>
 		<div v-if="art.tags!==null" class="article-tags-list">
-			<h3 class="tit">TAG标签</h3>
+			<h4 class="tit">标签</h4>
 			<a
 				v-for="tag in art.tags"
 				:key="tag.id"
@@ -91,30 +93,49 @@
 	.article-body {
 		font-size: 0.28rem;
 		color: rgba(236, 236, 236, 1);
+		ul {
+			margin: 10px 0 10px 20px;
+			> li {
+				list-style: inherit;
+			}
+		}
 		ol {
 			& > li {
 				list-style: decimal;
 			}
 		}
 		a {
-			color: #70917e;
+			padding: 0 2px;
+			color: #a9b9e6;
 			word-wrap: break-word;
 			text-decoration: underline;
+			transition: color 0.3s ease;
+			&:hover {
+				color: #fff;
+			}
 		}
+
 		img {
-			max-width: 100%;
+			max-width: 300px;
+			max-height: 400px;
+			@media (max-width: 320px) {
+			}
 		}
 		blockquote {
 			padding: 0;
 			margin: 0;
 		}
-		p {
+		p,
+		li,
+		span {
 			font-size: 1em;
 
 			> code {
 				margin: 0 3px;
 				padding: 1px 5px;
-				background-color: #2f533f;
+				border: 1px solid #000;
+				box-sizing: border-box;
+				background-color: #2f3a53;
 			}
 			code {
 				word-break: break-all;
@@ -179,7 +200,7 @@
 
 		pre {
 			color: darkorange;
-			padding: 5px 5px;
+			border: 2px solid #000;
 			border-radius: 2px;
 			box-sizing: border-box;
 			overflow-x: auto;
@@ -188,6 +209,7 @@
 
 	.article-tags-list {
 		font-size: 0.28rem;
+		margin-bottom: 20px;
 		.tag-lk {
 			position: relative;
 			display: inline-block;
@@ -195,7 +217,8 @@
 			margin: 5px 0;
 			margin-right: 20px;
 			background-color: #085e2c;
-
+			transition: background-color 0.3s ease;
+			z-index: 2;
 			&:hover {
 				background-color: #064922;
 			}
@@ -227,13 +250,19 @@
 	import LikesItem from "./ArcConItem_likes";
 	export default {
 		props: ["artinfo"],
-		data() {
-			return {
-				art: this.artinfo.arcInfo,
-				arcid: this.artinfo.arcInfo.id,
-				arcPrev: this.artinfo.arcPrev,
-				arcNext: this.artinfo.arcNext
-			};
+		computed: {
+			art() {
+				return this.artinfo.arcInfo;
+			},
+			arcid() {
+				return this.artinfo.arcInfo.id;
+			},
+			arcPrev() {
+				return this.artinfo.arcPrev;
+			},
+			arcNext() {
+				return this.artinfo.arcNext;
+			}
 		},
 		components: {
 			ShareItem,

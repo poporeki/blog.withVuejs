@@ -2,10 +2,10 @@
 	<aside :class="{'l-aside':true,unfold:!isFold}" ref="aside">
 		<a
 			href="javascript:void(0);"
-			:class="{'sidebar-btn':true,go:isClicked}"
+			:class="{'sidebar-btn':true,go:isWaitAniStatus}"
 			@mousemove="isFold=false"
 			@mouseleave="isFold=true"
-			@click="$route.path!=='/blog/user'?isClicked=true:''"
+			@click="$route.path!=='/blog/user'?$store.commit('changeWaitAniStatus',true):''"
 			@touchstart="touchStart"
 			@touchmove="touchMove"
 			@touchend="touchEnd"
@@ -30,11 +30,13 @@
 				</router-link>
 			</li>
 			<li>
-				<a href="https://tu.yansk.cn">图库</a>
+				<a href="https://tu.yansk.cn">
+					<span>图库</span>
+				</a>
 			</li>
 			<li>
 				<a href="/iresume">
-					<span>个人简历</span>
+					<span>关于我</span>
 				</a>
 			</li>
 		</ul>
@@ -85,11 +87,14 @@
 				top: 0;
 				border-radius: 50%;
 				background-color: rgba(0, 0, 0, 0.932);
+				transition: transform 1s ease;
 				z-index: 1;
 			}
 			&.go::after {
+				z-index: 1000;
 				background-color: rgba(0, 0, 0, 1);
-				animation: goUser 2s forwards;
+				// animation: goUser 2s forwards;
+				transform: rotate(0) scale(50);
 			}
 			@keyframes goUser {
 				0% {
@@ -193,7 +198,7 @@
 			}
 			.sidebar-btn {
 				top: auto;
-				bottom: 10%;
+				bottom: 100px;
 			}
 		}
 	}
@@ -267,19 +272,22 @@
 			}
 		},
 		watch: {
-			isClicked(val) {
+			isWaitAniStatus(val) {
 				if (!val) return;
 				let that = this;
 				setTimeout(() => {
 					that.$router.push({
 						path: "/blog/user"
 					});
-				}, 500);
+				}, 2000);
 			}
 		},
 		computed: {
 			user() {
 				return this.$store.getters.user;
+			},
+			isWaitAniStatus() {
+				return this.$store.getters.isWaitAni;
 			}
 		},
 		created() {
