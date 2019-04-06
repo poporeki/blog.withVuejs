@@ -33,7 +33,7 @@
 				</router-link>
 			</li>
 			<li class="tool-list-item">
-				<router-link to="/blog/tools/postcode">
+				<router-link to="/blog/tools/colorPicker">
 					<div class="tool-box">
 						<div class="tool-icon">
 							<i class="iconfont icon-format-color-fill"></i>
