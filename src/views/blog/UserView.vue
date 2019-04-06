@@ -7,7 +7,7 @@
 						<i class="iconfont icon-camera"></i>
 						<span>更换头像</span>
 					</div>
-					<img v-lazy="`https://www.yansk.cn${avatar}`" v-if="avatar!==''" alt="head-pic">
+					<img v-lazy="`https://v.yansk.cn${avatar}`" v-if="avatar!==''" alt="head-pic">
 				</div>
 				<div class="name-box">
 					<input type="text" :placeholder="userName">

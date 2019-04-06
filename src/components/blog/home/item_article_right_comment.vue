@@ -14,7 +14,7 @@
 				<div class="arc-comm">
 					<img
 						class="head-pic"
-						v-lazy="'https://www.yansk.cn'+(item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png')"
+						v-lazy="'https://v.yansk.cn'+(item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png')"
 						alt="头像"
 					>
 					{{item.author[0].user_name}} :

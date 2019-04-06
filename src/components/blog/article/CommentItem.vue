@@ -30,7 +30,7 @@
 					<div>
 						<div class="head-pic">
 							<a href="javascript:void(0);">
-								<img v-lazy="'https://www.yansk.cn/'+comm.user.avatar" alt="avatar">
+								<img v-lazy="'https://v.yansk.cn/'+comm.user.avatar" alt="avatar">
 							</a>
 						</div>
 						<div class="content">
@@ -86,7 +86,7 @@
 								<span># {{reply.floor}}</span>
 								<div class="head-pic">
 									<a href="javascript:void(0);">
-										<img :src="'https://www.yansk.cn'+reply.user.avatar" alt="avatar">
+										<img :src="'https://v.yansk.cn'+reply.user.avatar" alt="avatar">
 									</a>
 								</div>
 								<div class="content">

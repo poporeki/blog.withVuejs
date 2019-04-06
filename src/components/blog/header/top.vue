@@ -17,7 +17,7 @@
 			<transition enter-active-class="animated fadeInRight">
 				<div class="box-inner" v-if="isLogin">
 					<div class="link-box" v-if="1">
-						<a href="https://www.yansk.cn/backend" target="_blank">控制台</a>
+						<a href="https://v.yansk.cn/backend" target="_blank">控制台</a>
 					</div>
 					<div class="link-box">
 						<a href="javascript:void(0);" @click="logout">退出登录</a>
