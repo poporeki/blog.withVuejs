@@ -10,6 +10,19 @@
 	</header>
 </template>
 
+
+<script>
+	import Topitem from "@/components/blog/header/BlogHeaderTop";
+	import Navbar from "@/components/blog/header/BlogHeaderNavigation";
+	import Search from "@/components/blog/header/BlogHeaderSearch";
+	export default {
+		components: {
+			HeaderNavbar: Navbar,
+			HeaderTop: Topitem,
+			HeaderSearch: Search
+		}
+	};
+</script>
 <style lang="scss">
 	@font-face {
 		font-family: "Loto";
@@ -46,16 +59,3 @@
 		}
 	}
 </style>
-
-<script>
-	import Topitem from "./top.vue";
-	import Navbar from "./navbar.vue";
-	import Search from "./search.vue";
-	export default {
-		components: {
-			"Header-navbar": Navbar,
-			"Header-top": Topitem,
-			"Header-search": Search
-		}
-	};
-</script>

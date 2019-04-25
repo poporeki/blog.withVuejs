@@ -44,6 +44,11 @@
 		</div>
 	</transition>
 </template>
+
+
+<script>
+	export default {};
+</script>
 <style lang="scss">
 	.page-outer {
 		width: 100%;
@@ -177,7 +182,3 @@
 		}
 	}
 </style>
-
-<script>
-	export default {};
-</script>

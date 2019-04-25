@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="bgColor" :style="bgStyle"></div>
+		<div class="bg-color" :style="bgStyle"></div>
 		<photoshop-picker v-model="colors"></photoshop-picker>
 		<div class="rs-wrapper">
 			<div class="rs-box">
@@ -22,31 +22,6 @@
 		</div>
 	</div>
 </template>
-<style lang="scss">
-	.bgColor {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 50vh;
-		background-color: transparent;
-		transform: background-color 0.3s ease;
-		z-index: -1;
-	}
-	.rs-wrapper {
-		margin-top: 20px;
-	}
-	.rs-box {
-		border-top: 1px solid rgb(211, 154, 89);
-		text-shadow: 0 0 3px #000;
-		h3 {
-			word-break: break-all;
-			&:nth-child(2) {
-				color: rgb(155, 167, 161);
-			}
-		}
-	}
-</style>
 
 <script>
 	import { Chrome } from "vue-color";
@@ -94,3 +69,30 @@
 		components: { "photoshop-picker": Chrome }
 	};
 </script>
+
+
+<style lang="scss">
+	.bg-color {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 50vh;
+		background-color: transparent;
+		transform: background-color 0.3s ease;
+		z-index: -1;
+	}
+	.rs-wrapper {
+		margin-top: 20px;
+	}
+	.rs-box {
+		border-top: 1px solid rgb(211, 154, 89);
+		text-shadow: 0 0 3px #000;
+		h3 {
+			word-break: break-all;
+			&:nth-child(2) {
+				color: rgb(155, 167, 161);
+			}
+		}
+	}
+</style>

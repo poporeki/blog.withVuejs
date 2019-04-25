@@ -35,7 +35,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/iresume">
+				<a href="https://v.yansk.cn/iresume">
 					<span>关于我</span>
 				</a>
 			</li>
@@ -233,7 +233,6 @@
 				});
 			},
 			touchStart(ev) {
-				console.log(ev);
 				if (ev.touches.length !== 1) return;
 				let touches = ev.touches[0];
 				let x = touches.clientX;
@@ -241,22 +240,16 @@
 				this.touch.startX = x;
 			},
 			touchMove(ev) {
-				console.log(ev);
 				if (ev.touches.length !== 1) return;
 				let touches = ev.touches[0];
 				let x = touches.clientX;
 				let y = touches.clientY;
 				let aside = this.$refs.aside;
-				console.log(aside.clientWidth);
 				this.touch.moveX = x;
 				let rs = x - this.touch.startX;
 
 				rs > 0 ? (rs = 0) : "";
 				rs < -aside.clientWidth ? (rs = -aside.clientWidth) : "";
-				console.log(
-					`开始时间：${this.touch.startX}\n 移动距离：${x}\n transX${rs}`
-				);
-				// this.touch.translateX = `translateX(${rs}px)`;
 				aside.style.transform = `translateX(${rs}px)`;
 			},
 			touchEnd(ev) {

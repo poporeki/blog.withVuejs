@@ -1,4 +1,4 @@
-import postCode from '@/views/tools/postCodeView'
+import postCode from '@/views/tools/PostCodeView'
 export default {
   path: 'postCode',
   component: postCode,

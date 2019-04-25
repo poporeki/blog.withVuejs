@@ -12,19 +12,9 @@
 		<common-item :requestUrl="originalRequestUrl" :title.sync="title"></common-item>
 	</div>
 </template>
-<style lang="scss">
-	.list-tit {
-		display: inline-block;
-		border-bottom: 3px solid rgb(206, 120, 23);
-		small {
-			font-weight: normal;
-			color: rgb(255, 255, 255);
-		}
-	}
-</style>
 
 <script>
-	import CommonItem from "@/components/blog/articlelist/CommonItem";
+	import CommonItem from "@/components/blog/articlelist/ArticleListCommon";
 	export default {
 		data() {
 			return {
@@ -35,20 +25,19 @@
 				originalRequestUrl: "/api/v1/articlelist/getlist"
 			};
 		},
-		methods: {},
 		components: {
 			CommonItem
-		},
-		created() {
-			let query = "";
-			let path = this.$route.fullPath;
-			if (path.split("?")[1]) {
-				query = path.split("?")[1];
-			}
-
-			this.requestUrl = this.originalRequestUrl + "?" + query;
-			let a = true;
 		}
 	};
 </script>
 
+<style lang="scss">
+	.list-tit {
+		display: inline-block;
+		border-bottom: 3px solid rgb(206, 120, 23);
+		small {
+			font-weight: normal;
+			color: rgb(255, 255, 255);
+		}
+	}
+</style>

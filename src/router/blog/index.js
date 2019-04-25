@@ -18,7 +18,6 @@ const Defaults = {
 }
 export default {
   path: '/blog',
-  name: 'blog',
   component: BlogLayout,
   children: [Defaults, Article, ArticleList, UpdateLog, Tools, User]
 }

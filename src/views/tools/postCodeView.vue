@@ -41,6 +41,95 @@
 		</ul>
 	</div>
 </template>
+
+
+<script>
+	export default {
+		data() {
+			return {
+				itemTitle: "地区邮编查询",
+				inputFocus: false,
+				selected: {
+					province: "",
+					city: "",
+					county: ""
+				},
+				searchWords: "",
+				provinceList: [],
+				searchList: [],
+				cityList: [],
+				countyList: [],
+				postCodeList: []
+			};
+		},
+		watch: {
+			searchWords(val, oldVal) {
+				if (val === oldVal) return;
+				this.getPost();
+			}
+		},
+		methods: {
+			/**搜索内容 */
+			selectWords(words) {
+				this.searchWords = words;
+				this.searchList = [];
+			},
+			/**获取地区列表
+			 * @param {Number} id 区域编号
+			 * @param {String} region 'province or city or county'
+			 */
+			getRegion(id, region) {
+				let parent_id = id || 0;
+				region = region || "province";
+				let apiUrl = "/api/v1/tools/getregion";
+				let that = this;
+				that.$axios
+					.get(apiUrl, {
+						params: {
+							parent_id
+						}
+					})
+					.then(({ data }) => {
+						if (!data.status) return;
+						that[region + "List"] = data.data;
+					});
+			},
+			getPost() {
+				let apiUrl = "/api/v1/tools/getpostcode";
+				let that = this;
+				let searchkey = that.searchWords;
+				if (
+					that.selected.province === "" ||
+					that.selected.city === "" ||
+					that.selected.county === ""
+				)
+					return;
+				that.$axios
+					.get(apiUrl, {
+						params: {
+							provinceid: that.selected.province,
+							cityid: that.selected.city,
+							areaid: that.selected.county,
+							searchkey
+						}
+					})
+					.then(({ data }) => {
+						if (!data.status || data.data.su !== true) {
+							alert(data.msg);
+						}
+						that.postCodeList = data.data.rs;
+						that.searchList = data.data.rs;
+					});
+			}
+		},
+		created() {
+			this.getRegion();
+			this.$emit("pageTitle", this.itemTitle);
+		}
+	};
+</script>
+
+
 <style lang="scss" scoped>
 	.post-wrapper {
 		min-height: 400px;
@@ -93,84 +182,3 @@
 		}
 	}
 </style>
-
-<script>
-	export default {
-		data() {
-			return {
-				itemTitle: "地区邮编查询",
-				inputFocus: false,
-				selected: {
-					province: "",
-					city: "",
-					county: ""
-				},
-				searchWords: "",
-				provinceList: [],
-				searchList: [],
-				cityList: [],
-				countyList: [],
-				postCodeList: []
-			};
-		},
-		watch: {
-			searchWords(val, oldVal) {
-				if (val === oldVal) return;
-				this.getPost();
-			}
-		},
-		methods: {
-			selectWords(words) {
-				this.searchWords = words;
-				this.searchList = [];
-			},
-			getRegion(id, region) {
-				let parent_id = id || 0;
-				region = region || "province";
-				let apiUrl = "/api/v1/tools/getregion";
-				let that = this;
-				that.$axios
-					.get(apiUrl, {
-						params: {
-							parent_id
-						}
-					})
-					.then(({ data }) => {
-						if (!data.status) return;
-						that[region + "List"] = data.data;
-					});
-			},
-			getPost() {
-				let apiUrl = "/api/v1/tools/getpostcode";
-				let that = this;
-				let searchkey = that.searchWords;
-				if (
-					that.selected.province === "" ||
-					that.selected.city === "" ||
-					that.selected.county === ""
-				)
-					return;
-				that.$axios
-					.get(apiUrl, {
-						params: {
-							provinceid: that.selected.province,
-							cityid: that.selected.city,
-							areaid: that.selected.county,
-							searchkey
-						}
-					})
-					.then(({ data }) => {
-						if (!data.status || data.data.su !== true) {
-							alert(data.msg);
-						}
-						that.postCodeList = data.data.rs;
-						that.searchList = data.data.rs;
-					});
-			}
-		},
-		created() {
-			this.getRegion();
-			this.$emit("pageTitle", this.itemTitle);
-		}
-	};
-</script>

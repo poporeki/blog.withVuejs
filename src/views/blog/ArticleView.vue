@@ -32,9 +32,9 @@
 </style>
 
 <script>
-	import BreadCrumb from "@/components/blog/article/BreadcrumbItem";
-	import ArticleContent from "@/components/blog/article/ArcConItem";
-	import ArticleComment from "@/components/blog/article/CommentItem";
+	import BreadCrumb from "@/components/blog/article/ArticleHeaderBreadcrumb";
+	import ArticleContent from "@/components/blog/article/ArticleBody";
+	import ArticleComment from "@/components/blog/article/ArticleComments";
 
 	import LoadingItem from "@/components/loading/Loading_global";
 	export default {

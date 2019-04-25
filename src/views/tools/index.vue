@@ -4,8 +4,8 @@
 			<div class="page-inner">
 				<div class="left-section">
 					<div class="tool-title">
-						<h2>{{$route.meta.title||''}}</h2>
-						<p>{{$route.meta.titleDescription||''}}</p>
+						<h2>{{pageTitle}}</h2>
+						<p>{{pageTitleDescription}}</p>
 					</div>
 					<div class="tool-box">
 						<router-view></router-view>
@@ -21,6 +21,20 @@
 		</div>
 	</transition>
 </template>
+
+<script>
+	export default {
+		computed: {
+			pageTitle() {
+				return this.$route.meta.title || "";
+			},
+			pageTitleDescription() {
+				return this.$route.meta.titleDescription || "";
+			}
+		}
+	};
+</script>
+
 
 <style lang="scss">
 	.wrapper {

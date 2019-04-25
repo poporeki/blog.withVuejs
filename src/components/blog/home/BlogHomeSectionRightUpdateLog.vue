@@ -6,6 +6,7 @@
 				<router-link to="/blog/log">More</router-link>
 			</small>
 		</h2>
+		<Loading :isLoading="isRequest"></Loading>
 		<ul class="log-list">
 			<li class="log-list-item" v-for="item in logList" :key="item.id">
 				<div class="u-time">
@@ -21,8 +22,39 @@
 		</ul>
 	</div>
 </template>
+
+<script>
+	import Loading from "@/components/loading/Loading_02";
+	export default {
+		data() {
+			return {
+				logList: [],
+				isRequest: false
+			};
+		},
+		components: { Loading },
+		methods: {
+			getUpdateLogList() {
+				let that = this;
+				this.isRequest = true;
+				that.$axios.get("/blog/log/getlist?limit=3").then(({ data }) => {
+					that.isRequest = false;
+					if (data.status !== 1 || data.data.logList.length === 0) return;
+					let list = data.data.logList;
+					that.logList = list;
+				});
+			}
+		},
+		created() {
+			this.getUpdateLogList();
+		}
+	};
+</script>
+
 <style lang="scss">
 	.update-log-box {
+		position: relative;
+		min-height: 100px;
 		.title {
 			a {
 				color: rgb(207, 207, 207);
@@ -48,26 +80,3 @@
 		}
 	}
 </style>
-<script>
-	export default {
-		data() {
-			return {
-				logList: []
-			};
-		},
-		methods: {
-			getUpdateLogList() {
-				let that = this;
-				that.$axios.get("/blog/log/getlist?limit=3").then(({ data }) => {
-					if (data.status !== 1 || data.data.logList.length === 0) return;
-					let list = data.data.logList;
-					that.logList = list;
-				});
-			}
-		},
-		created() {
-			this.getUpdateLogList();
-		}
-	};
-</script>
-

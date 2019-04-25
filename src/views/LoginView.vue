@@ -559,7 +559,6 @@
 			},
 			/* input效果 */
 			tipsUp(event) {
-				console.log("focus");
 				let type = event.type;
 				let target = event.currentTarget;
 				let parent = target.parentElement;

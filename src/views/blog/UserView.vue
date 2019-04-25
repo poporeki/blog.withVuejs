@@ -607,7 +607,6 @@
 					that.userName = userInfo.username;
 					that.email = userInfo.email;
 					that.telNumber = userInfo.telnumber;
-					console.log(data);
 				});
 			},
 			getBase64(cropper) {

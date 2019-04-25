@@ -1,9 +1,9 @@
 (function (doc, win) {
-   function _isMobile() {
+  function _isMobile() {
     let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
     return flag;
   }
-  if (!_isMobile()) return;
+  if (!_isMobile()) return document.documentElement.style.fontSize = '50px';
   var docEl = doc.documentElement,
     resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
     recalc = function () {

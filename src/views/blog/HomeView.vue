@@ -28,20 +28,20 @@
 </style>
 
 <script>
-	import TopItem from "@/components/blog/home/topitem";
-	import Classify from "@/components/blog/home/classify";
-	import Weather from "@/components/blog/home/weather";
-	import secArticle from "@/components/blog/home/newtop";
-	import secRight from "@/components/blog/home/sectionRight";
-	import Tools from "@/components/blog/home/Tools";
+	import TopItem from "@/components/blog/home/BlogHomeTop";
+	import Classify from "@/components/blog/home/BlogHomeClassify";
+	import Weather from "@/components/blog/home/BlogHomeWeather";
+	import SectionLeft from "@/components/blog/home/BlogHomeSectionLeft";
+	import SectionRight from "@/components/blog/home/BlogHomeSectionRight";
+	import Tools from "@/components/blog/home/BlogHomeSectionLeftTools";
 	export default {
 		components: {
 			"item-hottop": TopItem,
 			"item-classify": Classify,
 			"item-weather": Weather,
-			"item-left": secArticle,
+			"item-left": SectionLeft,
 			"item-tools": Tools,
-			"item-right": secRight
+			"item-right": SectionRight
 		}
 	};
 </script>

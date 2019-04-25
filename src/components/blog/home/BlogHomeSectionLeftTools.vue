@@ -51,6 +51,14 @@
 	</section>
 </template>
 
+
+<script>
+	import RuleLine from "@/components/RuleLine.vue";
+	export default {
+		components: { RuleLine }
+	};
+</script>
+
 <style lang="scss">
 	@import "~@/assets/iconfont/tools/iconfont.css";
 	section.tools {
@@ -119,11 +127,3 @@
 		}
 	}
 </style>
-
-<script>
-	import RuleLine from "@/components/ruleLine.vue";
-	export default {
-		components: { RuleLine }
-	};
-</script>
-

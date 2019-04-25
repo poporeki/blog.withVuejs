@@ -69,12 +69,6 @@ Axios.interceptors.response.use(function (config) {
   store.state.loading.isLoading = false;
   let data = config.data;
   if (data.status === -9) {
-    /* router.replace({
-      path: "login",
-      query: {
-        redirect: router.currentRoute.fullPath
-      }
-    }); */
     router.push("/login")
   }
 
@@ -84,7 +78,7 @@ Vue.use(progressive, {
   removePreview: true,
   scale: true
 });
-const vm = new Vue({
+new Vue({
   router,
   store,
   render: h => h(App)

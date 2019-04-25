@@ -5,6 +5,20 @@
 		<item-log></item-log>
 	</section>
 </template>
+
+<script>
+	import itemTags from "./BlogHomeSectionRightTagsList";
+	import itemCommtop from "./BlogHomeSectionRightTopComment";
+	import itemLog from "./BlogHomeSectionRightUpdateLog";
+	export default {
+		components: {
+			itemTags,
+			itemCommtop,
+			itemLog
+		}
+	};
+</script>
+
 <style lang="scss" scoped>
 	.section-right {
 		padding-left: 10px;
@@ -17,17 +31,3 @@
 		}
 	}
 </style>
-
-<script>
-	import itemTags from "./item_article_right_taglist";
-	import itemCommtop from "./item_article_right_comment";
-	import itemLog from "./item_article_right_update_log";
-	export default {
-		components: {
-			itemTags,
-			itemCommtop,
-			itemLog
-		}
-	};
-</script>
-

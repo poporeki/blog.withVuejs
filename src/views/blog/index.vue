@@ -4,7 +4,6 @@
 		<div class="body" ref="page">
 			<router-view/>
 		</div>
-		<img src alt>
 		<div class="bg-block">
 			<div class="progressive parallax-window" ref="bg">
 				<img class="preview" v-progressive="bg.lowRes" :data-srcset="bg.original" :src="bg.original">
@@ -16,6 +15,62 @@
 		<blog-aside></blog-aside>
 	</div>
 </template>
+
+
+<script>
+	import Header from "@/components/blog/header";
+	import TheFooter from "@/components/blog/TheFooter";
+	import Aside from "@/components/blog/sidebar";
+	import Background from "@/components/blog/background";
+	import "../../assets/iconfont_blog/iconfont.css";
+	import "../../assets/css/progressive-image.css";
+	export default {
+		name: "Blog",
+		components: {
+			blogHeader: Header,
+			blogFooter: TheFooter,
+			blogAside: Aside,
+			blogBackground: Background
+		},
+		data() {
+			return {
+				bg: {
+					original: "/images/blog_bg.jpg",
+					lowRes: "/images/placeholder/blog_bg.jpg"
+				}
+			};
+		},
+		methods: {
+			imgload() {
+				let bodyHeight = this.$refs.bg.clientHeight;
+				this.$refs.page.style.minHeight = bodyHeight + "px";
+			},
+			getWallpaper() {
+				let that = this;
+				this.$axios.get("/api/v1/bing").then(({ data }) => {
+					if (data.status !== true || data.data.url === "") return;
+					that.bg.original = data.data.url;
+					that.bg.lowRes = data.data.url;
+				});
+			}
+		},
+
+		mounted() {
+			const that = this;
+			let img = new Image();
+			if (!this.bg) return;
+			img.src = this.bg.original;
+			img.onload = () => {
+				this.imgload();
+			};
+
+			window.onresize = function temp() {
+				that.imgload();
+			};
+		},
+		created() {}
+	};
+</script>
 
 <style lang="scss">
 	// html {
@@ -106,59 +161,4 @@
 		}
 	}
 </style>
-
-<script>
-	import Header from "@/components/blog/header";
-	import Footer from "@/components/blog/footer";
-	import Aside from "@/components/blog/sidebar";
-	import Background from "@/components/blog/background";
-	import "../../assets/iconfont_blog/iconfont.css";
-	import "../../assets/css/progressive-image.css";
-	export default {
-		name: "Blog",
-		data() {
-			return {
-				bg: {
-					original: "/images/blog_bg.jpg",
-					lowRes: "/images/placeholder/blog_bg.jpg"
-				}
-			};
-		},
-		methods: {
-			imgload() {
-				let bodyHeight = this.$refs.bg.clientHeight;
-				this.$refs.page.style.minHeight = bodyHeight + "px";
-			},
-			getWallpaper() {
-				let that = this;
-				this.$axios.get("/api/v1/bing").then(({ data }) => {
-					if (data.status !== true || data.data.url === "") return;
-					that.bg.original = data.data.url;
-					that.bg.lowRes = data.data.url;
-				});
-			}
-		},
-		components: {
-			"blog-header": Header,
-			"blog-footer": Footer,
-			"blog-aside": Aside,
-			"blog-background": Background
-		},
-		mounted() {
-			const that = this;
-			let img = new Image();
-			if (!this.bg) return;
-			img.src = this.bg.original;
-			img.onload = () => {
-				this.imgload();
-			};
-
-			window.onresize = function temp() {
-				that.imgload();
-			};
-		},
-		created() {}
-	};
-</script>
-
 
