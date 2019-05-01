@@ -7,7 +7,7 @@
 		@scroll="scrolls"
 		ref="ulArclist"
 	>
-		<li v-for="(arc,idx) in arcList" class="article-list-item" :key="idx" :data-index="idx">
+		<li v-for="(arc,aidx) in arcList" class="article-list-item" :key="aidx" :data-index="aidx">
 			<a :href="'/blog/article/'+ arc.artid">
 				<div class="lt">
 					<div class="top">
@@ -16,7 +16,7 @@
 						</div>
 						<div class="time">{{arc.create_time}}</div>
 					</div>
-					<div class="thumbnail">{{arc.source}}</div>
+					<div class="thumbnail">{{arc.content}}</div>
 				</div>
 			</a>
 		</li>

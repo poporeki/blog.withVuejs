@@ -23,10 +23,12 @@
 				</span>
 			</div>
 		</div>
-		<div class="article-body" v-html="art.content" v-highlight ref="articleBody"></div>
-		<div class="article-source" v-if="art.from!==''&&art.from!==undefined&&art.from!==null">
+		<div class="article-body" v-html="art.source" v-highlight ref="articleBody"></div>
+		<div class="article-source" v-if="from.link||from.name">
 			<br>原帖地址：
-			<a :href="art.from">{{art.from}}</a>
+			<a v-if="from.link&&from.name" :href="from.link">{{from.name}}</a>
+			<a v-else-if="from.link" :href="from.link">{{from.link}}</a>
+			<span v-else-if="from.name">{{from.name}}</span>
 		</div>
 		<br>
 		<p class="end" v-if="art!==null">--THE END--</p>
@@ -69,15 +71,23 @@
 		},
 		props: ["artinfo"],
 		computed: {
+			//文章
 			art() {
 				return this.artinfo.arcInfo;
 			},
+			//源
+			from() {
+				return this.artinfo.arcInfo.from;
+			},
+			//文章id
 			arcid() {
 				return this.artinfo.arcInfo.id;
 			},
+			//上一页
 			arcPrev() {
 				return this.artinfo.arcPrev;
 			},
+			//下一页
 			arcNext() {
 				return this.artinfo.arcNext;
 			}
@@ -302,6 +312,15 @@
 				height: 500px;
 				width: 100%;
 			}
+		}
+		.ql-video {
+			position: relative;
+			min-height: 300px;
+			max-height: 600px;
+			max-width: 800px;
+			height: 500px;
+			width: 100%;
+			min-width: 300px;
 		}
 		code.hljs {
 			transition: all 0.5s ease;

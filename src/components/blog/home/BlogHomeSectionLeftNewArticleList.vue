@@ -35,13 +35,10 @@
 							</div>
 						</div>
 						<div class="card-body">
-							<div class="pic-box" v-if="filterSrc(arc.content)!==''">
-								<img
-									v-lazy="filterSrc(arc.content)===''?'/images/exp.png':filterSrc(arc.content)"
-									alt="img"
-								>
+							<div class="pic-box" v-if="filterSrc(arc.source)!==''">
+								<img v-lazy="filterSrc(arc.source)===''?'/images/exp.png':filterSrc(arc.source)" alt="img">
 							</div>
-							<p>{{arc.source}}</p>
+							<p>{{arc.content}}</p>
 						</div>
 					</div>
 				</router-link>
