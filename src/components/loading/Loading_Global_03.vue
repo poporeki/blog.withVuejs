@@ -70,7 +70,7 @@
 	}
 </style>
 <script>
-	import { mapGetters } from "vuex";
+	import { mapState } from "vuex";
 	export default {
 		data() {
 			return {
@@ -78,7 +78,7 @@
 			};
 		},
 		computed: {
-			...mapGetters(["showLoading"])
+			...mapState(["showLoading"])
 		}
 	};
 </script>

@@ -1,47 +1,124 @@
 <template>
-	<aside :class="{'l-aside':true,unfold:!isFold}" ref="aside">
+	<aside :class="{'l-aside':true,unfold:!isFold}" ref="aside" @touchstart.stop>
 		<a
 			href="javascript:void(0);"
 			:class="{'sidebar-btn':true,go:isWaitAniStatus}"
 			@mousemove="isFold=false"
 			@mouseleave="isFold=true"
 			@click="$route.path!=='/blog/user'?$store.commit('changeWaitAniStatus',true):''"
-			@touchstart="touchStart"
-			@touchmove="touchMove"
-			@touchend="touchEnd"
+			@touchstart.stop="touchStart"
+			@touchmove.stop="touchMove"
+			@touchend.stop="touchEnd"
 		>
-			<p>{{JSON.stringify(user)!=='{}'?(user.username).toUpperCase():'YANSK'}}</p>
+			<p>{{title}}</p>
 		</a>
 		<img src="/images/logo.png" class="img-logo" alt="logo">
 		<ul class="navbar">
-			<li class="aaa ani1">
-				<router-link to="/blog">
-					<span>首页</span>
+			<li v-for="(item,idx) in navList" :key="idx">
+				<router-link :to="'/blog/articlelist?by[type_id]='+item.link">
+					<span>{{item.name}}</span>
 				</router-link>
-			</li>
-			<li v-for="(item,idx) in navlist" :key="idx">
-				<router-link :to="'/blog/articlelist?by[type_id]='+item._id">
-					<span>{{item.type_name}}</span>
-				</router-link>
-			</li>
-			<li>
-				<router-link to="/blog/tools">
-					<span>工具集</span>
-				</router-link>
-			</li>
-			<li>
-				<a href="https://tu.yansk.cn">
-					<span>图库</span>
-				</a>
-			</li>
-			<li>
-				<a href="https://v.yansk.cn/iresume">
-					<span>关于我</span>
-				</a>
 			</li>
 		</ul>
 	</aside>
 </template>
+
+<script>
+	import { mapState } from "vuex";
+	export default {
+		data() {
+			return {
+				navlist: [],
+				isFold: true,
+				isClicked: false,
+				userName: "",
+				touch: {
+					startX: 0,
+
+					nowX: 0,
+					endX: 0,
+					moveX: 0,
+					lastX: 0,
+					lastY: 0,
+
+					translateX: "translateX(-100%)"
+				}
+			};
+		},
+		methods: {
+			getNavbar() {
+				let that = this;
+				this.$axios.get("/api/v1/gethomenavbar").then(({ data }) => {
+					that.navlist = data.data;
+				});
+			},
+			touchStart(ev) {
+				if (ev.touches.length !== 1) return;
+				let touches = ev.touches[0];
+				let x = touches.clientX;
+				let y = touches.clientY;
+				this.touch.startX = x;
+			},
+			touchMove(ev) {
+				if (ev.touches.length !== 1) return;
+				let touches = ev.touches[0];
+				let x = touches.clientX;
+				let y = touches.clientY;
+				let aside = this.$refs.aside;
+				this.touch.moveX = x;
+				let rs = x - this.touch.startX;
+
+				rs > 0 ? (rs = 0) : "";
+				rs < -aside.clientWidth ? (rs = -aside.clientWidth) : "";
+				aside.style.transform = `translateX(${rs}px)`;
+			},
+			touchEnd(ev) {
+				if (ev.changedTouches.length !== 1) return;
+				let touches = ev.changedTouches[0];
+				let x = touches.clientX;
+				let aside = this.$refs.aside;
+				let rs = x - this.touch.startX;
+
+				rs > 0 || rs >= -aside.clientWidth / 2 ? (rs = 0) : "";
+				rs < -80 || rs < -aside.clientWidth / 2 ? (rs = -80) : "";
+				aside.style.transform = `translateX(${rs}px)`;
+			}
+		},
+		watch: {
+			isWaitAniStatus(val) {
+				if (!val) return;
+				let that = this;
+				setTimeout(() => {
+					that.$router.push({
+						path: "/blog/user"
+					});
+				}, 2000);
+			}
+		},
+		computed: {
+			title() {
+				return (
+					this.user &&
+					(JSON.stringify(this.user) !== "{}"
+						? this.user.username.toUpperCase()
+						: "YANSK")
+				);
+			},
+			user() {
+				return this.$store.state.userInfo;
+			},
+			isWaitAniStatus() {
+				return this.$store.state.isWaitAni;
+			},
+			...mapState(["navList"])
+		},
+		created() {
+			this.getNavbar();
+		}
+	};
+</script>
+
+
 <style lang="scss">
 	aside.l-aside {
 		position: fixed;
@@ -203,89 +280,3 @@
 		}
 	}
 </style>
-
-<script>
-	export default {
-		data() {
-			return {
-				navlist: [],
-				isFold: true,
-				isClicked: false,
-				userName: "",
-				touch: {
-					startX: 0,
-
-					nowX: 0,
-					endX: 0,
-					moveX: 0,
-					lastX: 0,
-					lastY: 0,
-
-					translateX: "translateX(-100%)"
-				}
-			};
-		},
-		methods: {
-			getNavbar() {
-				let that = this;
-				this.$axios.get("/api/v1/gethomenavbar").then(({ data }) => {
-					that.navlist = data.data;
-				});
-			},
-			touchStart(ev) {
-				if (ev.touches.length !== 1) return;
-				let touches = ev.touches[0];
-				let x = touches.clientX;
-				let y = touches.clientY;
-				this.touch.startX = x;
-			},
-			touchMove(ev) {
-				if (ev.touches.length !== 1) return;
-				let touches = ev.touches[0];
-				let x = touches.clientX;
-				let y = touches.clientY;
-				let aside = this.$refs.aside;
-				this.touch.moveX = x;
-				let rs = x - this.touch.startX;
-
-				rs > 0 ? (rs = 0) : "";
-				rs < -aside.clientWidth ? (rs = -aside.clientWidth) : "";
-				aside.style.transform = `translateX(${rs}px)`;
-			},
-			touchEnd(ev) {
-				if (ev.changedTouches.length !== 1) return;
-				let touches = ev.changedTouches[0];
-				let x = touches.clientX;
-				let aside = this.$refs.aside;
-				let rs = x - this.touch.startX;
-
-				rs > 0 || rs >= -aside.clientWidth / 2 ? (rs = 0) : "";
-				rs < -80 || rs < -aside.clientWidth / 2 ? (rs = -80) : "";
-				aside.style.transform = `translateX(${rs}px)`;
-			}
-		},
-		watch: {
-			isWaitAniStatus(val) {
-				if (!val) return;
-				let that = this;
-				setTimeout(() => {
-					that.$router.push({
-						path: "/blog/user"
-					});
-				}, 2000);
-			}
-		},
-		computed: {
-			user() {
-				return this.$store.getters.user;
-			},
-			isWaitAniStatus() {
-				return this.$store.getters.isWaitAni;
-			}
-		},
-		created() {
-			this.getNavbar();
-		}
-	};
-</script>
-

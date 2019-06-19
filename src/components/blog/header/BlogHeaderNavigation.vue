@@ -32,14 +32,15 @@
 				let that = this;
 				this.$axios.get("/api/v1/gethomenavbar").then(({ data }) => {
 					let list = data.data;
-					that.isShow = true;
+					this.isShow = true;
 					let obj = list.map(val => {
 						return {
 							name: val.type_name,
 							link: `/blog/articlelist?by[type_id]=${val._id}`
 						};
 					});
-					that.navlist = this.navlist.concat(obj);
+					this.navlist = this.navlist.concat(obj);
+					this.$store.commit("updateNavlist", this.navlist);
 					console.log(obj);
 				});
 			},

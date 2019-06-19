@@ -4,23 +4,7 @@
 		<router-view v-if="isRouterAlive"/>
 	</div>
 </template>
-<style lang="scss">
-	// html {
-	// 	width: 100%;
-	// 	height: 100%;
-	// }
-	body {
-		position: relative;
-	}
-	#app {
-		position: relative;
-		// width: 100%;
-		// height: 100%;
-	}
-	img[lazy="loaded"] {
-		animation: fadeInTop 0.5s;
-	}
-</style>
+
 <script>
 	import Loading from "@/components/loading/Loading_global";
 	export default {
@@ -53,4 +37,21 @@
 	};
 </script>
 
+<style lang="scss">
+	// html {
+	// 	width: 100%;
+	// 	height: 100%;
+	// }
+	body {
+		position: relative;
+	}
+	#app {
+		position: relative;
+		// width: 100%;
+		// height: 100%;
+	}
+	img[lazy="loaded"] {
+		animation: fadeInTop 0.5s;
+	}
+</style>
 

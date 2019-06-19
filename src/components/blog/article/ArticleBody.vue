@@ -6,7 +6,7 @@
 			</div>
 			<div class="pt-info">
 				<span class="pubtime">
-					发表时间：
+					发布时间：
 					{{art.createTime}}
 				</span>
 				<span class="source">
@@ -14,8 +14,8 @@
 					<a class="type-lk" :href="'/blog/articlelist?by[type_id]='+art.type.id">{{art.type.name}}</a>
 				</span>
 				<span class="author">
-					发布:
-					{{art.author}}
+					<!-- A:
+					{{art.author}}-->
 				</span>
 				<span class="count">
 					阅读数:
@@ -210,15 +210,15 @@
 
 			span {
 				margin-right: 20px;
-				color: #8c9cb3;
-				text-shadow: 0 0 5px #424242;
+				color: #cacaca;
+				text-shadow: 0 0 1px #dddddd;
 			}
 
 			.type-lk {
 				display: inline-block;
-				color: #fff;
-				background-color: #e16d20;
-				border-radius: 10%;
+				color: rgb(116, 116, 116);
+				background-color: #cac8c8;
+				border-bottom-left-radius: 4px;
 				padding: 0 10px;
 				text-align: center;
 				transition: transform 0.3s ease, background-color 0.3s ease;
@@ -270,6 +270,7 @@
 			height: auto;
 			max-width: 400px;
 			max-height: 100%;
+			width: 100%;
 			@media (max-width: 320px) {
 			}
 		}

@@ -4,8 +4,9 @@ import Vuex from 'vuex'
 /* 全局Loading模块 */
 import ModuleLoading from './modules/loading'
 import {
-  UPDATE_USERINFO,
-  IS_LOGIN
+  USERINFO_UPDATE,
+  IS_LOGIN,
+  NAVLIST_UPDATE
 } from './mutation-types';
 Vue.use(Vuex)
 
@@ -13,29 +14,24 @@ export default new Vuex.Store({
   state: {
     isLogin: false,
     userInfo: {},
-    showLoading: false,
-    isLoading: false,
-    isWaitAni: false
+    isWaitAni: false,
+    navList: []
   },
   mutations: {
-    [UPDATE_USERINFO](state, options) {
+    [USERINFO_UPDATE](state, options) {
       state.userInfo = options;
     },
     [IS_LOGIN](state, s) {
       state.isLogin = s;
     },
+    [NAVLIST_UPDATE](state, value) {
+      state.navList = value;
+    },
     changeWaitAniStatus(state, tf) {
       state.isWaitAni = tf;
     }
   },
-  getters: {
-    user(state) {
-      return state.userInfo
-    },
-    isWaitAni(state) {
-      return state.isWaitAni
-    }
-  },
+  getters: {},
   actions: {
 
   },

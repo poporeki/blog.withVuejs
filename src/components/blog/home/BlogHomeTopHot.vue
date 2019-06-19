@@ -9,11 +9,13 @@
 				<swiper-slide class="hot-list-item" v-for="item in topData" :key="item.id">
 					<a :href="'/blog/article/' + item.artid" class="hot-lk">
 						<span class="lt">
-							<img
-								v-lazy="item.previewImage ? item.previewImage : '/images/exp.png'"
-								onerror="this.src='/images/exp.png'"
-								alt="images"
-							>
+							<div class="pic-wrap">
+								<img
+									v-lazy="item.previewImage ? item.previewImage : '/images/exp.png'"
+									onerror="this.src='/images/exp.png'"
+									alt="images"
+								>
+							</div>
 						</span>
 						<span class="rt p10">
 							<div class="art-tit">{{item.title}}</div>
@@ -103,7 +105,7 @@
 		}
 
 		.hot-list-item {
-			animation: scaleIn_2x 0.3s ease;
+			// animation: scaleIn_2x 0.3s ease;
 
 			&:hover {
 				.hot-lk {
@@ -139,12 +141,15 @@
 					background-color: rgb(68, 68, 68);
 					box-sizing: border-box;
 					overflow: hidden;
-
-					img {
+					.pic-wrap {
 						position: absolute;
 						top: 50%;
-						transform: translateY(-50%);
-						width: 100%;
+						left: 50%;
+						min-width: 100%;
+						transform: translate(-50%, -50%);
+						img {
+							width: 100%;
+						}
 					}
 				}
 

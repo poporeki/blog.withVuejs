@@ -60,12 +60,12 @@ router.beforeEach((to, from, next) => {
 //定义一个请求拦截器
 Axios.interceptors.request.use(function (config) {
   if (config.url === BASE_URL + "/auth") return config;
-  store.dispatch("showloader");
+  store.commit("loading/loading_show");
   return config;
 });
 //定义一个响应拦截器
 Axios.interceptors.response.use(function (config) {
-  store.dispatch("hideloader");
+  store.commit("loading/loading_hide");
   store.state.loading.isLoading = false;
   let data = config.data;
   if (data.status === -9) {

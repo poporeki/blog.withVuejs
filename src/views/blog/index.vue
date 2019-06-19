@@ -13,6 +13,7 @@
 		<!-- <blog-background></blog-background> -->
 		<blog-footer></blog-footer>
 		<blog-aside></blog-aside>
+		<back-totop-item></back-totop-item>
 	</div>
 </template>
 
@@ -22,6 +23,7 @@
 	import TheFooter from "@/components/blog/TheFooter";
 	import Aside from "@/components/blog/sidebar";
 	import Background from "@/components/blog/background";
+	import BackTotopItem from "@/components/BackToTopItem";
 	import "../../assets/iconfont_blog/iconfont.css";
 	import "../../assets/css/progressive-image.css";
 	export default {
@@ -30,7 +32,8 @@
 			blogHeader: Header,
 			blogFooter: TheFooter,
 			blogAside: Aside,
-			blogBackground: Background
+			blogBackground: Background,
+			BackTotopItem
 		},
 		data() {
 			return {
@@ -68,7 +71,9 @@
 				that.imgload();
 			};
 		},
-		created() {}
+		created() {
+			this.getWallpaper();
+		}
 	};
 </script>
 
@@ -158,6 +163,7 @@
 		> img {
 			position: relative;
 			height: 100%;
+			filter: blur(5px);
 		}
 	}
 </style>

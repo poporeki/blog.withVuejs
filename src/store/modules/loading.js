@@ -1,5 +1,5 @@
-const SHOW_LOADING = 'SHOW_LOADING';
-const HIDE_LOADING = 'HIDE_LOADING';
+const SHOW_LOADING = 'loading_show';
+const HIDE_LOADING = 'loading_hide';
 
 
 const state = {
@@ -9,19 +9,18 @@ const state = {
 }
 
 const mutations = {
-  SHOW_LOADING(state) {
+  [SHOW_LOADING](state) {
     state.showLoading = true;
   },
-  HIDE_LOADING(state) {
+  [HIDE_LOADING](state) {
     state.showLoading = false;
   }
 }
 const getters = {
-  showLoading(state) {
-    return state.showLoading
-  }
+
 }
 const actions = {
+
   showloader: ({
     commit
   }) => {
@@ -36,6 +35,7 @@ const actions = {
 
 
 export default {
+  namespaced: true,
   state,
   mutations,
   getters,

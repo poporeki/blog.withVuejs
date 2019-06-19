@@ -28,8 +28,6 @@
 					<strong>BY YANSK</strong>
 				</h2>
 				<h6>Four short words sum up what has lifted most successful individuals above the crowd: a little bit more.</h6>
-				<router-link to="/about">关于本站</router-link>&nbsp;&nbsp;
-				<a href="http://www.miitbeian.gov.cn">渝ICP备18016240号-2</a>
 			</div>
 		</div>
 	</footer>
@@ -42,9 +40,9 @@
 		margin: 0 auto;
 		margin-top: 100px;
 		min-height: 100px;
-
+		border-top: 1px solid rgb(58, 58, 58);
 		transition: background-color 0.3s ease;
-
+		background-color: rgb(0, 0, 0);
 		background-image: linear-gradient(
 			to bottom,
 			rgba(0, 0, 0, 0),
@@ -75,9 +73,8 @@
 				display: flex;
 				flex-grow: 1;
 				flex-direction: row;
-				align-items: flex-end;
+				padding: 20px;
 				box-sizing: border-box;
-
 				// @media (max-width: 360px) {
 				// 	& {
 				// 		flex-direction: column;
@@ -88,9 +85,6 @@
 					flex-grow: 1;
 					flex-direction: column;
 					align-items: center;
-					padding: 20px 0;
-					border-top: 1px solid rgb(58, 58, 58);
-					background-color: rgb(0, 0, 0);
 					> .lk {
 						position: relative;
 						display: block;
@@ -120,10 +114,8 @@
 				}
 			}
 			.copy-box {
-				padding: 30px;
+				padding: 15px;
 				box-sizing: border-box;
-				background-color: #085e2c;
-				box-shadow: -2px 2px 5px rgba(53, 53, 53, 0.329);
 			}
 		}
 	}
