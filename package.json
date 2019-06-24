@@ -21,6 +21,7 @@
     "vue-cropper": "^0.4.9",
     "vue-lazyload": "^1.2.6",
     "vue-parallaxy": "^1.1.1",
+    "vue-pose": "^0.5.1",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

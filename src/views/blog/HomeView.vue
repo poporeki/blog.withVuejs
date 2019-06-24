@@ -12,13 +12,10 @@
 	</div>
 </template>
 <style lang="scss">
-	h2 {
-		font-size: 0.35rem;
-	}
 	.sections-wrapper {
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		@media (max-width: 768px) {
 			& {
 				flex-direction: column;

@@ -21,7 +21,7 @@
 		border-left: 2px solid;
 		border-image: linear-gradient(#30d4fd, #3558f3) 1 5 5;
 		padding-left: 25px;
-		font-size: 0.26rem;
+		font-size: 1rem;
 	}
 	.log-content {
 		color: #dddddd;

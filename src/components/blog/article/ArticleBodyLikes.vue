@@ -37,7 +37,7 @@
 			font-family: "Architects Daughter", cursive;
 
 			.like-number {
-				font-size: 1rem;
+				font-size: 2rem;
 			}
 
 			.loading-ani {

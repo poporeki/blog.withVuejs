@@ -6,7 +6,8 @@ import ModuleLoading from './modules/loading'
 import {
   USERINFO_UPDATE,
   IS_LOGIN,
-  NAVLIST_UPDATE
+  NAVLIST_UPDATE,
+  MENU_DISPLAY_STATUS_CHANGE
 } from './mutation-types';
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     isLogin: false,
     userInfo: {},
     isWaitAni: false,
+    isShowMenu: false,
     navList: []
   },
   mutations: {
@@ -23,6 +25,9 @@ export default new Vuex.Store({
     },
     [IS_LOGIN](state, s) {
       state.isLogin = s;
+    },
+    [MENU_DISPLAY_STATUS_CHANGE](state, value) {
+      state.isShowMenu = value || !state.isShowMenu;
     },
     [NAVLIST_UPDATE](state, value) {
       state.navList = value;

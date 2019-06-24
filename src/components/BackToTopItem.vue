@@ -19,17 +19,30 @@
 		methods: {
 			onScroll(e) {
 				let body = e.target.body;
-				let winHei = window.innerHeight;
 				let scrollTop = body.getBoundingClientRect().top;
 				this.isShow = scrollTop < 0 ? true : false;
-				console.log(e);
 			},
 			backToTop() {
-				document.querySelector("body").scrollTop = 0;
+				let scrollTop = document.documentElement.scrollTop;
+				// window.scroll(0, 0)
+				// document.documentElement.scrollTop = 0;
+				// requestAnimationFrame(this.toTopAnimation);
+				window.scrollTo({
+					top: 0,
+					behavior: "smooth"
+				});
+			},
+			toTopAnimation() {
+				if (document.documentElement.scrollTop === 0) return;
+				document.documentElement.scrollTop =
+					document.documentElement.scrollTop - 100;
+				requestAnimationFrame(this.toTopAnimation);
 			}
 		},
 		mounted() {
-			document.addEventListener("scroll", this.onScroll);
+			this.$nextTick(function() {
+				document.addEventListener("scroll", this.onScroll);
+			});
 		},
 		destroyed() {
 			document.removeEventListener("scroll", this.onScroll);

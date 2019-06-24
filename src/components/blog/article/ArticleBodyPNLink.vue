@@ -1,12 +1,12 @@
 <template>
 	<div class="o-arc-lkbox">
 		<div class="arc-link-wrap prev" v-if="arcPrev">
-			<span class="iconfont icon-leftarrows"></span>
+			<span class="iconfont icon-arrow-left"></span>
 			<router-link :to="'/blog/article/'+arcPrev._id">上一篇:&nbsp;{{arcPrev.title}}</router-link>
 		</div>
 
 		<div class="arc-link-wrap next" v-if="arcNext">
-			<span class="iconfont icon-rightarrows"></span>
+			<span class="iconfont icon-arrow-right"></span>
 			<router-link :to="'/blog/article/'+arcNext._id">下一篇:&nbsp;{{arcNext.title}}</router-link>
 		</div>
 	</div>

@@ -11,7 +11,7 @@
 			>
 				<swiper-slide v-for="item in carouData" :key="item.id">
 					<a :href="'/blog/article/'+item.id">
-						<h3>{{item.title}}</h3>
+						<h4>{{item.title}}</h4>
 						<img v-lazy="item.imgSrc!==''?item.imgSrc:''" :onerror="errorImg" alt="image">
 					</a>
 				</swiper-slide>
@@ -197,16 +197,15 @@
 		transform: translate(-50%, -50%);
 	}
 
-	.swiper-slide > a > h3 {
+	.swiper-slide > a > h4 {
 		position: absolute;
 		display: inline-block;
 		width: 100%;
 		left: 0;
 		bottom: 0;
-		margin: 0 0 15px;
-		padding: 5px;
+		margin: 0 0 20px;
+		padding: 8px;
 		color: #fff;
-		font-size: 0.35rem;
 		background-color: #000;
 		text-shadow: 0 0 5px #000;
 		z-index: 1;
@@ -221,8 +220,9 @@
 		padding: 2px;
 		width: 16px;
 		height: 16px;
+		font-size: 0.8rem;
 		text-align: center;
-		line-height: 16px;
+		line-height: 0.8rem;
 		transition: background 0.5s ease;
 	}
 </style>

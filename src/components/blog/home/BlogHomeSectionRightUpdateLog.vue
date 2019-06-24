@@ -1,11 +1,11 @@
 <template>
 	<div class="update-log-box">
-		<h2 class="title">
+		<h4 class="title">
 			更新日志
 			<small>
 				<router-link to="/blog/log">More</router-link>
 			</small>
-		</h2>
+		</h4>
 		<Loading :isLoading="isRequest"></Loading>
 		<ul class="log-list">
 			<li class="log-list-item" v-for="item in logList" :key="item.id">
@@ -66,7 +66,7 @@
 		.log-list {
 			border-left: 1px solid rgb(78, 78, 78);
 			padding-left: 25px;
-			font-size: 0.25rem;
+			font-size: 0.9rem;
 			.log-list-item {
 				margin-bottom: 15px;
 				.u-cnt {

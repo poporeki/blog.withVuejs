@@ -2,7 +2,7 @@
 	<article class="article-box" data-art-i-d="art.id">
 		<div class="article-header wobble">
 			<div class="art-title">
-				<h2>{{art.title}}</h2>
+				<h4>{{art.title}}</h4>
 			</div>
 			<div class="pt-info">
 				<span class="pubtime">
@@ -34,7 +34,7 @@
 		<p class="end" v-if="art!==null">--THE END--</p>
 		<br>
 		<div v-if="art.tags!==null" class="article-tags-list">
-			<h4 class="tit">标签</h4>
+			<h6 class="tit">标签</h6>
 			<a
 				v-for="tag in art.tags"
 				:key="tag.id"
@@ -198,7 +198,7 @@
 	.article-header {
 		opacity: 0;
 		.art-title {
-			> h2 {
+			> h4 {
 				text-align: center;
 			}
 		}
@@ -231,7 +231,8 @@
 	}
 	.article-box {
 		p.end {
-			font-size: 0.3rem;
+			font-size: 1.1rem;
+			opacity: 0.5;
 		}
 	}
 	.article-source {
@@ -240,7 +241,7 @@
 		}
 	}
 	.article-body {
-		font-size: 0.28rem;
+		font-size: inherit;
 		color: rgba(236, 236, 236, 1);
 
 		ul {

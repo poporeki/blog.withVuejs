@@ -22,11 +22,11 @@
 				</li>
 			</ul>
 			<div class="copy-box">
-				<h2 class="text-center">
+				<h4 class="text-center">
 					&copy; 2018
 					<br>
 					<strong>BY YANSK</strong>
-				</h2>
+				</h4>
 				<h6>Four short words sum up what has lifted most successful individuals above the crowd: a little bit more.</h6>
 				<router-link to="/about">关于本站</router-link>&nbsp;&nbsp;
 				<a href="http://www.miitbeian.gov.cn">渝ICP备18016240号-2</a>

@@ -1,10 +1,10 @@
 <template>
 	<section class="tools">
 		<rule-line></rule-line>
-		<h2 class="title">
+		<h4 class="title">
 			工具
 			<router-link to="/blog/tools">MORE</router-link>
-		</h2>
+		</h4>
 		<ul class="tool-list">
 			<li class="tool-list-item">
 				<router-link to="/blog/tools/qrcode">
@@ -106,7 +106,7 @@
 	}
 	.tool-icon .iconfont {
 		transition: color 0.6s ease;
-		font-size: 1.2rem;
+		font-size: 3rem;
 	}
 	.tool-box {
 		display: flex;

@@ -1,6 +1,6 @@
 <template>
 	<div class="comment-top-box">
-		<h2>最新评论</h2>
+		<h4>最新评论</h4>
 		<Loading v-if="isRequest"></Loading>
 		<div @click="getNewArtCommList" v-if="isRequestError">获取失败，点击重试</div>
 		<div class="artcomm-list" v-if="!isRequest">
@@ -12,13 +12,17 @@
 			>
 				<h6 class="arc-tit" :title="item.article[0].title">{{item.article[0].title}}</h6>
 				<div class="arc-comm">
-					<img
-						class="head-pic"
-						v-lazy="'https://v.yansk.cn'+(item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png')"
-						alt="头像"
-					>
-					{{item.author[0].user_name}} :
-					<span>{{item.comment_text}}</span>
+					<div class="user-avatar-pic">
+						<img
+							class="head-pic"
+							v-lazy="'https://v.yansk.cn'+(item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png')"
+							alt="头像"
+						>
+					</div>
+					<div class="text-info">
+						<span class="user-name">{{item.author[0].user_name}}</span>
+						<span class="comm-text">{{item.comment_text}}</span>
+					</div>
 				</div>
 			</a>
 		</div>
@@ -74,7 +78,7 @@
 			position: relative;
 			margin: 0;
 			padding: 0;
-			font-size: 0.22rem;
+			font-size: 1rem;
 		}
 
 		.comm-lk {
@@ -96,14 +100,38 @@
 		}
 
 		.arc-comm {
+			display: flex;
+			flex-direction: row;
 			padding: 10px 0;
-			font-size: 0.2rem;
+			font-size: 0.8rem;
 			color: rgb(202, 202, 202);
+			.user-avatar-pic {
+				flex-shrink: 0;
+				height: 3rem;
+				width: 3rem;
+				position: relative;
+				border-radius: 50%;
+				overflow: hidden;
 
-			> img {
-				height: 0.4rem;
-				vertical-align: bottom;
-				margin-right: 5px;
+				> img {
+					max-height: 100%;
+					vertical-align: bottom;
+					margin-right: 5px;
+				}
+			}
+			.user-name {
+				font-weight: 500;
+				letter-spacing: 5px;
+				color: rgba(255, 255, 255, 0.349);
+				text-transform: uppercase;
+			}
+			.text-info {
+				display: flex;
+				flex-direction: column;
+				.comm-text {
+					padding-left: 20px;
+					flex-grow: 1;
+				}
 			}
 		}
 	}

@@ -92,7 +92,7 @@
 
 <style lang="scss">
 	.w-icon {
-		font-size: 0.3rem;
+		font-size: 1rem;
 	}
 	@media (max-width: 767.9px) {
 		.sec-wrapper {
@@ -130,7 +130,7 @@
 				position: absolute;
 				right: 0;
 				top: 0;
-				font-size: 0.8rem;
+				font-size: 3rem;
 				color: rgb(255, 136, 0);
 
 				&:after {
@@ -144,21 +144,22 @@
 				top: 0;
 				left: 0;
 				color: rgb(167, 167, 167);
+				font-size: 0.7rem;
 			}
 
 			.w-province {
 				position: absolute;
 				left: 0;
 				bottom: 0;
-				font-size: 0.6rem;
+				font-size: 2rem;
 			}
 
 			.w-city {
 				position: absolute;
-				width: 0.3rem;
-				right: 0;
+				right: 10px;
 				bottom: 0;
-				font-size: 0.3rem;
+				width: 10px;
+				font-size: 1rem;
 				color: gray;
 			}
 		}

@@ -1,8 +1,8 @@
 <template>
-	<section class="section-right">
+	<section class="section-right-container">
 		<item-tags></item-tags>
-		<item-commtop></item-commtop>
-		<item-log></item-log>
+		<item-commtop class="section-right-item"></item-commtop>
+		<item-log class="section-right-item"></item-log>
 	</section>
 </template>
 
@@ -20,7 +20,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.section-right {
+	.section-right-container {
 		padding-left: 10px;
 		flex-basis: 20%;
 		box-sizing: border-box;
@@ -28,6 +28,9 @@
 			& {
 				order: -1;
 			}
+		}
+		.section-right-item {
+			margin-top: 1rem;
 		}
 	}
 </style>

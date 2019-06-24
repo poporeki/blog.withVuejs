@@ -11,7 +11,7 @@ import VueLazyload from 'vue-lazyload';
 import {
   BASE_URL
 } from '@/config/baseURL';
-import '@/util/rem';
+// import '@/util/rem';
 
 Vue.use(VueLazyload);
 Vue.config.productionTip = true;

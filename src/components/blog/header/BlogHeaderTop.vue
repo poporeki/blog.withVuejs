@@ -42,7 +42,7 @@
 			padding: 3px 0;
 			> a {
 				padding: 0 10px;
-				font-size: 0.26rem;
+				font-size: 0.8rem;
 			}
 			&:nth-child(even) {
 				> a {

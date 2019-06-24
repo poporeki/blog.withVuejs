@@ -5,14 +5,15 @@
 			<router-view/>
 		</div>
 		<div class="bg-block">
-			<div class="progressive parallax-window" ref="bg">
+			<div class="progressive parallax-window" ref="bg" v-if="isInit">
 				<img class="preview" v-progressive="bg.lowRes" :data-srcset="bg.original" :src="bg.original">
 			</div>
 			<div class="gradient"></div>
 		</div>
 		<!-- <blog-background></blog-background> -->
 		<blog-footer></blog-footer>
-		<blog-aside></blog-aside>
+		<!-- <blog-aside></blog-aside> -->
+		<menu-item></menu-item>
 		<back-totop-item></back-totop-item>
 	</div>
 </template>
@@ -22,9 +23,9 @@
 	import Header from "@/components/blog/header";
 	import TheFooter from "@/components/blog/TheFooter";
 	import Aside from "@/components/blog/sidebar";
+	import MenuItem from "@/components/blog/MenuItem";
 	import Background from "@/components/blog/background";
 	import BackTotopItem from "@/components/BackToTopItem";
-	import "../../assets/iconfont_blog/iconfont.css";
 	import "../../assets/css/progressive-image.css";
 	export default {
 		name: "Blog",
@@ -33,10 +34,12 @@
 			blogFooter: TheFooter,
 			blogAside: Aside,
 			blogBackground: Background,
-			BackTotopItem
+			BackTotopItem,
+			MenuItem
 		},
 		data() {
 			return {
+				isInit: false,
 				bg: {
 					original: "/images/blog_bg.jpg",
 					lowRes: "/images/placeholder/blog_bg.jpg"
@@ -50,27 +53,36 @@
 			},
 			getWallpaper() {
 				let that = this;
-				this.$axios.get("/api/v1/bing").then(({ data }) => {
-					if (data.status !== true || data.data.url === "") return;
-					that.bg.original = data.data.url;
-					that.bg.lowRes = data.data.url;
-				});
+				this.$axios
+					.get("/api/v1/bing")
+					.then(({ data }) => {
+						if (data.status !== true || data.data.url === "") return;
+						that.bg.original = data.data.url;
+						that.bg.lowRes = data.data.url;
+						this.isInit = true;
+					})
+					.catch(err => {
+						this.isInit = true;
+					});
 			}
 		},
+		watch: {
+			isInit(val) {
+				if (!val) return;
+				const that = this;
+				let img = new Image();
+				if (!this.bg) return;
+				img.src = this.bg.original;
+				img.onload = () => {
+					this.imgload();
+				};
 
-		mounted() {
-			const that = this;
-			let img = new Image();
-			if (!this.bg) return;
-			img.src = this.bg.original;
-			img.onload = () => {
-				this.imgload();
-			};
-
-			window.onresize = function temp() {
-				that.imgload();
-			};
+				window.onresize = function temp() {
+					that.imgload();
+				};
+			}
 		},
+		mounted() {},
 		created() {
 			this.getWallpaper();
 		}
@@ -78,30 +90,12 @@
 </script>
 
 <style lang="scss">
-	// html {
-	// 	height: 100%;
-	// 	width: 100%;
-	// }
-
-	html,
 	body {
-		font-family: "Lato", "Microsoft YaHei", sans-serif;
-		font-size: 0.16rem;
-	}
-
-	body {
-		margin: 0;
-		padding: 0;
-		height: 100%;
-		color: $color-font;
-		width: 100%; // background-image: url(/images/dark_geometric2.png);
-		background-color: $color-bg;
-
 		overflow-x: hidden;
 	}
 
 	a {
-		color: #fff;
+		color: $link-text-color-base;
 		text-decoration: none;
 	}
 
@@ -117,7 +111,7 @@
 	header {
 		position: relative;
 		max-width: 1190px;
-
+		width: 100%;
 		margin: 0 auto;
 		padding: 0 10px;
 		box-sizing: border-box;
@@ -127,9 +121,12 @@
 	}
 	.blog-page {
 		position: relative;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
 	}
 	.body {
-		min-height: 40vh;
+		flex-grow: 1;
 	}
 	.p10 {
 		padding: 10px;
@@ -153,7 +150,7 @@
 			background-image: linear-gradient(
 				to bottom,
 				rgba(231, 51, 104, 0),
-				$color-bg
+				$body-bg-color-base
 			);
 		}
 	}

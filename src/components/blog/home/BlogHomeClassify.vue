@@ -1,16 +1,15 @@
 <template>
 	<section class="classify">
 		<div class="lt">
-			<h2 class="title">分类</h2>
+			<h4 class="title">分类</h4>
 		</div>
 		<div class="rt">
-			<transition-group tag="div" class="rt" name="classify" enter-active-class="animated fadeInDown">
-				<div class="classify-item" v-for="item in typelist" :key="item.typeID">
-					<a class="type-lk" :href="'/blog/articlelist?by[type_id]='+item.typeID">
-						<i :class="'iconfont icon-'+item.typeIconName"></i>
-						<i :class="'iconfont bottom icon-'+item.typeIconName"></i>
+			<transition-group tag="div" class="category-list" enter-active-class="animated fadeInUp">
+				<div class="category-list-item" v-for="item in typelist" :key="item.typeID">
+					<router-link class="type-lk" :to="'/blog/articlelist?by[type_id]='+item.typeID">
 						<p>{{item.typeName}}</p>
-					</a>
+						<i :class="'iconfont icon-'+item.typeIconName"></i>
+					</router-link>
 				</div>
 			</transition-group>
 		</div>
@@ -43,7 +42,7 @@
 		position: relative;
 		width: 100%;
 		min-width: 100px;
-		margin-top: 50px;
+		margin: 50px 0;
 		display: flex;
 		flex-direction: row;
 		box-sizing: border-box;
@@ -66,92 +65,106 @@
 			flex-direction: row;
 			flex-wrap: wrap;
 		}
-
-		.classify-item {
+		.category-list {
 			position: relative;
 			display: flex;
-			align-items: center;
-			text-align: center;
-			justify-content: center;
+			flex-direction: row;
+			flex-wrap: wrap;
 			flex-grow: 1;
-			height: 200px;
-			min-width: 90px;
-			margin: 2.5px;
-			margin-bottom: 20px;
-			border-radius: $bor-radius;
-			box-sizing: border-box;
-			box-shadow: 2px 2px 10px #000;
-			background-color: $color-block-wrap;
-			transition: transform 0.3s ease, background-color 0.3s ease;
-			overflow: hidden;
 
-			&:hover {
-				background-color: $color-lk-font;
-				transform: translateY(-5px);
-			}
-
-			a.type-lk {
+			.category-list-item {
+				flex-grow: 1;
 				position: relative;
-				display: block;
-				height: 100%;
-				width: 100%;
-				box-sizing: border-box;
+				padding: 2rem;
 				overflow: hidden;
+				background-color: rgb(19, 19, 19);
+				transition: transform 0.3s ease;
+				box-shadow: 2px 2px 2px rgba(58, 61, 66, 0.479);
+				border-radius: 4px;
+				&::before,
+				&::after {
+					content: "";
+					position: absolute;
+					width: 10px;
+					height: 10px;
+					right: 5%;
+					top: 5%;
+					padding: 20px;
+					border-radius: 50%;
+				}
+				&::before {
+					z-index: 1;
+					transition: transform 0.3s ease;
+				}
+				&::after {
+					opacity: 0.8;
+					z-index: 2;
+					transition: transform 0.3s ease;
+				}
+				&:nth-child(1) {
+					&::before {
+						background-color: rgb(21, 129, 70);
+					}
+					&::after {
+						background-color: rgba(26, 175, 93, 0.479);
+					}
+				}
+				&:nth-child(2) {
+					&::before {
+						background-color: rgb(21, 80, 129);
+					}
+					&::after {
+						background-color: rgba(29, 95, 216, 0.479);
+					}
+				}
+				&:nth-child(3) {
+					&::before {
+						background-color: rgb(129, 21, 106);
+					}
+					&::after {
+						background-color: rgba(163, 26, 175, 0.479);
+					}
+				}
+				&:nth-child(4) {
+					&::before {
+						background-color: rgb(199, 100, 34);
+					}
+					&::after {
+						background-color: rgba(233, 115, 37, 0.479);
+					}
+				}
+				.type-lk {
+					position: relative;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					align-content: stretch;
+					width: 100%;
+					height: 150px;
+					z-index: 3;
 
-				&:hover {
 					.iconfont {
-						color: $color-block-wrap;
-						transform: translateY(-100%);
-					}
-
-					.iconfont.bottom {
-						color: $color-block-wrap;
-						transform: translateY(0);
-					}
-
-					> p {
-						background-color: $color-block-hover;
+						transition: color 0.3s ease;
+						font-size: 4rem;
 					}
 				}
-
-				.iconfont {
-					font-size: 50px;
-					position: absolute;
-					width: 100%;
-					height: 100%;
-					left: 0;
-					top: 50%;
-					margin-top: -40px;
-					color: $color-lk-font;
-					box-sizing: border-box;
-					text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.384);
-					transition: transform 0.3s ease-in, color 0.3s ease;
-
-					&.bottom {
-						transform: translateY(100%);
-						color: $color-lk-font;
+				&:hover {
+					transform: translateY(-10px);
+					.type-lk {
+						.iconfont {
+							color: #000;
+						}
+					}
+					&::before {
+						// width: 100%;
+						// height: 100%;
+						// border-radius: 0;
+						transform: scale(17);
+					}
+					&::after {
+						transform: scale(5);
 					}
 				}
-
-				> p {
-					position: absolute;
-					width: 100%;
-					padding: 10px;
-					left: 0;
-					margin: 0;
-					bottom: 0;
-					font-size: 0.3rem;
-					color: $color-lk-bgcolor;
-					background-color: $color-black;
-					box-sizing: border-box;
-					text-align: center;
-					letter-spacing: 5px;
-					transition: color 0.5s ease;
-				}
-			}
-
-			&:last-child {
-				margin-right: 0;
 			}
 		}
 	}

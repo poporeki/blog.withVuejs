@@ -11,7 +11,7 @@ module.exports = {
         .loader('sass-resources-loader')
         .options({
           // Or array of paths
-          resources: ['./src/assets/scss/mixins/_animation.scss', './src/assets/scss/mixins/_set-color.scss']
+          resources: ['./src/assets/scss/mixins/_animation.scss', './src/assets/scss/mixins/_set-color.scss', './src/assets/scss/mixins/_theme_default.scss']
         })
         .end()
     })

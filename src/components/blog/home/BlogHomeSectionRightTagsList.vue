@@ -1,6 +1,9 @@
 <template>
 	<div class="tags-box">
-		<h2>Tag标签</h2>
+		<h4>
+			标签
+			<i class="iconfont icon-tag"></i>
+		</h4>
 		<div class="articletag-list">
 			<Loading :isLoading="isRequest"></Loading>
 			<a
@@ -71,7 +74,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		min-height: 150px;
-		font-size: 0.26rem;
+		font-size: 0.8rem;
 		.tag-lk {
 			position: relative;
 			display: inline-block;

@@ -31,8 +31,6 @@
 
 	@media (width: 360px) {
 		header {
-			height: 80px;
-
 			nav {
 				flex-direction: column-reverse !important;
 			}

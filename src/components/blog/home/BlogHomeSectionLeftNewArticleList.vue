@@ -1,9 +1,11 @@
 <template>
 	<div class="new-arc-list-wapper">
-		<h2 class="title">
+		<h4 class="title">
 			最新文章
-			<router-link to="/blog/articlelist">MORE</router-link>
-		</h2>
+			<small>
+				<router-link to="/blog/articlelist">More</router-link>
+			</small>
+		</h4>
 		<div style="min-height:400px;position:relative;" v-if="isRequest">
 			<Loading :isLoading="isRequest"></Loading>
 		</div>
@@ -14,18 +16,18 @@
 					<div class="card">
 						<div class="card-header">
 							<div class="title">
-								<h4>
+								<h6>
 									<span class="art-type-tips">{{arc.type.name}}</span>
 									{{arc.title}}
-								</h4>
+								</h6>
 							</div>
 							<div class="info-box">
 								<div class="item read-num">
-									<i class="iconfont bottom icon-read"></i>
+									<i class="iconfont bottom icon-view-line"></i>
 									{{arc.read}}
 								</div>
 								<div class="item author">
-									<i class="iconfont bottom icon-iresume"></i>
+									<i class="iconfont bottom icon-writer"></i>
 									{{arc.author.name}}
 								</div>
 								<div class="item author">
@@ -125,7 +127,9 @@
 
 			box-sizing: border-box;
 			background-color: #000;
-
+			> a {
+				display: block;
+			}
 			&:hover {
 				.card {
 					background-color: $highlight-color-black;
@@ -199,6 +203,7 @@
 					border-left: 5px solid $color-green;
 					margin: 0 0 10px;
 					padding: 10px 5px;
+					font-size: 1.1rem;
 					background-color: #000;
 					box-shadow: 0 0 1px rgb(119, 119, 119);
 					border-top-right-radius: 2px;
@@ -279,7 +284,7 @@
 						-webkit-backface-visibility: hidden;
 						height: 100%;
 						width: 100%;
-						transform: scale(0.9);
+						transform: scale(0.99);
 						transition: transform 0.5s ease;
 					}
 				}

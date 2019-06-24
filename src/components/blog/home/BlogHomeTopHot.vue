@@ -1,7 +1,7 @@
 <template >
 	<div>
 		<div class="tit">
-			<h2>热门</h2>
+			<h4>热门</h4>
 		</div>
 		<Loading :isLoading="isRequest"></Loading>
 		<transition enter-active-class="animated fadeInRight">
@@ -21,7 +21,7 @@
 							<div class="art-tit">{{item.title}}</div>
 							<div class="art-info">
 								<div class="read">
-									<i class="iconfont bottom icon-eye"></i>
+									<i class="iconfont bottom icon-view"></i>
 									&nbsp;{{item.read}}
 								</div>
 								<div class="time">{{item.timeCreate}}</div>
@@ -160,7 +160,7 @@
 					flex-direction: column;
 					justify-content: flex-start;
 					align-content: space-around;
-					font-size: 0.25rem;
+					font-size: 0.9rem;
 
 					.art-tit {
 						box-sizing: border-box;
@@ -175,7 +175,10 @@
 						flex-direction: row;
 						justify-content: space-between;
 						align-items: flex-end;
-
+						font-size: 0.8em;
+						.iconfont {
+							font-size: inherit;
+						}
 						.read {
 							display: flex;
 							flex-direction: row;

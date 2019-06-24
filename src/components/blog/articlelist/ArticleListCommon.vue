@@ -8,17 +8,17 @@
 		ref="ulArclist"
 	>
 		<li v-for="(arc,aidx) in arcList" class="article-list-item" :key="aidx" :data-index="aidx">
-			<a :href="'/blog/article/'+ arc.artid">
+			<router-link :to="'/blog/article/'+ arc.artid">
 				<div class="lt">
 					<div class="top">
 						<div class="title">
-							<h4>{{arc.title}}</h4>
+							<h5>{{arc.title}}</h5>
 						</div>
 						<div class="time">{{arc.create_time}}</div>
 					</div>
 					<div class="thumbnail">{{arc.content}}</div>
 				</div>
-			</a>
+			</router-link>
 		</li>
 		<li v-if="isInit&&(!arcList||arcList.length===0)" key="nothing">没有相关内容</li>
 		<li v-if="isOver" style="text-align:center;" key="end">--THE END--</li>
@@ -137,10 +137,9 @@
 					}
 
 					if (data.status !== 1 || !datas) return;
-
+					this.scrolls();
 					that.isInit = true;
 					that.arcList = datas.arclist;
-					that.listenerScroll();
 					that.page++;
 				});
 			},
@@ -188,6 +187,9 @@
 			this.querystring = query ? qs.parse(query) : "";
 			this.getNewData();
 			this.listenerScroll();
+		},
+		destroyed() {
+			window.removeEventListener("scroll", this.scrolls);
 		}
 	};
 </script>
@@ -202,8 +204,13 @@
 		a {
 			color: #fff;
 		}
-
+		@media (min-width: 768px) {
+			> .article-list-item {
+				width: 33%;
+			}
+		}
 		> .article-list-item {
+			display: inline-block;
 			margin-bottom: 20px;
 			border-bottom: 1px solid rgb(41, 41, 41);
 			padding: 0 10px;
@@ -212,7 +219,6 @@
 			transition: transform 0.5s ease;
 			transform-origin: bottom center;
 			// animation: flipXIn 1s forwards;
-			font-size: 0.28rem;
 			&:last-child {
 				margin-bottom: 0;
 			}

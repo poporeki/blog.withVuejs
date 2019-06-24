@@ -1,6 +1,6 @@
 <template>
 	<section class="comment-block" id="comment">
-		<h3>发表评论</h3>
+		<h5>发表评论</h5>
 		<div class="add-comm clearfix">
 			<textarea
 				@keyup="typing($event)"
@@ -17,7 +17,7 @@
 			</a>
 		</div>
 		<div class="comm-list">
-			<h3>评论列表({{artTotal}})</h3>
+			<h5>评论列表({{artTotal}})</h5>
 			<!-- 评论列表 -->
 			<ul class="list">
 				<li v-if="commList.length===0">目前并没有评论哦</li>
@@ -98,9 +98,11 @@
 										</div>
 									</div>
 									<p v-if="reply.to==''">{{reply.arc_content}}</p>
-									<p
-										v-if="typeof reply!=='undefined'&&reply.to!==''&&reply.to!==null"
-									>回复 #{{reply.to.floor}} {{reply.to.user.name}}:{{reply.arc_content}}</p>
+									<p v-if="typeof reply!=='undefined'&&reply.to!==''&&reply.to!==null">
+										回复
+										<span class="rep-to-name">#{{reply.to.floor}} {{reply.to.user.name}}:</span>
+										{{reply.arc_content}}
+									</p>
 									<div class="tools">
 										<a
 											href="javascript:void(0);"
@@ -169,9 +171,13 @@
 	</section>
 </template>
 <style lang="scss">
+	.rep-to-name {
+		color: #d18521;
+	}
 	.comment-block {
 		font-size: 0.28rem;
-		h3 {
+		h5 {
+			font-weight: bold;
 			padding: 10px 0;
 			border-bottom: 1px solid rgb(48, 48, 48);
 		}
@@ -277,7 +283,7 @@
 		.reply-list {
 			display: none;
 			position: relative;
-			border: 1px solid #424242;
+			border-left: 1px solid #424242;
 			margin-top: 15px;
 			padding: 5px 15px;
 
@@ -364,19 +370,27 @@
 				&:hover {
 					border-color: #60bb46;
 				}
+				> span {
+					flex-shrink: 0;
+				}
 				.head-pic {
+					flex-shrink: 0;
 					position: relative;
+					padding: 10px;
 					width: 10vw;
 					height: 10vw;
 					max-width: 80px;
 					max-height: 80px;
+
 					margin-top: 5px;
 					box-sizing: border-box;
 					a {
 						display: block;
 						height: 100%;
 						width: 100%;
-						border-top-left-radius: 50%;
+						min-width: 20px;
+						min-height: 20px;
+						border-radius: 50%;
 						overflow: hidden;
 						transition: all 0.3s ease;
 						> img {
@@ -437,13 +451,16 @@
 					> p {
 						margin: 0;
 						color: #9dafc7;
+						word-break: break-all;
 					}
 
 					.tools {
 						position: relative;
 						display: flex;
 						justify-content: flex-end;
-						font-size: 14px;
+						.comm-reply-btn {
+							font-size: 0.8rem;
+						}
 					}
 				}
 			}
@@ -453,9 +470,7 @@
 					> div {
 						> .head-pic {
 							> a {
-								height: 90%;
-								width: 90%;
-								box-shadow: 2px 2px 10px rgb(255, 255, 255);
+								box-shadow: 0 2px 4px rgba(41, 168, 29, 0.76);
 							}
 						}
 					}
