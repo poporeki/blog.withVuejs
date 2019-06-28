@@ -94,7 +94,16 @@
 		flex-direction: row;
 		align-items: center;
 		align-content: center;
-
+		overflow-x: auto;
+		&::-webkit-scrollbar {
+			width: 5px;
+			height: 4px;
+			background-color: rgba(32, 32, 32, 0); /* or add it to the track */
+		}
+		&::-webkit-scrollbar-thumb {
+			background: rgba(0, 0, 0, 0.534);
+			border-radius: 4px;
+		}
 		li {
 			flex-grow: 1;
 			> a {
@@ -143,6 +152,9 @@
 				}
 				> .iconfont {
 					margin-right: 5px;
+				}
+				> span {
+					word-break: keep-all;
 				}
 			}
 

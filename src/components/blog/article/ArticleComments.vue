@@ -172,6 +172,7 @@
 </template>
 
 <script>
+	import utils from "@/util/utils";
 	export default {
 		data() {
 			return {
@@ -409,9 +410,9 @@
 			avatarUrl(avatar) {
 				if (!avatar)
 					return "https://v.yansk.cn/images/user/avatars/default/1.png";
-				return ["http://", "https://"].indexOf(avatar) !== -1
-					? `https://v.yansk.cn${avatar}`
-					: avatar;
+				return utils.REG_URL.test(avatar)
+					? avatar
+					: `https://v.yansk.cn${avatar}`;
 			}
 		},
 		created() {
@@ -545,9 +546,15 @@
 			border-left: 1px solid #424242;
 			margin-top: 15px;
 			padding: 5px 15px;
-
+			background-color: #141518;
 			&.show {
 				display: block;
+			}
+			.comment-item {
+				span {
+					font-size: 12px;
+					flex-shrink: 0;
+				}
 			}
 		}
 

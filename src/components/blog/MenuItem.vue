@@ -66,13 +66,13 @@
 <script>
 	import posed, { PoseTransition } from "vue-pose";
 	import { mapState } from "vuex";
+	import utils from "@/util/utils";
 	export default {
 		data() {
 			return {
 				logoPic: "https://v.yansk.cn/images/logo.png",
 				isShow: false,
-				maskShow: false,
-				URL_REG: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+				maskShow: false
 			};
 		},
 		components: {
@@ -187,9 +187,9 @@
 				return this.isShowMenu ? "visible" : "hidden";
 			},
 			avatarUrl() {
-				return URL_REG.test(this.userInfo.avatarPath)
-					? `https://v.yansk.cn${this.userInfo.avatarPath}`
-					: this.userInfo.avatarPath;
+				return utils.REG_URL.test(this.userInfo.avatarPath)
+					? this.userInfo.avatarPath
+					: `https://v.yansk.cn${this.userInfo.avatarPath}`;
 			}
 		}
 	};

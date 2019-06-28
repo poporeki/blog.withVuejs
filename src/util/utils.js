@@ -27,5 +27,6 @@ export default {
       return value === name;
     })
     return filter.length === 0 ? false : true;
-  }
+  },
+  REG_URL: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
 }

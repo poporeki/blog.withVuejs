@@ -27,6 +27,7 @@
 
 <script>
 	import Loading from "@/components/loading/Loading_02";
+	import utils from "@/util/utils";
 	export default {
 		components: { Loading },
 		data() {
@@ -55,9 +56,9 @@
 			avatarUrl(avatar) {
 				if (!avatar)
 					return "https://v.yansk.cn/images/user/avatars/default/1.png";
-				return ["http://", "https://"].indexOf(avatar.save_path) !== -1
-					? `https://v.yansk.cn${avatar.save_path}`
-					: avatar.save_path;
+				return utils.REG_URL.test(avatar.save_path)
+					? avatar.save_path
+					: `https://v.yansk.cn${avatar.save_path}`;
 			}
 		},
 		created() {
