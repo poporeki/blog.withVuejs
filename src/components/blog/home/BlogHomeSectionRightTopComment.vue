@@ -13,11 +13,7 @@
 				<h6 class="arc-tit" :title="item.article[0].title">{{item.article[0].title}}</h6>
 				<div class="arc-comm">
 					<div class="user-avatar-pic">
-						<img
-							class="head-pic"
-							v-lazy="'https://v.yansk.cn'+(item.avatar[0]!=null?item.avatar[0].save_path+'thumbnail_'+item.avatar[0].new_name:'/images/user/avatars/default/1.png')"
-							alt="头像"
-						>
+						<img class="head-pic" v-lazy="avatarUrl(item.avatar[0])" alt="头像">
 					</div>
 					<div class="text-info">
 						<span class="user-name">{{item.author[0].user_name}}</span>
@@ -55,6 +51,13 @@
 						that.isRequest = false;
 						that.isRequestError = true;
 					});
+			},
+			avatarUrl(avatar) {
+				if (!avatar)
+					return "https://v.yansk.cn/images/user/avatars/default/1.png";
+				return ["http://", "https://"].indexOf(avatar.save_path) !== -1
+					? `https://v.yansk.cn${avatar.save_path}`
+					: avatar.save_path;
 			}
 		},
 		created() {

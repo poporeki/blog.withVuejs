@@ -16,4 +16,27 @@ module.exports = {
         .end()
     })
   }
+  /* ,
+    pluginOptions: {
+      prerenderSpa: {
+        registry: undefined,
+        renderRoutes: [
+          '/',
+          '/about',
+          '/blog',
+          '/blog/articlelist',
+          '/blog/updatalog',
+          '/blog/user',
+          '/login',
+          '/reg'
+        ],
+        useRenderEvent: true,
+        onlyProduction: true,
+
+        headless: true,
+        customRendererConfig: {
+          args: ['--auto-open-devtools-for-tabs']
+        }
+      }
+    } */
 }

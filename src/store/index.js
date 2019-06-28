@@ -27,7 +27,11 @@ export default new Vuex.Store({
       state.isLogin = s;
     },
     [MENU_DISPLAY_STATUS_CHANGE](state, value) {
-      state.isShowMenu = value || !state.isShowMenu;
+      if (typeof value !== 'boolean') {
+        state.isShowMenu = !state.isShowMenu;
+        return;
+      }
+      state.isShowMenu = value;
     },
     [NAVLIST_UPDATE](state, value) {
       state.navList = value;

@@ -7,7 +7,7 @@
 					<span>{{item.name}}</span>
 				</router-link>
 				<a :href="item.href" v-if="item.href" target="_blank">
-					<i :class="'iconfont '+ item.icon "></i>
+					<i :class="'iconfont '+ 'icon-'+item.icon "></i>
 					<span>{{item.name}}</span>
 				</a>
 			</navlist-item>
@@ -53,7 +53,7 @@
 					{
 						name: "关于我",
 						href: "https://v.yansk.cn/iresume",
-						icon: "icon-avatar"
+						icon: "avatar"
 					}
 				]
 			};

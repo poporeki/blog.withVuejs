@@ -204,7 +204,7 @@
 		}
 
 		.pt-info {
-			font-size: 0.28rem;
+			font-size: 0.7rem;
 			text-align: center;
 			margin-bottom: 50px;
 
@@ -381,7 +381,7 @@
 	}
 
 	.article-tags-list {
-		font-size: 0.28rem;
+		font-size: 0.7rem;
 		margin-bottom: 20px;
 		.tag-lk {
 			position: relative;

@@ -1,13 +1,13 @@
 <template>
 	<div class="menu-container">
 		<pose-transition>
-			<btn-control-item class="btn-control" @click.native="isShow=!isShow" v-show="!isShow">
+			<btn-control-item class="btn-control" @click.native="changeMenuDisplay" v-show="!isShowMenu">
 				<i class="iconfont icon-menu"></i>
 			</btn-control-item>
 		</pose-transition>
 		<PoseTransition>
-			<menu-inner-item class="menu-inner" v-if="isShow">
-				<menu-mask-item class="menu-mask" @click.native="isShow=false"></menu-mask-item>
+			<menu-inner-item class="menu-inner" v-if="isShowMenu">
+				<menu-mask-item class="menu-mask" @click.native="changeMenuDisplay(false)"></menu-mask-item>
 				<menu-content class="menu-content">
 					<!-- <div class="not-login-box">
 						<div class="not-login-inner">
@@ -15,7 +15,7 @@
 							<router-link to="/login">注册</router-link>
 						</div>
 					</div>-->
-					<div class="btn-close-sidebar" @click="isShow=false">
+					<div class="btn-close-sidebar" @click="changeMenuDisplay(false)">
 						<div class="btn-inner"></div>
 					</div>
 					<div class="menu-data-list">
@@ -38,11 +38,11 @@
 					</div>
 					<div class="aside-bottom-container">
 						<div class="logo-pic">
-							<img src="https://v.yansk.cn/images/logo.png" alt>
+							<img :src="logoPic" alt>
 						</div>
 						<div class="not-login-inner" v-if="!isLogin">
 							<router-link to="/login">登录</router-link>
-							<router-link to="/login">注册</router-link>
+							<router-link to="/signup">注册</router-link>
 						</div>
 						<div class="user-box" v-if="isLogin" @click="maskShow=!maskShow">
 							<transition name="mask-show" @after-enter="userAfterEnter" @after-leave="userAfterLeave">
@@ -50,7 +50,7 @@
 							</transition>
 							<div class="user-head-wrap">
 								<div class="user-head-pic">
-									<img :src="'https://v.yansk.cn/'+userInfo.avatarPath" alt>
+									<img :src="avatarUrl" alt>
 								</div>
 								<div class="user-name">{{userInfo.username}}</div>
 							</div>
@@ -69,8 +69,10 @@
 	export default {
 		data() {
 			return {
+				logoPic: "https://v.yansk.cn/images/logo.png",
 				isShow: false,
-				maskShow: false
+				maskShow: false,
+				URL_REG: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
 			};
 		},
 		components: {
@@ -165,21 +167,29 @@
 				});
 				console.log("完成");
 				this.maskShow = false;
-				this.isShow = false;
+				this.changeMenuDisplay(false);
 			},
 			userAfterLeave() {
-				this.isShow = false;
+				this.changeMenuDisplay(false);
 			},
 			linkItemHasCurrent(link) {
 				let spt = link.split("/");
 				let rou = this.$route.params;
 				console.log(spt);
+			},
+			changeMenuDisplay(val) {
+				return this.$store.commit("changeMenuDisplayStatus", val);
 			}
 		},
 		computed: {
-			...mapState(["navList", "isLogin", "userInfo"]),
+			...mapState(["navList", "isLogin", "userInfo", "isShowMenu"]),
 			isShowMenuListPose() {
-				return this.isShow ? "visible" : "hidden";
+				return this.isShowMenu ? "visible" : "hidden";
+			},
+			avatarUrl() {
+				return URL_REG.test(this.userInfo.avatarPath)
+					? `https://v.yansk.cn${this.userInfo.avatarPath}`
+					: this.userInfo.avatarPath;
 			}
 		}
 	};
@@ -313,7 +323,8 @@
 			}
 		}
 		.logo-pic {
-			width: 50%;
+			flex-shrink: 0;
+			flex-basis: 50%;
 			> img {
 				max-width: 100%;
 			}
@@ -323,6 +334,9 @@
 			position: relative;
 			justify-content: flex-end;
 			flex-grow: 1;
+			flex-basis: 50%;
+			width: 50%;
+			flex-shrink: 0;
 			.mask {
 				position: absolute;
 				top: 50%;
@@ -353,10 +367,8 @@
 				border-radius: 50%;
 			}
 			img {
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, -50%);
+				width: 100%;
+				transform: scale(1.1);
 			}
 		}
 

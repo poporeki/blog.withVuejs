@@ -11,7 +11,7 @@
 		</div>
 		<transition-group tag="ul" enter-active-class="filpXIns" class="article-list" v-show="!isRequest">
 			<li v-if="isEmptyData" :key="0">没有数据</li>
-			<li v-for="arc in arclist" :key="arc.id">
+			<li v-for="arc in arclist" :key="arc.id" class="article-list-item">
 				<router-link :to="'blog/article/'+arc.id">
 					<div class="card">
 						<div class="card-header">
@@ -100,13 +100,12 @@
 
 <style lang="scss">
 	.new-arc-list-wapper {
-		ul.article-list {
+		.article-list {
 			position: relative;
 			column-count: 2;
 			column-gap: 1px;
 			column-rule: 1px solid rgb(53, 53, 53);
 			width: 100%;
-			box-sizing: border-box;
 			@media (max-width: 768px) {
 				& {
 					column-count: 1;
@@ -116,16 +115,13 @@
 		.filpXIns {
 			animation: flipXIn 0.3s forwards;
 		}
-		li {
-			-webkit-column-break-inside: avoid;
+		.article-list-item {
 			-webkit-column-break-inside: avoid;
 			-moz-column-break-inside: avoid;
 			-o-column-break-inside: avoid;
 			-ms-column-break-inside: avoid;
-			column-break-inside: avoid;
-			-webkit-backface-visibility: hidden;
-
-			box-sizing: border-box;
+			// column-break-inside: avoid;
+			backface-visibility: hidden;
 			background-color: #000;
 			> a {
 				display: block;
@@ -180,12 +176,6 @@
 			&:before {
 				content: "";
 				position: absolute;
-				-webkit-column-break-inside: avoid;
-				-moz-column-break-inside: avoid;
-				-o-column-break-inside: avoid;
-				-ms-column-break-inside: avoid;
-				column-break-inside: avoid;
-				-webkit-backface-visibility: hidden;
 				width: 100%;
 				height: 5px;
 				bottom: 0;
@@ -239,7 +229,7 @@
 				.info-box {
 					display: flex;
 					flex-direction: row;
-					font-size: 0.24rem;
+					font-size: 0.8rem;
 
 					> .item {
 						margin-right: 20px;
@@ -264,7 +254,7 @@
 					word-break: break-word;
 					overflow: hidden;
 					margin: 10px 0 0 0;
-					font-size: 0.26rem;
+					font-size: 0.8rem;
 					max-height: 100px;
 					color: rgb(226, 226, 226);
 				}
@@ -280,8 +270,8 @@
 						-moz-column-break-inside: avoid;
 						-o-column-break-inside: avoid;
 						-ms-column-break-inside: avoid;
-						column-break-inside: avoid;
-						-webkit-backface-visibility: hidden;
+						// column-break-inside: avoid;
+						// backface-visibility: hidden;
 						height: 100%;
 						width: 100%;
 						transform: scale(0.99);

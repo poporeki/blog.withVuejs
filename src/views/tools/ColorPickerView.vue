@@ -4,20 +4,20 @@
 		<photoshop-picker v-model="colors"></photoshop-picker>
 		<div class="rs-wrapper">
 			<div class="rs-box">
-				<h3>HEX:</h3>
-				<h3>{{colors.hex}}</h3>
+				<h6>HEX:</h6>
+				<h6>{{colors.hex}}</h6>
 			</div>
 			<div class="rs-box">
-				<h3>HSL:</h3>
-				<h3>{{hsl}}</h3>
+				<h6>HSL:</h6>
+				<h6>{{hsl}}</h6>
 			</div>
 			<div class="rs-box">
-				<h3>HSV:</h3>
-				<h3>{{hsv}}</h3>
+				<h6>HSV:</h6>
+				<h6>{{hsv}}</h6>
 			</div>
 			<div class="rs-box">
-				<h3>RGBA:</h3>
-				<h3>{{rgba}}</h3>
+				<h6>RGBA:</h6>
+				<h6>{{rgba}}</h6>
 			</div>
 		</div>
 	</div>

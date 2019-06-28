@@ -22,7 +22,7 @@
 
 			&,
 			a {
-				font-size: 0.26rem;
+				font-size: 0.9rem;
 			}
 
 			a {

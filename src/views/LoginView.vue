@@ -107,7 +107,6 @@
 		perspective: 1500px;
 		-webkit-perspective: 1500px;
 		transform-style: preserve-3d;
-		font-size: 0.26rem;
 	}
 
 	.loading-ani {
@@ -316,11 +315,11 @@
 
 				.input-tips {
 					transform: translateY(-20px);
-					font-size: 0.22rem;
+					font-size: 0.8rem;
 
 					.iconfont {
 						transform: rotate(-45deg);
-						font-size: 0.22rem;
+						font-size: 0.8rem;
 					}
 				}
 			}

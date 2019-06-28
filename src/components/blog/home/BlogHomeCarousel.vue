@@ -12,7 +12,9 @@
 				<swiper-slide v-for="item in carouData" :key="item.id">
 					<a :href="'/blog/article/'+item.id">
 						<h4>{{item.title}}</h4>
-						<img v-lazy="item.imgSrc!==''?item.imgSrc:''" :onerror="errorImg" alt="image">
+						<div class="pic-wrap">
+							<img v-lazy="item.imgSrc!==''?item.imgSrc:''" :onerror="errorImg" alt="image">
+						</div>
 					</a>
 				</swiper-slide>
 
@@ -96,6 +98,7 @@
 				let that = this;
 				this.$axios.get("/api/v1/getCarousel").then(({ data }) => {
 					that.isRequest = false;
+					console.log(data.data);
 					that.carouData = data.data;
 					that.isShow = true;
 				});
@@ -185,16 +188,18 @@
 				height: 100%;
 				width: 100%;
 				min-height: 300px;
+				.pic-wrap {
+					position: absolute;
+					width: 100%;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+					> img {
+						width: 100%;
+					}
+				}
 			}
 		}
-	}
-
-	.swiper-slide > a > img {
-		position: absolute;
-		width: 100%;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
 	}
 
 	.swiper-slide > a > h4 {

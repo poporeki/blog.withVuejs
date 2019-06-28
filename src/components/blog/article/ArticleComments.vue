@@ -30,7 +30,7 @@
 					<div>
 						<div class="head-pic">
 							<a href="javascript:void(0);">
-								<img v-lazy="'https://v.yansk.cn/'+comm.user.avatar" alt="avatar">
+								<img v-lazy="avatarUrl(comm.user.avatar)" alt="avatar">
 							</a>
 						</div>
 						<div class="content">
@@ -86,7 +86,7 @@
 								<span># {{reply.floor}}</span>
 								<div class="head-pic">
 									<a href="javascript:void(0);">
-										<img :src="'https://v.yansk.cn'+reply.user.avatar" alt="avatar">
+										<img :src="avatarUrl(reply.user.avatar)" alt="avatar">
 									</a>
 								</div>
 								<div class="content">
@@ -170,12 +170,271 @@
 		</div>
 	</section>
 </template>
+
+<script>
+	export default {
+		data() {
+			return {
+				// 评论文本
+				context_comm: "",
+				isCommConError: false,
+				commConErrorMsg: "",
+				// 回复文本
+				replyContent: "",
+				context_reply: "",
+				isEnd: false,
+				// 请求状态
+				isRequest: false,
+				// 请求数据错误状态
+				isRequestError: false,
+				replyBoxStatus: [],
+				commList: []
+			};
+		},
+		props: ["arcId", "artTotal", "artComms", "toComment"],
+		watch: {
+			artComms() {
+				this.commList = [];
+				this.pushCommentData(this, this.artComms);
+			}
+		},
+		methods: {
+			/* 跳转到锚点 */
+			goAnchor(el) {
+				setTimeout(() => {
+					let event = document.getElementById(el);
+					let offTop = event.offsetTop;
+					document.body.scrollTop = offTop; // chrome
+					document.documentElement.scrollTop = offTop; // firefox
+				}, 200);
+			},
+			/* 输入状态 */
+			typing(ev) {
+				console.log("typing:" + ev);
+				let target = ev.currentTarget;
+				let nextSibling = target.nextSibling;
+				if (target.value === "")
+					return this.commonFn.removeClass(nextSibling, "show");
+
+				if (nextSibling.tagName === "A") {
+					this.commonFn.addClass(nextSibling, "show");
+				}
+			},
+			/* 提交评论 */
+			submitComment(event, type, commid, commidx, replyid, replyidx) {
+				if (!this.isLogin) {
+					return this.$router.push({
+						path: "/login"
+					});
+				}
+				if (type === "toComment") {
+					this.submitToComment(commid, commidx);
+					return;
+				} else if (type === "toReply") {
+					this.submitToReply(commid, replyid, commidx, replyidx);
+					return;
+				}
+				const that = this;
+				this.$axios
+					.post("/api/v1/article/comment/submitComment", {
+						isGlobalLoading: false,
+						comm_content: this.context_comm,
+						arc_id: this.arcId
+					})
+					.then(({ data }) => {
+						if (data.status === true) {
+							that.context_comm = "";
+							that.pushCommentData(that, data.data);
+						} else if (data.status === -1) {
+							that.isCommConError = true;
+							that.commConErrorMsg = data.msg;
+							setTimeout(() => {
+								that.isCommConError = false;
+								that.commConErrorMsg = "";
+							}, 2000);
+						} else {
+							that.isCommConError = true;
+							that.commConErrorMsg = data.msg;
+							setTimeout(() => {
+								that.isCommConError = false;
+								that.commConErrorMsg = "";
+							}, 2000);
+						}
+					})
+					.catch(err => {});
+			},
+			/**
+			 * 提交评论
+			 *
+			 */
+			submitToComment(commid, idx) {
+				let that = this;
+				let url = "/api/v1/article/comment/submitReply";
+				this.$axios
+					.post(url, {
+						isGlobalLoading: false,
+						comm_content: this.replyContent,
+						arc_id: this.arcId,
+						commid: commid
+					})
+					.then(({ data }) => {
+						if (data.status === true) {
+							that.replyContent = "";
+							that.commList[idx].status = false;
+							that.pushCommentData(that, data.data);
+						} else {
+							that.isCommConError = true;
+							that.commConErrorMsg = data.msg;
+							setTimeout(() => {
+								that.isCommConError = false;
+								that.commConErrorMsg = "";
+							}, 2000);
+						}
+					});
+			},
+			/**
+			 * 提交评论回复
+			 */
+			submitToReply(commid, replyid, commidx, replyidx) {
+				let that = this;
+				let url = "/api/v1/article/comment/submitReply";
+				this.$axios
+					.post(url, {
+						isGlobalLoading: false,
+						comm_content: this.replyContent,
+						arc_id: this.arcId,
+						commid: commid,
+						reply_id: replyid
+					})
+					.then(({ data }) => {
+						if (data.status === true) {
+							that.replyContent = "";
+							that.commList[commidx].commReps[replyidx].status = false;
+							that.pushCommentData(that, data.data, commidx);
+						} else {
+							that.isCommConError = true;
+							that.commConErrorMsg = data.msg;
+							setTimeout(() => {
+								that.isCommConError = false;
+								that.commConErrorMsg = "";
+							}, 2000);
+						}
+					});
+			},
+			/* 回复框切换 */
+			fadeToggle(event, commIdx, replyIdx) {
+				let replyBoxStatus = this.commList;
+				this.replyContent = "";
+				replyBoxStatus.map(comm => {
+					comm.status = false;
+					let replyArr = comm.commReps;
+					if (
+						replyArr === undefined ||
+						typeof replyArr === undefined ||
+						replyArr.length === 0
+					) {
+						return;
+					}
+					replyArr.map(reply => {
+						reply.status = false;
+					});
+				});
+				if (arguments.length === 3) {
+					replyBoxStatus[commIdx].commReps[replyIdx].status = !replyBoxStatus[
+						commIdx
+					].commReps[replyIdx].status;
+					return;
+				}
+				replyBoxStatus[commIdx].status = !replyBoxStatus[commIdx].status;
+			},
+			pushCommentData(that, commlist, commidx) {
+				return new Promise(resolve => {
+					let comms = commlist;
+					if (typeof comms == "undefined") return resolve();
+					if (arguments.length === 3) {
+						that.$set(comms, "status", false);
+						that.commList[commidx].commReps.unshift(comms);
+						return resolve();
+					}
+					if (!(comms instanceof Array)) {
+						that.$set(comms, "status", false);
+						that.commList.unshift(comms);
+						return resolve();
+					}
+					comms.map((comm, idx) => {
+						that.$set(commlist[idx], "status", false);
+
+						let replyArr = comm.commReps;
+						if (
+							replyArr === undefined ||
+							replyArr === null ||
+							typeof replyArr === "undefined" ||
+							replyArr.length === 0
+						) {
+							that.commList.push(comm);
+							return;
+						}
+						replyArr.map((reply, repidx) => {
+							that.$set(commlist[idx].commReps[repidx], "status", false);
+						});
+						that.commList.push(comm);
+					});
+					resolve();
+				});
+			},
+			/* 获取更多评论 */
+			getMoreComment() {
+				let that = this;
+				this.isRequest = true;
+				this.isRequestError = false;
+				that.$axios
+					.get("/api/v1/article/comment/getComments", {
+						params: {
+							isGlobalLoading: false,
+							skip: that.commList.length || 0,
+							arcid: that.arcId
+						}
+					})
+					.then(({ data }) => {
+						that.isRequest = false;
+						if (data.status !== 1) {
+							that.isEnd = true;
+						}
+						that.pushCommentData(that, data.data);
+					})
+					.catch(() => {
+						that.isRequestError = true;
+					});
+			},
+			avatarUrl(avatar) {
+				if (!avatar)
+					return "https://v.yansk.cn/images/user/avatars/default/1.png";
+				return ["http://", "https://"].indexOf(avatar) !== -1
+					? `https://v.yansk.cn${avatar}`
+					: avatar;
+			}
+		},
+		created() {
+			this.pushCommentData(this, this.artComms);
+		},
+		mounted() {
+			/* 是否锚点到评论区 */
+			this.toComment === true ? this.goAnchor("comment") : "";
+		},
+		computed: {
+			isLogin() {
+				return this.$store.state.isLogin;
+			}
+		}
+	};
+</script>
+
 <style lang="scss">
 	.rep-to-name {
 		color: #d18521;
 	}
 	.comment-block {
-		font-size: 0.28rem;
+		font-size: 0.9rem;
 		h5 {
 			font-weight: bold;
 			padding: 10px 0;
@@ -488,255 +747,3 @@
 		}
 	}
 </style>
-
-<script>
-	export default {
-		data() {
-			return {
-				// 评论文本
-				context_comm: "",
-				isCommConError: false,
-				commConErrorMsg: "",
-				// 回复文本
-				replyContent: "",
-				context_reply: "",
-				isEnd: false,
-				// 请求状态
-				isRequest: false,
-				// 请求数据错误状态
-				isRequestError: false,
-				replyBoxStatus: [],
-				commList: []
-			};
-		},
-		props: ["arcId", "artTotal", "artComms", "toComment"],
-		watch: {
-			artComms() {
-				this.commList = [];
-				this.pushCommentData(this, this.artComms);
-			}
-		},
-		methods: {
-			/* 跳转到锚点 */
-			goAnchor(el) {
-				setTimeout(() => {
-					let event = document.getElementById(el);
-					let offTop = event.offsetTop;
-					document.body.scrollTop = offTop; // chrome
-					document.documentElement.scrollTop = offTop; // firefox
-				}, 200);
-			},
-			/* 输入状态 */
-			typing(ev) {
-				console.log("typing:" + ev);
-				let target = ev.currentTarget;
-				let nextSibling = target.nextSibling;
-				if (target.value === "")
-					return this.commonFn.removeClass(nextSibling, "show");
-
-				if (nextSibling.tagName === "A") {
-					this.commonFn.addClass(nextSibling, "show");
-				}
-			},
-			/* 提交评论 */
-			submitComment(event, type, commid, commidx, replyid, replyidx) {
-				if (!this.isLogin) {
-					return this.$router.push({
-						path: "/login"
-					});
-				}
-				if (type === "toComment") {
-					this.submitToComment(commid, commidx);
-					return;
-				} else if (type === "toReply") {
-					this.submitToReply(commid, replyid, commidx, replyidx);
-					return;
-				}
-				const that = this;
-				this.$axios
-					.post("/api/v1/article/comment/submitComment", {
-						isGlobalLoading: false,
-						comm_content: this.context_comm,
-						arc_id: this.arcId
-					})
-					.then(({ data }) => {
-						if (data.status === true) {
-							that.context_comm = "";
-							that.pushCommentData(that, data.data);
-						} else if (data.status === -1) {
-							that.isCommConError = true;
-							that.commConErrorMsg = data.msg;
-							setTimeout(() => {
-								that.isCommConError = false;
-								that.commConErrorMsg = "";
-							}, 2000);
-						} else {
-							that.isCommConError = true;
-							that.commConErrorMsg = data.msg;
-							setTimeout(() => {
-								that.isCommConError = false;
-								that.commConErrorMsg = "";
-							}, 2000);
-						}
-					})
-					.catch(err => {});
-			},
-			/**
-			 * 提交评论
-			 *
-			 */
-			submitToComment(commid, idx) {
-				let that = this;
-				let url = "/api/v1/article/comment/submitReply";
-				this.$axios
-					.post(url, {
-						isGlobalLoading: false,
-						comm_content: this.replyContent,
-						arc_id: this.arcId,
-						commid: commid
-					})
-					.then(({ data }) => {
-						if (data.status === true) {
-							that.replyContent = "";
-							that.commList[idx].status = false;
-							that.pushCommentData(that, data.data);
-						} else {
-							that.isCommConError = true;
-							that.commConErrorMsg = data.msg;
-							setTimeout(() => {
-								that.isCommConError = false;
-								that.commConErrorMsg = "";
-							}, 2000);
-						}
-					});
-			},
-			/**
-			 * 提交评论回复
-			 */
-			submitToReply(commid, replyid, commidx, replyidx) {
-				let that = this;
-				let url = "/api/v1/article/comment/submitReply";
-				this.$axios
-					.post(url, {
-						isGlobalLoading: false,
-						comm_content: this.replyContent,
-						arc_id: this.arcId,
-						commid: commid,
-						reply_id: replyid
-					})
-					.then(({ data }) => {
-						if (data.status === true) {
-							that.replyContent = "";
-							that.commList[commidx].commReps[replyidx].status = false;
-							that.pushCommentData(that, data.data, commidx);
-						} else {
-							that.isCommConError = true;
-							that.commConErrorMsg = data.msg;
-							setTimeout(() => {
-								that.isCommConError = false;
-								that.commConErrorMsg = "";
-							}, 2000);
-						}
-					});
-			},
-			/* 回复框切换 */
-			fadeToggle(event, commIdx, replyIdx) {
-				let replyBoxStatus = this.commList;
-				this.replyContent = "";
-				replyBoxStatus.map(comm => {
-					comm.status = false;
-					let replyArr = comm.commReps;
-					if (
-						replyArr === undefined ||
-						typeof replyArr === undefined ||
-						replyArr.length === 0
-					) {
-						return;
-					}
-					replyArr.map(reply => {
-						reply.status = false;
-					});
-				});
-				if (arguments.length === 3) {
-					replyBoxStatus[commIdx].commReps[replyIdx].status = !replyBoxStatus[
-						commIdx
-					].commReps[replyIdx].status;
-					return;
-				}
-				replyBoxStatus[commIdx].status = !replyBoxStatus[commIdx].status;
-			},
-			pushCommentData(that, commlist, commidx) {
-				return new Promise(resolve => {
-					let comms = commlist;
-					if (typeof comms == "undefined") return resolve();
-					if (arguments.length === 3) {
-						that.$set(comms, "status", false);
-						that.commList[commidx].commReps.unshift(comms);
-						return resolve();
-					}
-					if (!(comms instanceof Array)) {
-						that.$set(comms, "status", false);
-						that.commList.unshift(comms);
-						return resolve();
-					}
-					comms.map((comm, idx) => {
-						that.$set(commlist[idx], "status", false);
-
-						let replyArr = comm.commReps;
-						if (
-							replyArr === undefined ||
-							replyArr === null ||
-							typeof replyArr === "undefined" ||
-							replyArr.length === 0
-						) {
-							that.commList.push(comm);
-							return;
-						}
-						replyArr.map((reply, repidx) => {
-							that.$set(commlist[idx].commReps[repidx], "status", false);
-						});
-						that.commList.push(comm);
-					});
-					resolve();
-				});
-			},
-			/* 获取更多评论 */
-			getMoreComment() {
-				let that = this;
-				this.isRequest = true;
-				this.isRequestError = false;
-				that.$axios
-					.get("/api/v1/article/comment/getComments", {
-						params: {
-							isGlobalLoading: false,
-							skip: that.commList.length || 0,
-							arcid: that.arcId
-						}
-					})
-					.then(({ data }) => {
-						that.isRequest = false;
-						if (data.status !== 1) {
-							that.isEnd = true;
-						}
-						that.pushCommentData(that, data.data);
-					})
-					.catch(() => {
-						that.isRequestError = true;
-					});
-			}
-		},
-		created() {
-			this.pushCommentData(this, this.artComms);
-		},
-		mounted() {
-			/* 是否锚点到评论区 */
-			this.toComment === true ? this.goAnchor("comment") : "";
-		},
-		computed: {
-			isLogin() {
-				return this.$store.state.isLogin;
-			}
-		}
-	};
-</script>
-

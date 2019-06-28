@@ -140,7 +140,7 @@
 		.form-control {
 			position: relative;
 			margin: 10% 0 0;
-			font-size: 0.26rem;
+			font-size: 0.8rem;
 			&.active {
 				.placeholder {
 					span {

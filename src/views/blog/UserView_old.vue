@@ -7,7 +7,7 @@
 						<i class="iconfont icon-camera"></i>
 						<span>更换头像</span>
 					</div>
-					<img v-lazy="avatarUrl" v-if="avatar!==''" alt="head-pic">
+					<img v-lazy="`https://v.yansk.cn${avatar}`" v-if="avatar!==''" alt="head-pic">
 				</div>
 				<div class="name-box">
 					<input type="text" :placeholder="userName">
@@ -165,6 +165,9 @@
 		}
 	}
 
+	body {
+		position: relative;
+	}
 	header.top-box {
 		position: relative;
 		height: 20%;
@@ -254,7 +257,8 @@
 	.content-box {
 		position: relative;
 		background-color: rgb(243, 243, 243);
-		padding-bottom: 100px;
+		padding-bottom: 200px;
+		height: 80vh;
 		.tab {
 			position: relative;
 			height: 100%;
@@ -274,7 +278,7 @@
 							margin: 0 5px;
 							padding: 20px 20px;
 							color: #000;
-							font-size: 1rem;
+							font-size: 0.3rem;
 							&:after {
 								content: "";
 								position: absolute;
@@ -327,7 +331,7 @@
 				padding: 10px;
 				transform-origin: left center;
 				animation: fadeIn_LR 0.5s forwards;
-				font-size: 1rem;
+				font-size: 0.28rem;
 				&.show {
 					display: block;
 					/* animation: fadeIn_LR 1s forwards; */
@@ -364,7 +368,7 @@
 					color: rgb(131, 131, 131);
 					padding: 10px 0 10px 0;
 					margin: 0;
-					font-size: 0.75em;
+					font-size: 1.1em;
 				}
 				input {
 					height: 30px;
@@ -402,7 +406,6 @@
 				color: rgb(255, 255, 255);
 				background-color: #e9ab26;
 				border-radius: 4px;
-				font-size: 0.75em;
 				box-shadow: 2px 2px 5px rgb(206, 206, 206);
 				&:hover,
 				&:active {
@@ -424,7 +427,7 @@
 		box-shadow: 0 0 5px rgb(155, 155, 155);
 		color: #000;
 		box-sizing: border-box;
-		font-size: 1rem;
+		font-size: 0.26rem;
 		z-index: 100000;
 		overflow: hidden;
 		&.show {
@@ -587,7 +590,6 @@
 				email: "",
 				telNumber: "",
 				userName: "",
-				avatarUrlHeader: "http://image.yansk.cn",
 				tips: {
 					isShow: false,
 					type: null,
@@ -612,52 +614,20 @@
 					this.submitNewAvatar(data);
 				});
 			},
-			getUploadToken() {
-				let url = "/api/v1/qiniu/upload/gettoken";
-				return new Promise(async (resolve, reject) => {
-					try {
-						let result = await this.$axios.get(url);
-						if (!result) return reject(false);
-						resolve(result.data.token);
-					} catch (err) {
-						reject(err);
-					}
-				});
-			},
-			async submitNewAvatar(base) {
+			submitNewAvatar(base) {
 				let that = this;
-				let token = await this.getUploadToken();
-				let sptBase = base.split("base64,")[1];
-				let requestURL = "https://up-z2.qiniup.com/putb64/-1";
-				this.$axios({
-					url: requestURL,
-					method: "post",
-					headers: {
-						"Content-Type": "application/octet-stream",
-						Authorization: "UpToken " + token
-					},
-					data: sptBase,
-					withCredentials: false
-				}).then(({ data }) => {
-					if (!data.status) {
-						that.tips.type = "err";
-						that.tips.text = "提交失败";
-					}
-
-					this.updateUserAvatar(this.avatarUrlHeader + "/" + data.key);
-				});
-			},
-			updateUserAvatar(avatarUrl) {
-				this.$axios
-					.post("/api/v1/user/updateavatar", { a_url: avatarUrl })
+				let requestURL = "/blog/user/uploadAvatar";
+				that.$axios
+					.post(requestURL, {
+						imgBase: base
+					})
 					.then(({ data }) => {
-						if (data.status !== 1) {
-							this.tips.type = "err";
-							this.tips.text = "提交失败";
+						if (!data.status) {
+							that.tips.type = "err";
+							that.tips.text = "提交失败";
 						}
-						this.tips.type = "success";
-						this.tips.text = "提交成功";
-						this.getUserInfo();
+						that.tips.type = "success";
+						that.tips.text = "提交成功";
 					});
 			},
 			getPreviews(data) {
@@ -690,13 +660,6 @@
 			submitUpdateUserInfo() {
 				let that = this;
 				that.$axios.post();
-			}
-		},
-		computed: {
-			avatarUrl() {
-				return ["http://", "https://"].indexOf(this.avatar) !== -1
-					? `https://v.yansk.cn${this.avatar}`
-					: this.avatar;
 			}
 		},
 		created() {

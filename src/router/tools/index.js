@@ -3,6 +3,7 @@ import PostCode from './postcode'
 import ToolsIndex from '@/views/tools'
 import DefaultView from '@/views/tools/DefaultView'
 import ColorPicker from './colorPicker'
+import HtmlEntity from './htmlEntity'
 
 const defaultView = {
   path: '',
@@ -15,5 +16,5 @@ const defaultView = {
 export default {
   path: 'tools',
   component: ToolsIndex,
-  children: [defaultView, QRCode, PostCode, ColorPicker]
+  children: [defaultView, QRCode, PostCode, ColorPicker, HtmlEntity]
 }

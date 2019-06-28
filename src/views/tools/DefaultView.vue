@@ -24,8 +24,12 @@
 							</p>
 						</div>
 					</div>
-					<div class="ball-wrap">
-						<div class="ball"></div>
+					<div class="ball-wrap" @click="$router.push({path:'/blog/tools/htmlentity'})">
+						<div class="ball">
+							<p>
+								<i class="iconfont icon-html-close-tag"></i>
+							</p>
+						</div>
 					</div>
 					<div class="ball-wrap">
 						<div class="ball"></div>

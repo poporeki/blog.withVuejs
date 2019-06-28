@@ -305,7 +305,7 @@
 					display: block;
 					margin: 0 5px;
 					padding: 10px 10px;
-					font-size: 0.24rem;
+					font-size: 0.8rem;
 					border-bottom: 1px solid rgba(218, 218, 218, 0.445);
 					color: rgb(95, 95, 95);
 
@@ -345,7 +345,6 @@
 	@media (width: 360px) {
 		.rt {
 			align-self: flex-end !important;
-			margin-bottom: 50px;
 			width: 100% !important;
 
 			.s-wrap {

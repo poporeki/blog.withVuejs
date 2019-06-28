@@ -3,7 +3,9 @@
 		<rule-line></rule-line>
 		<h4 class="title">
 			工具
-			<router-link to="/blog/tools">MORE</router-link>
+			<small>
+				<router-link to="/blog/tools">More</router-link>
+			</small>
 		</h4>
 		<ul class="tool-list">
 			<li class="tool-list-item">
@@ -45,7 +47,19 @@
 					</div>
 				</router-link>
 			</li>
-			<li class="tool-list-item">1</li>
+			<li class="tool-list-item">
+				<router-link to="/blog/tools/htmlentity">
+					<div class="tool-box">
+						<div class="tool-icon">
+							<i class="iconfont icon-html-close-tag"></i>
+						</div>
+						<div class="tool-content">
+							<div class="tit">Html特殊字符表</div>
+							<div class="info">Html特殊字符表</div>
+						</div>
+					</div>
+				</router-link>
+			</li>
 			<li class="tool-list-item">1</li>
 		</ul>
 	</section>
@@ -65,7 +79,7 @@
 		display: flex;
 		flex-basis: 100%;
 		flex-direction: column;
-		font-size: 0.26rem;
+		font-size: 1rem;
 		@media (max-width: 768px) {
 			.tool-list-item {
 				flex-basis: 50%;
@@ -80,9 +94,10 @@
 	.tools {
 		.title {
 			a {
-				color: #000;
-				background-color: #fff;
-				font-size: 0.6em;
+				transition: color 0.3s ease;
+				&:hover {
+					color: rgb(209, 209, 209);
+				}
 			}
 		}
 	}
@@ -116,7 +131,7 @@
 	.tool-content {
 		padding-left: 10px;
 		.tit {
-			font-size: 1.1em;
+			font-size: 1em;
 			font-weight: bold;
 		}
 		.info {
