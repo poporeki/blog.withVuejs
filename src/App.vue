@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<Loading></Loading>
-		<router-view v-if="isRouterAlive"/>
+		<router-view v-if="isRouterAlive" />
 	</div>
 </template>
 
@@ -90,6 +90,7 @@
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 			"Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
 			"Segoe UI Symbol";
+		font-size: 14px;
 		font-size: 1rem;
 		font-weight: 400;
 		line-height: 1.5;
