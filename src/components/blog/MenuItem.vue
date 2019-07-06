@@ -38,7 +38,7 @@
 					</div>
 					<div class="aside-bottom-container">
 						<div class="logo-pic">
-							<img :src="logoPic" alt>
+							<img :src="logoPic" alt />
 						</div>
 						<div class="not-login-inner" v-if="!isLogin">
 							<router-link to="/login">登录</router-link>
@@ -50,7 +50,7 @@
 							</transition>
 							<div class="user-head-wrap">
 								<div class="user-head-pic">
-									<img :src="avatarUrl" alt>
+									<img :src="avatarUrl" alt />
 								</div>
 								<div class="user-name">{{userInfo.username}}</div>
 							</div>
@@ -186,6 +186,7 @@
 			isShowMenuListPose() {
 				return this.isShowMenu ? "visible" : "hidden";
 			},
+			/**头像地址 */
 			avatarUrl() {
 				return utils.REG_URL.test(this.userInfo.avatarPath)
 					? this.userInfo.avatarPath
@@ -399,16 +400,6 @@
 				text-align: center;
 				border-radius: 4px;
 				cursor: pointer;
-				// &::after {
-				// 	content: "";
-				// 	position: absolute;
-				// 	right: 0;
-				// 	top: 50%;
-				// 	height: 1px;
-				// 	width: 100%;
-				// 	background-color: #fff;
-				// 	transform: translateY(-50%);
-				// }
 				::after {
 					content: "";
 					position: absolute;
@@ -427,6 +418,7 @@
 					}
 				}
 				> a {
+					font-size: 1.2rem;
 					transition: color 0.3s ease;
 				}
 				.iconfont {

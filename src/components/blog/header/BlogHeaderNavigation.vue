@@ -154,6 +154,7 @@
 					margin-right: 5px;
 				}
 				> span {
+					font-size: 1.2em;
 					word-break: keep-all;
 				}
 			}

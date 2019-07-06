@@ -11,9 +11,9 @@
 			>
 				<swiper-slide v-for="item in carouData" :key="item.id">
 					<a :href="'/blog/article/'+item.id">
-						<h4>{{item.title}}</h4>
+						<h5>{{item.title}}</h5>
 						<div class="pic-wrap">
-							<img v-lazy="item.imgSrc!==''?item.imgSrc:''" :onerror="errorImg" alt="image">
+							<img v-lazy="item.imgSrc!==''?item.imgSrc:''" :onerror="errorImg" alt="image" />
 						</div>
 					</a>
 				</swiper-slide>
@@ -202,7 +202,7 @@
 		}
 	}
 
-	.swiper-slide > a > h4 {
+	.swiper-slide > a > h5 {
 		position: absolute;
 		display: inline-block;
 		width: 100%;

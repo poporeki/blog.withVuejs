@@ -2,7 +2,7 @@
 	<div class="wrapper">
 		<div :class="{'login-box':true,success:success}">
 			<div class="dog">
-				<img src="/images/login_pic.png" alt>
+				<img src="/images/login_pic.png" alt />
 			</div>
 			<transition @after-leave="afterLeave" leave-active-class="logBoxOut">
 				<div class="inner" v-show="!success">
@@ -20,7 +20,7 @@
 								@keyup.enter="login"
 								@focus="nameInputFocus=true"
 								@blur="username===''?nameInputFocus=false:''"
-							>
+							/>
 							<div class="input-tips">
 								<i class="iconfont icon-head"></i>
 								<span>输入用户名</span>
@@ -37,14 +37,14 @@
 								@keyup.enter="login"
 								@focus="pwdInputFocus=true"
 								@blur="password===''?pwdInputFocus=false:''"
-							>
+							/>
 							<div class="input-tips">
 								<i class="iconfont icon-password"></i>
 								<span>输入密码</span>
 							</div>
 						</div>
 						<div class="login-btn-box">
-							<input @click="login" type="button" id="login_btn" class="login-btn" value="登录">
+							<input @click="login" type="button" id="login_btn" class="login-btn" value="登录" />
 							<transition
 								enter-active-class="animated  fadeInDown"
 								leave-active-class="animated  fadeOutDown"
@@ -294,7 +294,7 @@
 
 	form.login-form {
 		background-color: #111;
-		padding: 20px 100px;
+		padding: 50px 100px 20px 100px;
 		box-sizing: border-box;
 		transition: transform 1s ease;
 
@@ -306,6 +306,7 @@
 		.control {
 			position: relative;
 			margin-bottom: 5px;
+			padding: 20px 10px 10px;
 			border-bottom: 1px solid rgba(73, 73, 73, 0.902);
 			width: 200px;
 			transition: border 0.3s ease;
@@ -314,7 +315,7 @@
 				border-bottom: 1px solid rgba(146, 146, 146, 0.902);
 
 				.input-tips {
-					transform: translateY(-20px);
+					transform: translateY(-20px) translateX(-10px);
 					font-size: 0.8rem;
 
 					.iconfont {
@@ -324,7 +325,6 @@
 				}
 			}
 
-			&,
 			.input-tips {
 				padding: 20px 10px 10px;
 			}
@@ -333,12 +333,12 @@
 				position: absolute;
 				left: 0;
 				top: 0;
-				padding-left: 0;
 				color: rgb(189, 189, 189);
 				pointer-events: none;
 				transition: transform 0.3s ease, font-size 0.3s ease;
 
 				> .iconfont {
+					margin-right: 5px;
 					display: inline-block;
 					transition: transform 0.5s ease, font-size 0.3s ease;
 				}
@@ -415,6 +415,7 @@
 				border: 1px solid rgba(22, 124, 219, 0.363);
 				color: rgba(22, 124, 219, 0.712);
 				outline: none;
+				cursor: pointer;
 			}
 
 			input.login-btn.error {

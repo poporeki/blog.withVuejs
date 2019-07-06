@@ -16,10 +16,10 @@
 					<div class="card">
 						<div class="card-header">
 							<div class="title">
-								<h6>
+								<h5>
 									<span class="art-type-tips">{{arc.type.name}}</span>
 									{{arc.title}}
-								</h6>
+								</h5>
 							</div>
 							<div class="info-box">
 								<div class="item read-num">
@@ -38,7 +38,7 @@
 						</div>
 						<div class="card-body">
 							<div class="pic-box" v-if="filterSrc(arc.source)!==''">
-								<img v-lazy="filterSrc(arc.source)===''?'/images/exp.png':filterSrc(arc.source)" alt="img">
+								<img v-lazy="filterSrc(arc.source)===''?'/images/exp.png':filterSrc(arc.source)" alt="img" />
 							</div>
 							<p>{{arc.content}}</p>
 						</div>
@@ -192,12 +192,16 @@
 				.title {
 					border-left: 5px solid $color-green;
 					margin: 0 0 10px;
-					padding: 10px 5px;
-					font-size: 1.1rem;
+					padding: 0.3rem;
 					background-color: #000;
 					box-shadow: 0 0 1px rgb(119, 119, 119);
 					border-top-right-radius: 2px;
 					border-bottom-right-radius: 2px;
+					> h5 {
+						> span {
+							font-size: 0.9em;
+						}
+					}
 				}
 
 				.art-type-tips {
@@ -254,7 +258,7 @@
 					word-break: break-word;
 					overflow: hidden;
 					margin: 10px 0 0 0;
-					font-size: 0.8rem;
+					font-size: 1rem;
 					max-height: 100px;
 					color: rgb(226, 226, 226);
 				}

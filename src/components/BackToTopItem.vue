@@ -65,6 +65,24 @@
 		padding: 10px;
 		z-index: 999;
 		cursor: pointer;
+		/* &::before {
+				content: "回到顶部";
+				position: absolute;
+				display: flex;
+				height: 100%;
+				justify-content: center;
+				align-items: center;
+				top: 0;
+				left: -100%;
+				margin-left: -1rem;
+				transition: transform 0.3s ease;
+				transform: translateX(100%) scale(0);
+			}
+			&:hover {
+				&::before {
+					transform: translateX(0) scale(1);
+				}
+			} */
 		.back-to-top-inner {
 			position: relative;
 			height: 100%;

@@ -39,6 +39,9 @@
 
 <style lang="scss">
 	@import url("//at.alicdn.com/t/font_1251795_2br1dvx1j.css");
+	html {
+		font-size: 14px;
+	}
 	body {
 		position: relative;
 	}
