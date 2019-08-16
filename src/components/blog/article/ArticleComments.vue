@@ -3,18 +3,20 @@
 		<h5>发表评论</h5>
 		<div class="add-comm clearfix">
 			<textarea
-				@keyup="typing($event)"
+				@input="typing($event)"
 				v-model="context_comm"
 				name="comm_textarea"
 				class="comm-textarea"
 				id="comm_textarea"
 			></textarea>
+
 			<a href="javascript:void(0);" class="comm-submit-btn" @click="submitComment" data-attr>
 				提交
 				<transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp">
 					<span class="s-c-empty" v-if="isCommConError">{{commConErrorMsg}}</span>
 				</transition>
 			</a>
+			<emoji-item class="emoji-comment"></emoji-item>
 		</div>
 		<div class="comm-list">
 			<h5>评论列表({{artTotal}})</h5>
@@ -30,7 +32,7 @@
 					<div>
 						<div class="head-pic">
 							<a href="javascript:void(0);">
-								<img v-lazy="avatarUrl(comm.user.avatar)" alt="avatar">
+								<img v-lazy="avatarUrl(comm.user.avatar)" alt="avatar" />
 							</a>
 						</div>
 						<div class="content">
@@ -50,7 +52,7 @@
 										<div class="add-comm clearfix">
 											<textarea
 												name="comm_textarea"
-												@keyup="typing"
+												@input="typing"
 												v-model="replyContent"
 												class="comm-textarea"
 												id="comm_textarea"
@@ -86,7 +88,7 @@
 								<span># {{reply.floor}}</span>
 								<div class="head-pic">
 									<a href="javascript:void(0);">
-										<img :src="avatarUrl(reply.user.avatar)" alt="avatar">
+										<img :src="avatarUrl(reply.user.avatar)" alt="avatar" />
 									</a>
 								</div>
 								<div class="content">
@@ -117,7 +119,7 @@
 												<div class="add-comm clearfix">
 													<textarea
 														name="comm_textarea"
-														@keyup="typing"
+														@input="typing"
 														v-model="replyContent"
 														class="comm-textarea"
 														id="comm_textarea"
@@ -173,7 +175,9 @@
 
 <script>
 	import utils from "@/util/utils";
+	import EmojiItem from "@/components/EmojiItem";
 	export default {
+		components: { EmojiItem },
 		data() {
 			return {
 				// 评论文本
@@ -471,7 +475,9 @@
 				z-index: 100;
 				overflow: auto;
 			}
-
+			.emoji-comment {
+				bottom: 0;
+			}
 			.comm-submit-btn.show {
 				transform: translateY(100%);
 			}

@@ -358,6 +358,9 @@
 				align-self: center;
 				position: relative;
 				width: 50%;
+				cursor: pointer;
+				&:hover {
+				}
 			}
 			.user-head-pic {
 				position: relative;
@@ -366,6 +369,30 @@
 				overflow: hidden;
 				border: 1px solid rgba(0, 0, 0, 0.438);
 				border-radius: 50%;
+				&::before {
+					content: "";
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					left: 0;
+					top: 0;
+					background-color: #000;
+					opacity: 0;
+					z-index: 1;
+					transition: opacity 0.3s ease;
+				}
+				&:hover {
+					&::before {
+						opacity: 0.1;
+					}
+				}
+			}
+			.user-name {
+				text-align: center;
+				color: #fff;
+				font-size: 1.3rem;
+				border: 1px solid rgba(39, 39, 39, 0.932);
+				background-color: #8a8a8a;
 			}
 			img {
 				width: 100%;
